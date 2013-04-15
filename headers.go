@@ -1,4 +1,4 @@
-package hades
+package clio
 
 import (
     "net/http"
