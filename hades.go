@@ -9,6 +9,7 @@ import (
 var (
     routes = make(map[string] map[string] func () string)
     splat = []string{}
+    params = make(map[string]string)
     ctx = context {}
 )
 
@@ -34,6 +35,11 @@ func Context () context {
 
 func Splat () []string {
     return splat
+}
+
+
+func Params () map[string]string {
+    return params
 }
 
 
@@ -69,10 +75,17 @@ func Run (port int) {
         // finding correct handler
         for rawPattern, _ := range routes[req.Method] {
             pattern := prepearePattern(rawPattern)
-            if pattern.MatchString(req.URL.String()) {
+
+            // splitting whole path into parts
+            path, paramsString := splitPath(req.URL.String())
+
+            if pattern.MatchString(path) {
 
                 // homage to Sinatra's splat
-                splat = pattern.FindAllStringSubmatch(req.URL.String(), 100)[0][1:]
+                splat = pattern.FindAllStringSubmatch(path, 100)[0][1:]
+
+                // filling params
+                params = parseParams(paramsString)
 
                 // calling matched handler
                 fmt.Fprintln(w, routes[req.Method][rawPattern]())
