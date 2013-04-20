@@ -63,3 +63,5 @@ func parseParams (paramsString string) map[string]string {
     }
     return params
 }
+
+// vim: noai:ts=4:sw=4
