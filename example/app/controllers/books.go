@@ -4,6 +4,11 @@ import (
     "../../../../clio"
 )
 
+func Index () string {
+    return "<a href=\"books\">Books index</a> <br />" +
+           "<a href=\"books/12\">Certain book</a>"
+}
+
 func Books () string {
     clio.SetHeader("Content-Type", "text/plain")
     return "Books list"
