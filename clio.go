@@ -53,7 +53,7 @@ func router (w http.ResponseWriter, req *http.Request) {
             fmt.Fprintln(w, routes[req.Method][rawPattern]())
 
             // terminal debugging
-            fmt.Println(req.Method, req.URL.String())
+            println(req.Method, req.URL.String())
             break
         }
     }

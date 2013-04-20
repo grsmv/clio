@@ -56,10 +56,17 @@ func splitPath (path string) (abs, params string) {
  */
 func parseParams (paramsString string) map[string]string {
     params := make(map[string]string)
-    pairsArray := strings.Split(paramsString, "&")
-    for index := range pairsArray {
-        pair := strings.Split(pairsArray[index], "=")
-        params[pair[0]] = pair[1]
+    if len(paramsString) > 0 {
+        pairsArray := strings.Split(paramsString, "&")
+
+        for index := range pairsArray {
+            if strings.Contains(pairsArray[index], "=") {
+                pair := strings.Split(pairsArray[index], "=")
+                params[pair[0]] = pair[1]
+            } else {
+                params[pairsArray[index]] = ""
+            }
+        }
     }
     return params
 }
