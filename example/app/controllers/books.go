@@ -1,7 +1,7 @@
 package controllers
 
 import (
-    "../../../../clio"
+    . "../../../../clio"
 )
 
 func Index () string {
@@ -10,14 +10,14 @@ func Index () string {
 }
 
 func Books () string {
-    clio.SetHeader("Content-Type", "text/plain")
+    SetHeader("Content-Type", "text/plain")
     return "Books list"
 }
 
 func Book () string {
-    return "Book id #" + clio.Splat()[0] + "<br />" +
-           "url: "     + clio.Context().Request.URL.String() + "<br />" +
-           "params: "  + clio.Params()["a"]
+    return "Book id #" + Splat()[0] + "<br />" +
+           "url: "     + Context().Request.URL.String() + "<br />" +
+           "params: "  + Params()["a"]
 }
 
 func BooksCreate () string {
@@ -25,7 +25,7 @@ func BooksCreate () string {
 }
 
 func BookUpdate () string {
-    return "Ok, let's update book with id #" + clio.Splat()[0]
+    return "Ok, let's update book with id #" + Splat()[0]
 }
 
 func BooksRemove () string {
@@ -33,5 +33,5 @@ func BooksRemove () string {
 }
 
 func BookRemove () string {
-    return "Remove book with id #" + clio.Splat()[0]
+    return "Remove book with id #" + Splat()[0]
 }

@@ -1,11 +1,11 @@
 package main
 
 import (
-    "../../clio"
+    . "../../clio"
     "./app/routes"
 )
 
 func main() {
     routes.BooksRoutes()
-    clio.Run (4567)
+    Run (4567)
 }

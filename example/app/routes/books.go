@@ -1,17 +1,17 @@
 package routes
 
 import (
-    "../../../../clio"
+    . "../../../../clio"
     "../../app/controllers"
 )
 
 func BooksRoutes () {
     // root
-    clio.Get("/",            controllers.Index)
-    clio.Post ("/books",     controllers.BooksCreate)
-    clio.Get ("/books",      controllers.Books)
-    clio.Get ("/books/*",    controllers.Book)
-    clio.Put ("/books/*",    controllers.BookUpdate)
-    clio.Delete ("/books",   controllers.BooksRemove)
-    clio.Delete ("/books/*", controllers.BookRemove)
+    Get("/",            controllers.Index)
+    Post ("/books",     controllers.BooksCreate)
+    Get ("/books",      controllers.Books)
+    Get ("/books/*",    controllers.Book)
+    Put ("/books/*",    controllers.BookUpdate)
+    Delete ("/books",   controllers.BooksRemove)
+    Delete ("/books/*", controllers.BookRemove)
 }
