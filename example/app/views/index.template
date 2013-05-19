@@ -1,0 +1,5 @@
+<h1>Links</h1>
+<ul>
+    <li><a href="books">Books index</a></li>
+    <li><a href="books/12">Certain book</a></li>
+</ul>

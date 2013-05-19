@@ -17,8 +17,7 @@ type Author struct {
 
 
 func Index () string {
-    return "<a href=\"books\">Books index</a> <br />" +
-           "<a href=\"books/12\">Certain book</a>"
+    return Render("index")
 }
 
 
