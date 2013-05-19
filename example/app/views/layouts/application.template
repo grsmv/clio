@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body {
+            font: normal 1em Helvetica;
+            color: #333;
+            padding: 2em 3em;
+            border: 1px solid #ccc;
+            margin: 3em;
+        }
+
+        h1 {
+            font: normal 3em Georgia;
+        }
+    </style>
+</head>
+<body>
+    {{ yield }}
+</body>
+</html>

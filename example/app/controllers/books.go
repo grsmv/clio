@@ -33,7 +33,7 @@ func Books () string {
             Work {"For Whom the Bell Tolls (1940)"},
             Work {"The Old Man and the Sea (1951)"} }}
 
-    rend := Render("books/index", data)
+    rend := Render("books/index", data /* , Settings{ Layout: "none" } */)
     return rend
 }
 

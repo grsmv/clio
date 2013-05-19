@@ -2,15 +2,23 @@ package clio
 
 import (
     "bytes"
+    "io/ioutil"
     "log"
     "os"
-    "io/ioutil"
+    "reflect"
+    "regexp"
     "text/template"
 )
+
+type Settings struct {
+    Layout string
+}
 
 var (
     templateExtension = ".template"
     templatesHolder = "app/views"
+    defaultLayoutName = "application"
+    sep = string(os.PathSeparator)
 )
 
 /**
@@ -23,7 +31,7 @@ func templateGeneric (_type, name string, obj []interface{}) (contents string) {
     var (
         // functions available inside templates
         customFunctions = template.FuncMap{ "partial": partial }
-        fileName = templatesHolder + string(os.PathSeparator) + name + templateExtension
+        fileName = templatesHolder + sep + name + templateExtension
 
         // defining source for template variables by default.
         // it's make possible to call render methods in templates
@@ -65,6 +73,28 @@ func templateGeneric (_type, name string, obj []interface{}) (contents string) {
 
 
 /**
+ *  Returning wrapping layout for rendered template.
+ *  Used in application files as:
+ *    `Render("a/b", dataInterface, Settings { Layout: 'name' })`
+ */
+func layout (layoutName, renderedTemplate string) (output string) {
+
+    if layoutName != "none" {
+        layoutFilepath := templatesHolder + sep + "layouts" + sep + layoutName + templateExtension
+        layoutContents, err := ioutil.ReadFile(layoutFilepath)
+
+        if err != nil { log.Fatal(err) } else {
+            pattern := regexp.MustCompile("{{[\\s]*?yield[\\s]*?}}")
+            output = pattern.ReplaceAllString(string(layoutContents), renderedTemplate)
+        }
+    } else {
+        output = renderedTemplate
+    }
+    return 
+}
+
+
+/**
  *  Rendering partial (used inside other templates as
  *    `{{ partial "partial_name"}}`)
  */
@@ -77,7 +107,20 @@ func partial (name string, obj ...interface{}) string {
  *  Rendering basic template
  */
 func Render (name string, obj ...interface{}) string {
-    return templateGeneric("template", name, obj)
+    var layoutName = defaultLayoutName
+
+    // wrapping rendered template by layout
+    if len(obj) > 0 {
+        for _, arg := range obj {
+            settings := reflect.ValueOf(arg)
+            if settings.Type().String() == "clio.Settings" {
+                layoutName = settings.FieldByName("Layout").String()
+                break
+            }
+        }
+    }
+
+    return layout(layoutName, templateGeneric("template", name, obj))
 }
 
 
