@@ -1,0 +1,11 @@
+<h1>{{ .Name }} {{ .Surname }}</h1>
+<div>{{ .Description }}</div>
+
+<div>
+    <h2>Selected works</h2>
+    <ul>
+    {{ range .Works }}
+        {{ partial "books/book" . }}
+    {{ end }}
+    </ul>
+</div>

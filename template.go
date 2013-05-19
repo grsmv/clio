@@ -4,10 +4,14 @@ import (
     "bytes"
     "log"
     "os"
+    "io/ioutil"
     "text/template"
 )
 
-var templateExtension = ".template"
+var (
+    templateExtension = ".template"
+    templatesHolder = "app/views"
+)
 
 /**
  *  Generic function for rendering templates and partials
@@ -15,11 +19,11 @@ var templateExtension = ".template"
  *    @param <String> name - name (wothout extension) to lookup
  *    @param <Slice> obj - data structure to compile with template (can be empty)
  */
-func Template (_type, name string, obj []interface{}) (contents string) {
+func templateGeneric (_type, name string, obj []interface{}) (contents string) {
     var (
         // functions available inside templates
-        customFunctions = template.FuncMap{ "partial": Partial }
-        fileName = name + templateExtension
+        customFunctions = template.FuncMap{ "partial": partial }
+        fileName = templatesHolder + string(os.PathSeparator) + name + templateExtension
 
         // defining source for template variables by default.
         // it's make possible to call render methods in templates
@@ -36,13 +40,20 @@ func Template (_type, name string, obj []interface{}) (contents string) {
 
         // adding functions to be used inside templates
         rawTemplate = rawTemplate.Funcs(customFunctions)
-        tmpl, _ := rawTemplate.ParseFiles(fileName)
+
+        // getting raw template's content
+        fileContents, _ := ioutil.ReadFile(fileName)
+        tmpl, err := rawTemplate.Parse(string(fileContents))
+
+        if err != nil { log.Fatal(err) }
 
         // redefining source for template variables if one given
         if (len(obj) > 0) { dataStruct = obj[0] }
 
         // compiling and returning template's contents
-        tmpl.Execute(&buffer, dataStruct)
+        err = tmpl.Execute(&buffer, dataStruct)
+        if err != nil { log.Fatal(err) }
+
         contents = buffer.String()
 
     } else {
@@ -54,19 +65,19 @@ func Template (_type, name string, obj []interface{}) (contents string) {
 
 
 /**
- *  Rendering basic template
+ *  Rendering partial (used inside other templates as
+ *    `{{ partial "partial_name"}}`)
  */
-func Render (name string, obj ...interface{}) string {
-    return Template("template", name, obj)
+func partial (name string, obj ...interface{}) string {
+    return templateGeneric("partial", name, obj)
 }
 
 
 /**
- *  Rendering partial (used inside other templates as
- *    `{{ partial "partial_name"}}`)
+ *  Rendering basic template
  */
-func Partial (name string, obj ...interface{}) string {
-    return Template("partial", name, obj)
+func Render (name string, obj ...interface{}) string {
+    return templateGeneric("template", name, obj)
 }
 
 
