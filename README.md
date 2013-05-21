@@ -4,7 +4,7 @@
 Clio is a simple DSL for creating web applications in Go programming language with minimal effort, built to use with [carcass](https://github.com/grsmv/carcass). It includes routes for URL-matching, simple template system with support of application-wide and custom layouts and templates for each action, and bunch of useful utilities. 
 
 
-##### Routes
+### Routes
 
 As an example of complex route usage here you can see the whole stack of REST-routes for curtain purposes (say, controller):
 
@@ -32,7 +32,7 @@ One and only requirement for functions or closures that calls when pattern match
 
 
 
-##### Splats
+### Splats
 
 As you noted, route pattern can be given in a form of wildcard:
 
