@@ -31,7 +31,6 @@ Get ("/", func () string {
 One and only requirement for functions or closures that calls when pattern match - they should return string. 
 
 
-
 ### Splats
 
 As you noted, route pattern can be given in a form of wildcard:
@@ -44,9 +43,11 @@ So it can match, for example such url as `/books/12`. This irregular parts of pa
 Pattern also can hold few irregular parts:
 
 ``` go
-// url is /books/145/download/zip
 Get ("/books/*/download/*", BooksDownload)
-fmt.Println (Splat()) // => [145 zip]
+
+func  BooksDownload () string {
+    return "Book with id " + Splat()[0] + "should be downloaded as: " + Splat()[1]
+}
 ```
 
 
