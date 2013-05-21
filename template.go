@@ -90,7 +90,7 @@ func layout (layoutName, renderedTemplate string) (output string) {
     } else {
         output = renderedTemplate
     }
-    return 
+    return
 }
 
 
