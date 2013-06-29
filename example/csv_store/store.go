@@ -1,4 +1,4 @@
-package main
+package store
 
 import (
     "encoding/csv"
@@ -10,13 +10,16 @@ import (
     "strings"
 )
 
-type DataBase struct {
+type Store struct {
     filePath string
     columns  []string
     records  []map[string]string
 }
 
-func Open (filePath string) (*DataBase, error) {
+/**
+ *  Opening new store file and creating new Store object
+ */
+func Open (filePath string) (*Store, error) {
 
     // opening and reading a file
     file, err := os.Open(filePath)
@@ -25,9 +28,8 @@ func Open (filePath string) (*DataBase, error) {
     }
     defer file.Close()
 
-    // creating new database object
-    db := new (DataBase)
-    db.filePath = filePath
+    store := new (Store)
+    store.filePath = filePath
 
     // starting reading a file
     reader := csv.NewReader(file)
@@ -46,28 +48,31 @@ func Open (filePath string) (*DataBase, error) {
             // filling columns
             if count == 0 {
                 for _, record_field := range record {
-                    db.columns = append(db.columns, strings.TrimSpace(record_field))
+                    store.columns = append(store.columns, strings.TrimSpace(record_field))
                 }
             } else {
 
-                // filling the database records
-                databaseRecord := map[string]string{}
+                // filling the store records
+                storeRecord := map[string]string{}
 
                 for index, record_field := range record {
-                    databaseRecord[db.columns[index]] = strings.TrimSpace(record_field)
+                    storeRecord[store.columns[index]] = strings.TrimSpace(record_field)
                 }
 
-                db.records = append(db.records, databaseRecord)
+                store.records = append(store.records, storeRecord)
             }
             count++
         }
     }
-    return db, nil
+    return store, nil
 }
 
 
-func (db *DataBase) Where (needleKey, needleValue string) (result []map[string]string) {
-    for _, record := range db.records {
+/**
+ *  Searching for an exact matching
+ */
+func (store *Store) Where (needleKey, needleValue string) (result []map[string]string) {
+    for _, record := range store.records {
         for key, value := range record  {
             if needleKey == key && needleValue == value {
               result = append (result, record)
@@ -78,8 +83,11 @@ func (db *DataBase) Where (needleKey, needleValue string) (result []map[string]s
 }
 
 
-func (db *DataBase) WhereLike (needleKey, needleValue string) (result []map[string]string) {
-    for _, record := range db.records {
+/**
+ *  Searching for an partial entry ignoring case
+ */
+func (store *Store) WhereLike (needleKey, needleValue string) (result []map[string]string) {
+    for _, record := range store.records {
         for key, value := range record  {
             if needleKey == key &&
                strings.Index(
@@ -93,17 +101,29 @@ func (db *DataBase) WhereLike (needleKey, needleValue string) (result []map[stri
 }
 
 
-func (db *DataBase) Add (record map[string]string) {
-    db.records = append (db.records, record)
-    db.update ()
+/**
+ *  Adding record to store
+ */
+func (store *Store) Add (record map[string]string) {
+    store.records = append (store.records, record)
+    store.update ()
 }
 
 
-func (db *DataBase) Remove (needleKey, needleValue string) {
+/**
+ *  Updating a record in a store
+ */
+func (store *Store) Update (needleKey, needleValue string, record map[string]string) {}
+
+
+/**
+ *  Deleting record from store
+ */
+func (store *Store) Remove (needleKey, needleValue string) {
     tmpRecords := []map[string]string{}
 
     // filtering records
-    R: for _, record := range db.records {
+    R: for _, record := range store.records {
         for key, value := range record {
             if key == needleKey && value == needleValue {
                 break R
@@ -112,48 +132,50 @@ func (db *DataBase) Remove (needleKey, needleValue string) {
         tmpRecords = append (tmpRecords, record)
     }
 
-    // updating db redord
-    db.records = tmpRecords
-    db.update ()
+    // updating store redord
+    store.records = tmpRecords
+    store.update ()
 }
 
 
-func (db *DataBase) update () {
+/**
+ *  Updating a store file
+ */
+func (store *Store) update () {
     newData := ""
 
     // writing column names
-    newData += strings.Join(db.columns, ",") + "\n"
+    newData += strings.Join(store.columns, ",") + "\n"
 
     // writing records
-    for _, record := range db.records {
+    for _, record := range store.records {
 
         // collecting values in correct order
         values := []string{}
-        for _, column := range db.columns {
+        for _, column := range store.columns {
             values = append (values, record[column])
         }
         newData += strings.Join(values, ",") + "\n"
     }
 
-    // updating database file and object
-    err := ioutil.WriteFile(db.filePath, []byte(newData), 0644)
+    // updating store file and object
+    err := ioutil.WriteFile(store.filePath, []byte(newData), 0644)
     if err != nil {
         log.Fatal (err)
     }
 }
 
-
+// Usage example
 func main () {
-    db, _ := Open ("names.txt")
-    /* db.Remove ("last_name", "Zibert") */
+    store, _ := Open ("names.csv")
+    /* store.Remove ("last_name", "Zibert") */
 
-    db.Add (map[string]string {
+    store.Add (map[string]string {
       "first_letter": "z",
       "first_name": "Zahria",
-      "last_name": "Johnes"
-    })
+      "last_name": "Johnes" })
 
-    results := db.WhereLike("last_name", "joh")
+    results := store.WhereLike("last_name", "joh")
 
     spew.Dump(results)
 }
