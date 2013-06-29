@@ -1,12 +1,12 @@
-// This is extremely minimalistic CSV record store implementation,
-// created just as part of Clio example, and used for storing simple
-// data, gathered from web-face of example application.
+//  This is extremely minimalistic CSV record store implementation,
+//  created just as part of Clio example, and used for storing simple
+//  data, gathered from web-face of example application.
 //
-// It supports CRUD actions for records. Record is a single row in
-// CSV table, which itself is a Store.
+//  It supports CRUD actions for records. Record is a single row in
+//  CSV table, which itself is a Store.
 //
-// Please don't use this Store anywhere, 'cause it is inefficient,
-// dead-simple implementation of a stupid idea.
+//  Please don't use this Store anywhere, 'cause it is inefficient,
+//  dead-simple implementation of a stupid idea.
 
 package store
 
