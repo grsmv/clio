@@ -6,7 +6,7 @@ import (
 )
 
 func main () {
-    s, _ := store.Open ("store/names.csv")
+    s, _ := store.Open ("names.csv")
 
     /* s.Remove ("last_name", "Zibert") */
 
