@@ -6,7 +6,6 @@ import (
 )
 
 func Context () context {
-    return ctx
 }
 
 

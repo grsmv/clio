@@ -10,12 +10,12 @@ As an example of complex route usage here you can see the whole stack of REST-ro
 
 ``` go
 func ControllerRoutes () {
-    Get ("/books",      Books)
-    Get ("/books/*",    Book)
-    Post ("/books",     BooksCreate)
-    Put ("/books/*",    BookUpdate)
+    Get    ("/books",   Books      )
+    Get    ("/books/*", Book       )
+    Post   ("/books",   BooksCreate)
+    Put    ("/books/*", BookUpdate )
     Delete ("/books",   BooksRemove)
-    Delete ("/books/*", BookRemove)
+    Delete ("/books/*", BookRemove )
 }
 ```
 
@@ -53,9 +53,11 @@ func  BooksDownload () string {
 
 ##### Views
 
-##### Cookies and sessions?
-
 ##### Headers
+
+##### Request details
+
+##### Cookies and sessions?
 
 ##### Example application
 
