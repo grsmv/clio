@@ -1,8 +1,17 @@
+// This is extremelly minimalistic CSV record store implementation,
+// created just as part of Clio example, and used for storing simple
+// data, gathered from web-face of example epplication.
+//
+// It supports CRUD actions for recods. Record is a single row in
+// CSV table, which itself is a Store.
+//
+// Please dont use this Store anywhere, 'cause it is unefficient,
+// dead-simple implementation of a stupid idea.
+
 package store
 
 import (
     "encoding/csv"
-    "github.com/davecgh/go-spew/spew"
     "io"
     "io/ioutil"
     "log"
@@ -113,7 +122,32 @@ func (store *Store) Add (record map[string]string) {
 /**
  *  Updating a record in a store
  */
-func (store *Store) Update (needleKey, needleValue string, record map[string]string) {}
+func (store *Store) Update (needleKey, needleValue string, newRecord map[string]string) {
+    tmpRecords := []map[string]string{}
+    changedRecord := false
+
+    // seaching for a coincidence
+    for _, record := range store.records {
+        for key, value := range record {
+            if key == needleKey && value == needleValue {
+                record = newRecord
+                changedRecord = true
+                break
+            }
+        }
+
+        // filling of tmo record store with original or changed records
+        if changedRecord == true {
+            tmpRecords = append (tmpRecords, newRecord)
+            changedRecord = false
+        } else {
+            tmpRecords = append (tmpRecords, record)
+        }
+    }
+
+    store.records = tmpRecords
+    store.update()
+}
 
 
 /**
@@ -165,17 +199,5 @@ func (store *Store) update () {
     }
 }
 
-// Usage example
-func main () {
-    store, _ := Open ("names.csv")
-    /* store.Remove ("last_name", "Zibert") */
 
-    store.Add (map[string]string {
-      "first_letter": "z",
-      "first_name": "Zahria",
-      "last_name": "Johnes" })
-
-    results := store.WhereLike("last_name", "joh")
-
-    spew.Dump(results)
-}
+// vim: noai:ts=4:sw=4
