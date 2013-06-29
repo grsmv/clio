@@ -126,7 +126,7 @@ func (store *Store) Update (needleKey, needleValue string, newRecord map[string]
     tmpRecords := []map[string]string{}
     changedRecord := false
 
-    // seaching for a coincidence
+    // searching for a coincidence
     for _, record := range store.records {
         for key, value := range record {
             if key == needleKey && value == needleValue {
@@ -136,7 +136,7 @@ func (store *Store) Update (needleKey, needleValue string, newRecord map[string]
             }
         }
 
-        // filling of tmo record store with original or changed records
+        // filling temporary record store with original or changed records
         if changedRecord == true {
             tmpRecords = append (tmpRecords, newRecord)
             changedRecord = false
@@ -166,7 +166,7 @@ func (store *Store) Remove (needleKey, needleValue string) {
         tmpRecords = append (tmpRecords, record)
     }
 
-    // updating store redord
+    // updating store record
     store.records = tmpRecords
     store.update ()
 }
