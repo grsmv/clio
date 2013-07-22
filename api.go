@@ -5,6 +5,11 @@ import (
         "net/http"
 )
 
+func Context () context {
+	return http
+}
+
+
 func Splat () []string {
     return splat
 }
@@ -54,6 +59,3 @@ func Run (port int) {
 func SetHeader (key, value string) {
     Context().ResponseWriter.Header().Set(key, value)
 }
-
-
-// vim: noai:ts=4:sw=4
