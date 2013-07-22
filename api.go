@@ -56,6 +56,6 @@ func Run (port int) {
 }
 
 
-//func SetHeader (key, value string) {
-//    Context().ResponseWriter.Header().Set(key, value)
-//}
+func SetHeader (key, value string) {
+    http.ResponseWriter.Header().Set(key, value)
+}
