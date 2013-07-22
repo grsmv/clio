@@ -5,9 +5,9 @@ import (
         "net/http"
 )
 
-func Context () context {
-	return http
-}
+//func Context () context {
+//	return http
+//}
 
 
 func Splat () []string {
@@ -56,6 +56,6 @@ func Run (port int) {
 }
 
 
-func SetHeader (key, value string) {
-    Context().ResponseWriter.Header().Set(key, value)
-}
+//func SetHeader (key, value string) {
+//    Context().ResponseWriter.Header().Set(key, value)
+//}
