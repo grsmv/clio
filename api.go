@@ -5,9 +5,9 @@ import (
         "net/http"
 )
 
-//func Splat () []string {
-//    return splat
-//}
+func Splat () []string {
+    return splat
+}
 
 
 func Params () map[string]string {
