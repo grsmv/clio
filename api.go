@@ -5,10 +5,6 @@ import (
         "net/http"
 )
 
-func Context () context {
-}
-
-
 func Splat () []string {
     return splat
 }
