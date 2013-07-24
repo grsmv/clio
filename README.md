@@ -68,3 +68,13 @@ func  BooksDownload () string {
 - Testing with [gocheck](http://labix.org/gocheck)
 - Documentation
 - More sophisticated example application
+- Security
+- Generators
+- WebSocket support / RPC
+- assets support
+- I18n and localization
+- Error handling
+- Deployment and maintenance
+- Controller should support more than render func (flash, send, etc)
+- in Util add JSONParse method
+- add workers
