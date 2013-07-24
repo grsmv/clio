@@ -21,6 +21,8 @@ func prepearePattern (rawPattern string) *regexp.Regexp {
     return regexpPattern
 }
 
+//TODO: JSON parse
+
 
 /**
  *  Splitting path into two parts - absolute page path and params

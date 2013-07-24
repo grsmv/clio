@@ -75,4 +75,6 @@ func  BooksDownload () string {
 - I18n and localization
 - Error handling
 - Deployment and maintenance
-- Controller should support more than render fu
+- Controller should support more than render func (flash, send, etc)
+- in Util add JSONParse method
+- add workers
