@@ -1,7 +1,7 @@
 package controllers
 
 import (
-    . "../../../../clio"
+    . "github.com/grsmv/clio/core"
 )
 
 type Work struct {
@@ -38,7 +38,7 @@ func Books () string {
 
 
 func Book () string {
-    // SetHeader("Content-Type", "text/plain")
+    SetHeader("Content-Type", "text/plain")
     return "Book id #" + Splat()[0] + "<br />" +
            "url: "     + Context().Request.URL.String() + "<br />" +
            "params: "  + Params()["a"]

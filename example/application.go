@@ -1,7 +1,7 @@
 package main
 
 import (
-    . "../../clio"
+    . "github.com/grsmv/clio/core"
     "./app/routes"
 )
 
