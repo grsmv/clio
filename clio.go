@@ -3,7 +3,7 @@ package clio
 import (
     "net/http"
     "fmt"
-    "./helpers"
+    "github.com/grsmv/clio/helpers"
 )
 
 var (

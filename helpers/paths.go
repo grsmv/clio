@@ -1,6 +1,7 @@
 package helpers
 
 import (
+    "strings"
     "bitbucket.org/kardianos/osext"
     "os"
 )
