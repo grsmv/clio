@@ -5,8 +5,8 @@ import (
     "net/http"
 )
 
-func Context () *context {
-    return new(context)
+func Context () context {
+    return ctx
 }
 
 
