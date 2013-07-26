@@ -3,6 +3,7 @@ package clio
 import (
     "net/http"
     "fmt"
+    "./helpers"
 )
 
 var (
@@ -36,10 +37,10 @@ func router (w http.ResponseWriter, req *http.Request) {
 
     // finding correct handler
     for rawPattern, _ := range routes[req.Method] {
-        pattern := prepearePattern(rawPattern)
+        pattern := helpers.PreparePattern(rawPattern)
 
         // splitting whole path into parts
-        path, paramsString := splitPath(req.URL.String())
+        path, paramsString := helpers.SplitPath(req.URL.String())
 
         if pattern.MatchString(path) {
 
@@ -47,7 +48,7 @@ func router (w http.ResponseWriter, req *http.Request) {
             splat = pattern.FindAllStringSubmatch(path, 100)[0][1:]
 
             // filling params
-            params = parseParams(paramsString)
+            params = helpers.ParseParams(paramsString)
 
             // calling matched handler
             fmt.Fprintln(w, routes[req.Method][rawPattern]())

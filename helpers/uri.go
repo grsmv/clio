@@ -1,4 +1,4 @@
-package clio
+package helpers
 
 import (
     "strings"
@@ -10,7 +10,7 @@ import (
  *  Example:
  *      "/books/ * /update" -> "^/books/([\p{L}\d\-_]{1,})/update$"
  */
-func prepearePattern (rawPattern string) *regexp.Regexp {
+func PreparePattern (rawPattern string) *regexp.Regexp {
     replaceRools := strings.NewReplacer(
         "*", "([\\p{L}\\d\\-_]{1,})",
         ".", "\\.")
@@ -28,7 +28,7 @@ func prepearePattern (rawPattern string) *regexp.Regexp {
  *    "/a/b/c?a=b&c=d" should be splitted into
  *    "/a/b/c" and "a=b&c=d"
  */
-func splitPath (path string) (abs, params string) {
+func SplitPath (path string) (abs, params string) {
     pattern, _ := regexp.Compile("(.*)\\?(.*)")
     parts := pattern.FindAllStringSubmatch(path, 100)
     if len(parts) > 0 {
@@ -54,7 +54,7 @@ func splitPath (path string) (abs, params string) {
  *      "a": "b", "c" : "d"
  *    }
  */
-func parseParams (paramsString string) map[string]string {
+func ParseParams (paramsString string) map[string]string {
     params := make(map[string]string)
     if len(paramsString) > 0 {
         pairsArray := strings.Split(paramsString, "&")
