@@ -1,0 +1,10 @@
+# Define helper provesses here. All of the would be spawned during
+# `carcass run` command execution.
+#
+# You can look at example setup. We assume that you need CoffeeScript
+# and SCSS compilers for comfort development.
+#
+# Also you can define any other processes here.
+
+coffee: coffee -c -w -o public/javascripts app/assets/javascripts
+scss:   scss --watch app/assets/stylesheets:public/stylesheets --style compressed

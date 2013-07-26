@@ -1,0 +1,6 @@
+[submodule "templates/public/javascripts/vendor/backbone"]
+	path = templates/public/javascripts/vendor/backbone
+	url = git://github.com/documentcloud/backbone.git
+[submodule "templates/public/javascripts/vendor/underscore"]
+	path = templates/public/javascripts/vendor/underscore
+	url = git://github.com/documentcloud/underscore.git
