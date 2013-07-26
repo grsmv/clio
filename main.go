@@ -1,4 +1,4 @@
-package clio
+package main
 
 import (
     "github.com/grsmv/clio/cli"
