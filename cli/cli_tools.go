@@ -6,7 +6,27 @@ import (
 )
 
 func Help() {
-    fmt.Println("Usage:", os.Args[0], "<action>")
+    bin := os.Args[0]
+    fmt.Println (
+        "This program is a command line interface to the Clio framework infrastructure.         \n" +
+        "See https://github.com/grsmv/clio/ for more information.                               \n" +
+        "                                                                                       \n" +
+        "Usage: ", bin, "COMMAND [FLAGS]                                                        \n" +
+        "                                                                                       \n" +
+        "Commads:                                                                               \n" +
+        "   create      Creating application skeleton                                           \n" +
+        "   build       Building application binary                                             \n" +
+        "   g           Generating scaffold, model, router or view                              \n" +
+        "   run         Running application and all helping workers                             \n" +
+        "   stop        Killing all application's processes                                     \n" +
+        "   test        Testing current application                                             \n" +
+        "   clean       Removing temporary files and binary                                     \n" +
+        "   deps        Installing application's dependencies, declared in config/dependencies  \n" +
+        "   release     Deploy aplication, according to selected strategy                       \n" +
+        "   help        Output this message again                                               \n" +
+        "                                                                                       \n" +
+        "Generators:                                                                            \n" +
+        "   " + bin + " [model view router scaffold] NAME [ARGUMENTS]                            \n")
 }
 
 func Build() {
