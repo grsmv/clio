@@ -5,6 +5,8 @@ import (
     "net/http"
 )
 
+// ------------------- utilities -------------------
+
 func Context () context {
     return ctx
 }
@@ -19,6 +21,12 @@ func Params () map[string]string {
     return params
 }
 
+
+func SetHeader (key, value string) {
+    Context().ResponseWriter.Header().Set(key, value)
+}
+
+// ------------------- rest methods -------------------
 
 func Get (pattern string, handler func () string) {
     routes["GET"][pattern] = handler;
@@ -39,6 +47,7 @@ func Delete (pattern string, handler func () string) {
     routes["DELETE"][pattern] = handler;
 }
 
+// ------------------- app runner -------------------
 
 func Run (port int) {
     http.HandleFunc("/", func (w http.ResponseWriter, req *http.Request) {
@@ -53,11 +62,6 @@ func Run (port int) {
     })
 
     http.ListenAndServe(":" + strconv.Itoa(port), nil)
-}
-
-
-func SetHeader (key, value string) {
-    Context().ResponseWriter.Header().Set(key, value)
 }
 
 

@@ -26,7 +26,7 @@ func Help() {
         "   help        Output this message again                                               \n" +
         "                                                                                       \n" +
         "Generators:                                                                            \n" +
-        "   " + bin + " [model view router scaffold] NAME [ARGUMENTS]                            \n")
+        "   " + bin + " [model view router scaffold] NAME [ARGUMENTS]                           \n")
 }
 
 func Build() {
