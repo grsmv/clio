@@ -3,6 +3,7 @@ package core
 import (
     "strconv"
     "net/http"
+    "github.com/grsmv/clio/helpers"
 )
 
 // ------------------- utilities -------------------
@@ -61,6 +62,11 @@ func Run (port int) {
         router(w, req)
     })
 
+    // process-centric routines
+    helpers.CreatePidFile()
+    helpers.HandleSignals()
+
+    // running and handling income
     http.ListenAndServe(":" + strconv.Itoa(port), nil)
 }
 
