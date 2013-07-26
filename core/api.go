@@ -1,8 +1,8 @@
-package clio
+package core
 
 import (
-        "strconv"
-        "net/http"
+    "strconv"
+    "net/http"
 )
 
 func Context () *context {

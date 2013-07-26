@@ -1,4 +1,4 @@
-package clio
+package core
 
 import (
     "net/http"
