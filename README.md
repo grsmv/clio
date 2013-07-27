@@ -1,7 +1,13 @@
 # Clio
 
 
-Clio is a simple DSL for creating web applications in Go programming language with minimal effort, built to use with [carcass](https://github.com/grsmv/carcass). It includes routes for URL-matching, simple template system with support of application-wide and custom layouts and templates for each action, and bunch of useful utilities. 
+Clio is a simple DSL for creating web applications in Go programming language with minimal effort, built to use with [carcass](https://github.com/grsmv/carcass). It includes routes for URL-matching, simple template system with support of application-wide and custom layouts and templates for each action, and bunch of useful utilities.
+
+
+##### Command-line tools
+
+
+##### Creating new application
 
 
 ### Routes
@@ -33,13 +39,13 @@ One and only requirement for functions or closures that calls when pattern match
 
 ### Splats
 
-As you noted, route pattern can be given in a form of wildcard:
+As you noted, route pattern can be given in a form of wild card:
 
 ``` go
 Get ("/books/*", Books)
 ```
 
-So it can match, for example such url as `/books/12`. This irregular parts of pattern is accessible as content of slice, returned by `Splat()` function. 
+So it can match, for example such URL as `/books/12`. This irregular parts of pattern is accessible as content of slice, returned by `Splat()` function.
 Pattern also can hold few irregular parts:
 
 ``` go
@@ -51,7 +57,30 @@ func  BooksDownload () string {
 ```
 
 
-##### Views
+### Views
+
+Clio has application-wide layout system, also you can define custom layout for specific routes. Also you can give away content without any layouts at all. Let's take a look at few examples:
+
+To define view for specific view, you need to call `Render()` method with path to a template as a first argument:
+
+``` go
+func Index () string {
+    return Render("index") // this will render `app/views/index.template` file
+}
+```
+
+To send some data to template, you need to use second [optional] argument for `Render()` method:
+
+``` go
+data := Author { Name: "Ernest", Surname: "Hemingway" }
+view := Render ("author", data)
+```
+
+To specify custom layout for specific route you need to use third [optional] argument for `Render()` method:
+
+```go
+view := Render ("books/index", data, Settings { Layout: "hemingway" })
+```
 
 ##### Headers
 
