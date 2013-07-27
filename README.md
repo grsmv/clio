@@ -6,6 +6,12 @@ Clio is a simple DSL for creating web applications in Go programming language wi
 
 ##### Command-line tools
 
+Clio comes with command line interface, which makes developing of Clio-based applications mush easier. This is a bench of tools. All needed information about them you can receive typing 
+
+``` bash
+$> clio help
+```
+in your terminal.
 
 ### Creating new application
 
@@ -34,7 +40,7 @@ func ControllerRoutes () {
 ```
 
 You can see, that Clio supports next HTTP methods: GET, POST, PUT, DELETE. 
-Every route method took to arguments - route pattern and function to call if route matches. You can place closure as second argument, for example:
+Every route method took two arguments - route pattern and function to call if route matches. You can place closure as second argument, for example:
 
 ``` go
 Get ("/", func () string {
@@ -115,6 +121,7 @@ To look and feel how real Clio-based application works, please take a look at __
 
 ##### Request details
 ##### Cookies and sessions?
+##### Workers
 
 ---
 
