@@ -104,6 +104,18 @@ Clio reuses standard Go [text/template](http://golang.org/pkg/text/template/) pa
 {{ partial "specific_header" }}
 ```
 
+##### Json
+
+Clio provides simple helper to represent your data as JSON without any exceed actions. To output JSON you just need to use `Json ()` function in your controller:
+
+``` go
+func JsonBook () string {
+  return Json (Book { "Robert Graves", "Good-Bye to All That" })
+}
+```
+
+it will automatically convert your data to JSON and set appropriate headers.
+
 ### Headers
 
 For example, you want to give away specific data not as html, but as plain text. To do so you need just to call `SetHeader ()` method. take a look at this example:
