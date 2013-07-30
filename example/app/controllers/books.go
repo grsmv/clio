@@ -15,6 +15,11 @@ type Author struct {
     Works       []Work
 }
 
+type Message struct {
+  Name string
+  Body string
+}
+
 
 func Index () string {
     return Render("index")
@@ -38,10 +43,17 @@ func Books () string {
 
 
 func Book () string {
-    SetHeader("Content-Type", "text/plain")
+    /* SetHeader("Content-Type", "text/plain") */
     return "Book id #" + Splat()[0] + "<br />" +
            "url: "     + Context().Request.URL.String() + "<br />" +
            "params: "  + Params()["a"]
+}
+
+
+func BookJ () string {
+  return Json ([]Message {
+    Message { "Alice", "Hello" },
+    Message { "Alex",  "Bye" }})
 }
 
 

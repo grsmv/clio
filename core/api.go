@@ -4,6 +4,7 @@ import (
     "strconv"
     "net/http"
     "github.com/grsmv/clio/helpers"
+    "encoding/json"
 )
 
 // ------------------- utilities -------------------
@@ -46,6 +47,15 @@ func Put (pattern string, handler func () string) {
 
 func Delete (pattern string, handler func () string) {
     routes["DELETE"][pattern] = handler;
+}
+
+// ------------------- json helper -------------------
+
+func Json (obj interface{}) string {
+    SetHeader("Content-Type", "application/json")
+
+    b, _ := json.Marshal(obj)
+    return string(b)
 }
 
 // ------------------- app runner -------------------
