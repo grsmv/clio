@@ -3,7 +3,7 @@ package core
 import (
     "strconv"
     "net/http"
-    "github.com/grsmv/clio/helpers"
+    "github.com/pallada/clio/helpers"
     "encoding/json"
 )
 

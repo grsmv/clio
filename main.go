@@ -1,7 +1,7 @@
 package main
 
 import (
-    "github.com/grsmv/clio/cli"
+    "github.com/pallada/clio/cli"
 )
 
 func main() {

@@ -3,7 +3,7 @@ package core
 import (
     "net/http"
     "fmt"
-    "github.com/grsmv/clio/helpers"
+    "github.com/pallada/clio/helpers"
 )
 
 var (
