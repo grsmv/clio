@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to Clio!</title>
+  <style type="text/css">
+    body {
+      font: normal 1em Helvetica;
+      color: #333;
+      padding: 2em 3em;
+      margin: 3em;
+    }
+
+    h1 {
+      font: normal 3em Helvetica;
+    }
+
+
+    h2 {
+      font: normal 2em Helvetica;
+    }
+  </style>
+</head>
+<body>
+  {{ yield }}
+</body>
+</html>

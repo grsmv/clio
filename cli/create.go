@@ -23,6 +23,7 @@ func Create (appName string) {
     app.createContainer ()
     app.createSubdirectories ()
     app.createConfigFiles ()
+    app.createAppFiles ()
     app.createCoreJavascriptFiles ()
 }
 
@@ -53,6 +54,7 @@ func (app *Application) createSubdirectories () {
         "app/helpers",
         "app/routes",
         "app/views",
+        "app/views/layouts",
         "bin",
         "config",
         "log",
@@ -72,6 +74,7 @@ func (app *Application) createSubdirectories () {
     }
 }
 
+
 /**
  *  Creating needed config files
  */
@@ -83,6 +86,19 @@ func (app *Application) createConfigFiles () {
             "dependencies",
             "procfile.yml"})
 }
+
+
+/**
+ * Placing sample application files into app folder
+ */
+func (app *Application) createAppFiles () {
+  app.createFilesFromTemplates ("", []string { "application.go" })
+  app.createFilesFromTemplates ("app/controllers", []string { "root.go" })
+  app.createFilesFromTemplates ("app/routes", []string { "root.go" })
+  app.createFilesFromTemplates ("app/views", []string { "root.template" })
+  app.createFilesFromTemplates ("app/views/layouts", []string { "application.template" })
+}
+
 
 /**
  * Placing core JavaScript vendor files in application
