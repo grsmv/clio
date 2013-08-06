@@ -24,7 +24,7 @@ func Create (appName string) {
     app.createSubdirectories ()
     app.createConfigFiles ()
     app.createAppFiles ()
-    app.createCoreJavascriptFiles ()
+    // app.createCoreJavascriptFiles ()
 }
 
 /**
@@ -81,9 +81,7 @@ func (app *Application) createSubdirectories () {
 func (app *Application) createConfigFiles () {
     app.createFilesFromTemplates ("config",
         []string{
-            "application.go",
             "assets.yml",
-            "dependencies",
             "procfile.yml"})
 }
 

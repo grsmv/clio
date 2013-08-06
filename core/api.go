@@ -60,7 +60,7 @@ func Json (obj interface{}) string {
 
 // ------------------- app runner -------------------
 
-func Run (port int) {
+func Run (settings map[string]interface {}) {
     http.HandleFunc("/", func (w http.ResponseWriter, req *http.Request) {
 
         // setting up package variable to use outside the package
@@ -73,11 +73,11 @@ func Run (port int) {
     })
 
     // process-centric routines
-    helpers.CreatePidFile()
-    helpers.HandleSignals()
+    helpers.CreatePidFile (settings["pid-file"].(string))
+    helpers.HandleSignals ()
 
     // running and handling income
-    http.ListenAndServe(":" + strconv.Itoa(port), nil)
+    http.ListenAndServe(":" + strconv.Itoa(settings["port"].(int)), nil)
 }
 
 
