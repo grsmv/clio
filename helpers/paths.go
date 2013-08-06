@@ -1,9 +1,9 @@
 package helpers
 
 import (
-    "strings"
-    "bitbucket.org/kardianos/osext"
+    "github.com/pallada/clio/vendor/osext"
     "os"
+    "strings"
 )
 
 /**
