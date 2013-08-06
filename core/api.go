@@ -5,7 +5,17 @@ import (
     "net/http"
     "github.com/pallada/clio/helpers"
     "encoding/json"
+    "fmt"
 )
+
+// ------------------- before everything -------------------
+
+var colours Colours
+
+func init () {
+    colours = Colours {}
+    colours.init ()
+}
 
 // ------------------- utilities -------------------
 
@@ -61,6 +71,12 @@ func Json (obj interface{}) string {
 // ------------------- app runner -------------------
 
 func Run (settings map[string]interface {}) {
+
+    // välkommen message
+    fmt.Printf ("\n%sClio running. Port %d%s\n%s\n\n",
+        colours.green, settings["port"].(int), colours.reset,
+        "For furter information please visit\nhttps://github.com/pallada/clio")
+
     http.HandleFunc("/", func (w http.ResponseWriter, req *http.Request) {
 
         // setting up package variable to use outside the package
@@ -69,7 +85,7 @@ func Run (settings map[string]interface {}) {
         // setting up default headers
         setHeaders (w, req)
 
-        router(w, req)
+        router (w, req)
     })
 
     // process-centric routines

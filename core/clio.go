@@ -1,9 +1,9 @@
 package core
 
 import (
-    "net/http"
     "fmt"
     "github.com/pallada/clio/helpers"
+    "net/http"
 )
 
 var (
@@ -54,7 +54,7 @@ func router (w http.ResponseWriter, req *http.Request) {
             fmt.Fprintln(w, routes[req.Method][rawPattern]())
 
             // terminal debugging
-            println(req.Method, req.URL.String())
+            fmt.Printf ("%s%s%s %s\n", colours.green, req.Method, colours.reset, req.URL.String())
             break
         }
     }

@@ -19,7 +19,7 @@ func HandleSignals() {
             // TODO: clear after self
 
             // final kiss
-            fmt.Println("It was amazing time! Bye")
+            fmt.Printf ("\nIt was amazing time! Adjö\n\n")
             os.Exit(0)
         }
     }()
