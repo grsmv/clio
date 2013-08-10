@@ -1,14 +1,10 @@
 package core
 
 import (
-    "strconv"
-    "net/http"
-    "github.com/pallada/clio/helpers"
     "encoding/json"
-    "fmt"
 )
 
-// ------------------- before everything -------------------
+// ------------------- initializing olor marks -------------------
 
 var colours Colours
 
@@ -66,34 +62,6 @@ func Json (obj interface{}) string {
 
     b, _ := json.Marshal(obj)
     return string(b)
-}
-
-// ------------------- app runner -------------------
-
-func Run (settings map[string]interface {}) {
-
-    // välkommen message
-    fmt.Printf ("\n%sClio running. Port %d%s\n%s\n\n",
-        colours.green, settings["port"].(int), colours.reset,
-        "For furter information please visit\nhttps://github.com/pallada/clio")
-
-    http.HandleFunc("/", func (w http.ResponseWriter, req *http.Request) {
-
-        // setting up package variable to use outside the package
-        ctx = context { ResponseWriter: w, Request: req }
-
-        // setting up default headers
-        setHeaders (w, req)
-
-        router (w, req)
-    })
-
-    // process-centric routines
-    helpers.CreatePidFile (settings["pid-file"].(string))
-    helpers.HandleSignals ()
-
-    // running and handling income
-    http.ListenAndServe(":" + strconv.Itoa(settings["port"].(int)), nil)
 }
 
 
