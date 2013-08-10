@@ -4,6 +4,7 @@ import (
     "fmt"
     "github.com/pallada/clio/helpers"
     "net/http"
+    "log"
 )
 
 var (
@@ -54,7 +55,7 @@ func router (w http.ResponseWriter, req *http.Request) {
             fmt.Fprintln(w, routes[req.Method][rawPattern]())
 
             // terminal debugging
-            fmt.Printf ("%s%s%s %s\n", colours.green, req.Method, colours.reset, req.URL.String())
+            log.Printf ("%s %s\n", req.Method, req.URL.String())
             break
         }
     }

@@ -3,6 +3,7 @@ package cli
 import (
     "bufio"
     "fmt"
+    "io"
     "io/ioutil"
     "os"
     "os/exec"
@@ -76,9 +77,9 @@ func (process *Process) spawn () {
 
     callParts := strings.Split(process.call, " ")
 
-    // TODO: add LookupPath for command name
     command := exec.Command(callParts[0], callParts[1:]...)
-    out, _ := command.StdoutPipe()
+    stdOut, _ := command.StdoutPipe()
+    stdErr, _ := command.StderrPipe()
 
     err := command.Start()
 
@@ -89,12 +90,16 @@ func (process *Process) spawn () {
         os.Exit(1)
     }
 
-    reader := bufio.NewReaderSize(out, 4*1024)
-    line, err := reader.ReadString('\n')
+    for _, pipe := range []io.ReadCloser {stdErr, stdOut} {
+        go func (pipe io.ReadCloser) {
+            reader := bufio.NewReaderSize(pipe, 4*1024)
+            line, err := reader.ReadString('\n')
 
-    for err == nil {
-        line, err = reader.ReadString('\n')
-        fmt.Printf("%s %s %s %s", green, process.name, reset, string(line))
+            for err == nil {
+                line, err = reader.ReadString('\n')
+                fmt.Printf("%s %s %s %s", green, process.name, reset, string(line))
+            }
+        }(pipe)
     }
 
     command.Wait()

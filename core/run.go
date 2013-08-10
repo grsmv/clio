@@ -1,12 +1,10 @@
 package core
 
-package (
+import (
     "strconv"
     "net/http"
     "github.com/pallada/clio/helpers"
-    "github.com/daaku/go.grace/gracehttp"
-    "fmt"
-    "os"
+    "github.com/pallada/clio/vendor/gracehttp"
 )
 
 func requestHandler () http.Handler {
@@ -30,14 +28,8 @@ func Run (settings map[string]interface {}) {
     port := strconv.Itoa(settings["port"].(int))
     pidPath := settings["pid-file"].(string)
 
-    // välkommen message
-    fmt.Printf ("\n%sClio running. Port: %d, pid: %d%s \n%s\n\n",
-        colours.green, settings["port"].(int), os.Getpid (), colours.reset,
-        "For furter information please visit\nhttps://github.com/pallada/clio")
-
     // process-centric routines
     helpers.CreatePidFile (pidPath) // fix this!
-    helpers.HandleSignals ()
 
     gracehttp.Serve (
         &http.Server { Addr: ":" + port, Handler: requestHandler () },
