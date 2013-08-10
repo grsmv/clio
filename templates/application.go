@@ -26,8 +26,5 @@ func main () {
       // This JavaScript framework will be used with Clio.
       // Please find more at 'Generators' section of Clio's README.
       "ui-framework": "backbone",
-
-      // Path to file with process ID
-      "pid-file": "tmp/pids/application.pid",
     })
 }

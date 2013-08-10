@@ -4,21 +4,26 @@ import (
   "os"
   "strings"
   "strconv"
+  "github.com/pallada/clio/vendor/osext"
   "log"
 )
 
+func UpdatePidFile (pid int) {
+    pidFile, err := os.Create (pidFilePath ())
+    if err != nil {
+        log.Fatal (err)
+    }
+    pidFile.WriteString (strconv.Itoa(pid))
+}
 
-/**
- *  Creating a pidfile and saving PID of Application
- */
-func CreatePidFile (pidFile string) {
-    log.Println (ApplicationRoot ())
 
-    file, _ := os.Create(
-        strings.Join(
-            []string{ ApplicationRoot (), pidFile },
-            string(os.PathSeparator)))
-    file.WriteString(strconv.Itoa(os.Getpid()))
+func pidFilePath () (path string) {
+    bin, _ := osext.Executable ()
+    folders := strings.Split (bin, string(os.PathSeparator))
+    path = strings.Join (
+        folders[0:len(folders) - 1],
+        string(os.PathSeparator)) + "/tmp/pids/clio.pid"
+    return
 }
 
 // vim: noai:ts=4:sw=4

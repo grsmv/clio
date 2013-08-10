@@ -3,8 +3,7 @@ package core
 import (
     "strconv"
     "net/http"
-    "github.com/pallada/clio/helpers"
-    "github.com/pallada/clio/vendor/gracehttp"
+    "github.com/pallada/clio/vendor/go.grace/gracehttp"
 )
 
 func requestHandler () http.Handler {
@@ -24,12 +23,7 @@ func requestHandler () http.Handler {
 
 
 func Run (settings map[string]interface {}) {
-
     port := strconv.Itoa(settings["port"].(int))
-    pidPath := settings["pid-file"].(string)
-
-    // process-centric routines
-    helpers.CreatePidFile (pidPath) // fix this!
 
     gracehttp.Serve (
         &http.Server { Addr: ":" + port, Handler: requestHandler () },
