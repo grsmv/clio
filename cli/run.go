@@ -9,6 +9,9 @@ import (
     "os/exec"
     "strings"
     "sync"
+    "github.com/pallada/clio/helpers"
+    "log"
+    "time"
 )
 
 const Procfile = "config/procfile.yml"
@@ -31,6 +34,12 @@ func Run() {
         fmt.Println(red, "error:", reset, Procfile, "doesn't exists")
         os.Exit(1)
     }
+
+    // building app before `clio run`
+    log.Print ("Building application binary")
+    helpers.Build()
+
+    time.Sleep(2 * time.Second)
 
     list := ProcessList { processes: listProcesses () }
     list.spawnAll ()
