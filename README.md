@@ -39,7 +39,7 @@ func ControllerRoutes () {
 }
 ```
 
-You can see, that Clio supports next HTTP methods: GET, POST, PUT, DELETE. 
+You can see that Clio supports next HTTP methods: GET, POST, PUT, DELETE. 
 Every route method takes two arguments - route pattern and function to call if route matches. You can place closure as second argument, for example:
 
 ``` go
@@ -98,7 +98,7 @@ view := Render ("books/index", data, Settings { Layout: "hemingway" })
 
 ##### Partials
 
-Clio reuses standard Go [text/template](http://golang.org/pkg/text/template/) package, but also defines `partial` method, that can be pretty usable right in `.template` files. Lets imagine that you want to include some template right in other template. To do so you need just to call `render` method and use partial's file name as first function's argument:
+Clio reuses standard Go [text/template](http://golang.org/pkg/text/template/) package, but also defines `partial` method, that can be pretty usable right in `.template` files. Let's imagine that you want to include some template right in other template. To do so you need just to call `render` method and use partial's file name as first function's argument:
 
 ``` template
 {{ partial "specific_header" }}
