@@ -36,12 +36,12 @@ func init () {
  */
 func router (w http.ResponseWriter, req *http.Request) {
 
+    // splitting whole path into parts
+    path, paramsString := helpers.SplitPath(req.URL.String())
+
     // finding correct handler
     for rawPattern, _ := range routes[req.Method] {
         pattern := helpers.PreparePattern(rawPattern)
-
-        // splitting whole path into parts
-        path, paramsString := helpers.SplitPath(req.URL.String())
 
         if pattern.MatchString(path) {
 
