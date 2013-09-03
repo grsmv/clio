@@ -31,7 +31,7 @@ type ProcessList struct {
  */
 func Run() {
     if _, err := os.Stat(Procfile); os.IsNotExist(err) {
-        fmt.Println(red, "error:", reset, Procfile, "doesn't exists")
+        fmt.Println(red, "error:", reset, Procfile, "doesn't exist")
         os.Exit(1)
     }
 

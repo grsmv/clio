@@ -40,7 +40,7 @@ func ControllerRoutes () {
 ```
 
 You can see, that Clio supports next HTTP methods: GET, POST, PUT, DELETE. 
-Every route method took two arguments - route pattern and function to call if route matches. You can place closure as second argument, for example:
+Every route method takes two arguments - route pattern and function to call if route matches. You can place closure as second argument, for example:
 
 ``` go
 Get ("/", func () string {

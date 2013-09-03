@@ -4,7 +4,7 @@ import (
     "encoding/json"
 )
 
-// ------------------- initializing olor marks -------------------
+// ------------------- initializing colour marks -------------------
 
 var colours Colours
 
