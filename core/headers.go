@@ -26,8 +26,11 @@ var (
 
 func setHeaders (w http.ResponseWriter, req *http.Request) {
 
-    // copying defaultHeaders
-    requestHeaders := defaultHeaders
+    //FIXME: copying map on each request is bad
+    var requestHeaders = make(map[string]string)
+    for k,v := range defaultHeaders {
+      requestHeaders[k] = v
+    }
 
     // getting request format
     pattern, _ := regexp.Compile("\\.(css|csv|gif|jpeg|jpg|js|json|png|svg|txt|xml)$")
