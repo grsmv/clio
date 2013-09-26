@@ -1,7 +1,7 @@
 package main
 
 import (
-  . "github.com/pallada/clio/core"
+  . "github.com/cliohq/clio/core"
   "./app/routes"
 )
 

@@ -6,7 +6,7 @@ app:      ./application
 
 # Running clio-watcher, which will track changes in .go and .template
 # files and restart an application immediatelly.
-# To use this tool, please make `go get github.com/pallada/hot-swap`
+# To use this tool, please make `go get github.com/cliohq/hot-swap`
 hotswap:  clio-hotswap
 
 # Example of embeding popular tools for UI development.

@@ -1,7 +1,7 @@
 package controllers
 
 import (
-  . "github.com/pallada/clio/core"
+  . "github.com/cliohq/clio/core"
 )
 
 func Root () string {
