@@ -1,7 +1,7 @@
 package main
 
 import (
-    "github.com/pallada/clio/cli"
+    "github.com/cliohq/clio/cli"
 )
 
 func main() {

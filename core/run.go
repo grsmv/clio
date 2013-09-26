@@ -3,7 +3,7 @@ package core
 import (
     "strconv"
     "net/http"
-    "github.com/pallada/clio/vendor/go.grace/gracehttp"
+    "github.com/cliohq/clio/vendor/go.grace/gracehttp"
 )
 
 func requestHandler (settings map[string]interface{}) http.Handler {

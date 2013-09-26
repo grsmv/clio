@@ -2,7 +2,7 @@ package core
 
 import (
     "fmt"
-    "github.com/pallada/clio/helpers"
+    "github.com/cliohq/clio/helpers"
     "net/http"
     "log"
 )

@@ -1,7 +1,7 @@
 package routes
 
 import (
-  . "github.com/pallada/clio/core"
+  . "github.com/cliohq/clio/core"
   "../../app/controllers"
 )
 

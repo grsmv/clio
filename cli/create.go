@@ -7,7 +7,7 @@ import (
     "strings"
 )
 
-const templatesPath = "src/github.com/pallada/clio/templates"
+const templatesPath = "src/github.com/cliohq/clio/templates"
 
 type Application struct {
     name string
