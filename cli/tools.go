@@ -8,8 +8,8 @@ import (
 func Help() {
     bin := os.Args[0]
     fmt.Println (
-        "This program is a command line interface to the Clio framework infrastructure.         \n" +
-        "See https://github.com/grsmv/clio/ for more information.                               \n" +
+        "Command line interface to the Clio framework infrastructure.                           \n" +
+        "Please, see https://github.com/cliohq/clio/ for more information.                      \n" +
         "                                                                                       \n" +
         "Usage: ", bin, "COMMAND [FLAGS]                                                        \n" +
         "                                                                                       \n" +
