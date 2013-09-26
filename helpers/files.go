@@ -4,7 +4,7 @@ import (
   "os"
   "strings"
   "strconv"
-  "github.com/pallada/clio/vendor/osext"
+  "github.com/cliohq/clio/vendor/osext"
   "log"
 )
 

@@ -9,7 +9,7 @@ import (
     "os/exec"
     "strings"
     "sync"
-    "github.com/pallada/clio/helpers"
+    "github.com/cliohq/clio/helpers"
     "log"
     "time"
 )
