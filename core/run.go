@@ -1,9 +1,9 @@
 package core
 
 import (
-    "strconv"
-    "net/http"
     "github.com/cliohq/clio/vendor/go.grace/gracehttp"
+    "net/http"
+    "strconv"
 )
 
 func requestHandler (settings map[string]interface{}) http.Handler {
