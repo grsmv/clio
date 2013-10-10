@@ -9,9 +9,9 @@ import (
     "os/exec"
     "strings"
     "sync"
-    "github.com/cliohq/clio/helpers"
-    "log"
-    "time"
+    // "github.com/cliohq/clio/helpers"
+    // "log"
+    // "time"
 )
 
 const Procfile = "config/procfile.yml"
@@ -25,6 +25,14 @@ type ProcessList struct {
     processes map[string]string
 }
 
+var launchedProcessList map[string]*exec.Cmd
+
+
+func init () {
+    launchedProcessList = map[string]*exec.Cmd {}
+}
+
+
 /**
  *  High-level abstraction for running processes
  *  (called from cli.Route())
@@ -36,14 +44,20 @@ func Run() {
     }
 
     // building app before `clio run`
-    log.Print ("Building application binary")
-    helpers.Build()
+    // log.Print ("Building application binary")
+    // helpers.Build()
 
-    time.Sleep(2 * time.Second)
+    // time.Sleep(2 * time.Second)
 
-    list := ProcessList { processes: listProcesses () }
-    list.spawnAll ()
+    go func () {
+        list := ProcessList { processes: listProcesses () }
+        list.spawnAll ()
+    } ()
+
+    // debug
+    println (len(launchedProcessList))
 }
+
 
 /**
  * Processing "procfiles" file into map. Each member of
@@ -79,6 +93,7 @@ func listProcesses() map[string]string {
     return processesMap
 }
 
+
 /**
  * Spawning undividual process
  */
@@ -89,6 +104,9 @@ func (process *Process) spawn () {
     command := exec.Command(callParts[0], callParts[1:]...)
     stdOut, _ := command.StdoutPipe()
     stdErr, _ := command.StderrPipe()
+
+    // placing process in global-accessible list
+    launchedProcessList[callParts[0]] = command;
 
     err := command.Start()
 
@@ -113,6 +131,7 @@ func (process *Process) spawn () {
 
     command.Wait()
 }
+
 
 /**
  *  Walking through processe's map and spawning
