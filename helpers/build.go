@@ -7,17 +7,18 @@ import (
     "log"
 )
 
+// todo: move name of main file to settings
 func Build () {
     Exec ("go build application.go")
 }
 
 
 func Euthanasia () {
-    data, err := ioutil.ReadFile ("tmp/pids/clio.pid")
-    if err != nil {
+    data, err := ioutil.ReadFile ("tmp/pids/clio.pid"); if err != nil {
         log.Fatal (err)
+    } else {
+        Exec ("kill -USR2 " + string(data))
     }
-    Exec ("kill -USR2 " + string(data))
 }
 
 

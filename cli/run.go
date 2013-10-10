@@ -36,10 +36,10 @@ func Run() {
     }
 
     // building app before `clio run`
-    log.Print ("Building application binary")
-    helpers.Build()
+    // log.Print ("Building application binary")
+    // helpers.Build()
 
-    time.Sleep(2 * time.Second)
+    // time.Sleep(2 * time.Second)
 
     list := ProcessList { processes: listProcesses () }
     list.spawnAll ()
@@ -108,7 +108,7 @@ func (process *Process) spawn () {
                 line, err = reader.ReadString('\n')
                 fmt.Printf("%s %s %s %s", green, process.name, reset, string(line))
             }
-        }(pipe)
+        } (pipe)
     }
 
     command.Wait()
@@ -124,7 +124,7 @@ func (list *ProcessList) spawnAll () {
     for name, call := range list.processes {
         wg.Add(1)
 
-        go func(n, c string) {
+        go func (n, c string) {
             process := Process { name: n, call: c }
             process.spawn ()
             wg.Done()
