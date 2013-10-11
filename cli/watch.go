@@ -25,7 +25,7 @@ func Watch () {
                 match, _ := regexp.Match("\\.(go|template)$", []byte(ev.Name))
 
                 if match && ev.IsModify () {
-                    fmt.Println (ev.Name + " changed. app rebuild")
+                    fmt.Print (ev.Name + ". app rebuild...")
 
                     // send signal to app relaunch
                     RelaunchProcessCall ()
@@ -51,9 +51,7 @@ func RelaunchProcessCall () {
         log.Fatal ("dialing error", err)
     }
 
-    args := Args { "application" }
-
-    err = client.Call ("Server.RelaunchProcess", args, nil); if err != nil {
+    err = client.Call ("Server.RelaunchProcess", nil, nil); if err != nil {
         log.Fatal ("server error:", err)
     }
 }

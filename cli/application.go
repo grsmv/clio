@@ -14,6 +14,12 @@ type Args struct {
     ProcName string
 }
 
+type ProcessInfo struct {
+    Path string
+    Args []string
+    Pid int
+}
+
 
 var LaunchedProcesses map[string]*exec.Cmd
 
@@ -35,15 +41,25 @@ func LaunchTcpServer () {
 
 
 func (t *Server) RelaunchProcess (args *Args, reply *int) error {
-    for proc, _ := range LaunchedProcesses {
-        print (proc)
-    }
+    appProc := LaunchedProcesses["app"]
+    // procBackup := BackupProcess (appProc)
 
+    err := appProc.Process.Kill(); if err == nil {
+
+    } else {
+        // todo: notify caller about failed operation
+    }
     // todo: a. backup app's info
     //       b. kill process with key 'app'
     //       c. rebuild app
     //       d. relaunch app
     return nil
 }
+
+
+func BackupProcess (command *exec.Cmd) ProcessInfo {
+    return ProcessInfo { command.Path, command.Args, command.Process.Pid }
+}
+
 
 // vim: noai:ts=4:sw=4
