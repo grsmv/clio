@@ -25,9 +25,6 @@ type ProcessList struct {
     processes map[string]string
 }
 
-type ApplicationState struct {
-    launchedProcesses map[string]*exec.Cmd
-}
 
 
 /**
@@ -41,6 +38,9 @@ func Run() {
     }
 
     // todo: rebuild application
+
+    // starting up tcp server, needed for hotswap
+    go LaunchTcpServer ()
 
     list := ProcessList { processes: listProcesses () }
     list.spawnAll ()
@@ -96,7 +96,11 @@ func (process *Process) spawn () {
     err := command.Start()
 
     if err == nil {
-        // todo: add process to alist of launched process
+        // adding link to proccess to a package-accessible
+        // list of launched processes to have possibility
+        // to operate this process lately
+        LaunchedProcesses[process.name] = command
+
         fmt.Println(green, process.name, reset, "started")
     } else {
         fmt.Println(red, process.name, reset, "error occured:", err)
@@ -137,14 +141,6 @@ func (list *ProcessList) spawnAll () {
     }
 
     wg.Wait()
-}
-
-
-/**
- *
- */
-func Relaunch (procName string) {
-    fmt.Println (procName)
 }
 
 // vim: noai:ts=4:sw=4

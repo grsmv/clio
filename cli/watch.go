@@ -1,10 +1,10 @@
 package cli
 
 import (
-    "github.com/cliohq/clio/vendor/fsnotify"
-    /* "github.com/cliohq/clio/cli" */
-    "log"
     "fmt"
+    "github.com/cliohq/clio/vendor/fsnotify"
+    "log"
+    "net/rpc"
     "regexp"
     "sync"
 )
@@ -25,12 +25,10 @@ func Watch () {
                 match, _ := regexp.Match("\\.(go|template)$", []byte(ev.Name))
 
                 if match && ev.IsModify () {
-                    fmt.Println (ev.Name + " changed. restarting an app")
+                    fmt.Println (ev.Name + " changed. app rebuild")
 
-                    Relaunch ("")
-
-                    // helpers.Build ()
-                    // helpers.Euthanasia ()
+                    // send signal to app relaunch
+                    RelaunchProcessCall ()
                 }
             }
         }
@@ -45,6 +43,19 @@ func Watch () {
     watcher.Watch ("./config")
 
     wg.Wait()
+}
+
+
+func RelaunchProcessCall () {
+    client, err := rpc.DialHTTP ("tcp", "localhost:31000"); if err != nil {
+        log.Fatal ("dialing error", err)
+    }
+
+    args := Args { "application" }
+
+    err = client.Call ("Server.RelaunchProcess", args, nil); if err != nil {
+        log.Fatal ("server error:", err)
+    }
 }
 
 // vim: noai:ts=4:sw=4
