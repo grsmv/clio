@@ -21,8 +21,8 @@ type Resource struct {
  *  Dispatching command-line arguments to a separate
  *  command execution
  */
-func Route() {
-    if len(os.Args) > 1 {
+func Route () {
+    if len (os.Args) > 1 {
 
         switch os.Args[1] {
 
@@ -41,7 +41,9 @@ func Route() {
         case "stop":
             Stop()
         case "test":
-            Test()
+            Test ()
+        case "watch":
+            Watch ()
 
         case "create":
             {

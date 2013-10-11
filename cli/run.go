@@ -25,11 +25,8 @@ type ProcessList struct {
     processes map[string]string
 }
 
-var launchedProcessList map[string]*exec.Cmd
-
-
-func init () {
-    launchedProcessList = map[string]*exec.Cmd {}
+type ApplicationState struct {
+    launchedProcesses map[string]*exec.Cmd
 }
 
 
@@ -43,19 +40,10 @@ func Run() {
         os.Exit(1)
     }
 
-    // building app before `clio run`
-    // log.Print ("Building application binary")
-    // helpers.Build()
+    // todo: rebuild application
 
-    // time.Sleep(2 * time.Second)
-
-    go func () {
-        list := ProcessList { processes: listProcesses () }
-        list.spawnAll ()
-    } ()
-
-    // debug
-    println (len(launchedProcessList))
+    list := ProcessList { processes: listProcesses () }
+    list.spawnAll ()
 }
 
 
@@ -68,17 +56,17 @@ func Run() {
 func listProcesses() map[string]string {
     fileContents, _ := ioutil.ReadFile(Procfile)
 
-    if len(fileContents) == 0 {
+    if len (fileContents) == 0 {
         fmt.Println (red, "error", reset, "nothing to run")
         os.Exit(1)
     }
 
     processesArray := strings.Split(string(fileContents), "\n")
-    processesMap := make(map[string]string)
+    processesMap := make (map[string]string)
 
     for i := range processesArray {
-        if len(processesArray[i]) > 0 {
-            _proc := strings.SplitN(processesArray[i], ":", 2)
+        if len (processesArray[i]) > 0 {
+            _proc := strings.SplitN (processesArray[i], ":", 2)
 
             // ignoring commented lines and heredoc lines
             if _proc[0][0] != '#' && len(_proc[1]) > 0 {
@@ -105,12 +93,10 @@ func (process *Process) spawn () {
     stdOut, _ := command.StdoutPipe()
     stdErr, _ := command.StderrPipe()
 
-    // placing process in global-accessible list
-    launchedProcessList[callParts[0]] = command;
-
     err := command.Start()
 
     if err == nil {
+        // todo: add process to alist of launched process
         fmt.Println(green, process.name, reset, "started")
     } else {
         fmt.Println(red, process.name, reset, "error occured:", err)
@@ -151,6 +137,14 @@ func (list *ProcessList) spawnAll () {
     }
 
     wg.Wait()
+}
+
+
+/**
+ *
+ */
+func Relaunch (procName string) {
+    fmt.Println (procName)
 }
 
 // vim: noai:ts=4:sw=4
