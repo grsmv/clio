@@ -7,6 +7,7 @@ import (
     "net/rpc"
     "regexp"
     "sync"
+    "strconv"
 )
 
 func Watch () {
@@ -47,7 +48,7 @@ func Watch () {
 
 
 func RelaunchProcessCall () {
-    client, err := rpc.DialHTTP ("tcp", "localhost:31000"); if err != nil {
+    client, err := rpc.DialHTTP ("tcp", "localhost:" + strconv.Itoa(tcpIPCPort)); if err != nil {
         log.Fatal ("dialing error", err)
     }
 

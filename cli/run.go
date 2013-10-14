@@ -3,15 +3,13 @@ package cli
 import (
     "bufio"
     "fmt"
+    "github.com/cliohq/clio/helpers"
     "io"
     "io/ioutil"
     "os"
     "os/exec"
     "strings"
     "sync"
-    "github.com/cliohq/clio/helpers"
-    // "log"
-    // "time"
 )
 
 const Procfile = "config/procfile.yml"
@@ -108,19 +106,24 @@ func (process *Process) spawn () {
         os.Exit(1)
     }
 
-    for _, pipe := range []io.ReadCloser {stdErr, stdOut} {
+    StreamOutput (stdOut, stdErr, process.name)
+
+    command.Wait()
+}
+
+
+func StreamOutput (stdout, stderr io.ReadCloser, procName string) {
+    for _, pipe := range []io.ReadCloser { stderr, stdout } {
         go func (pipe io.ReadCloser) {
             reader := bufio.NewReaderSize(pipe, 4*1024)
             line, err := reader.ReadString('\n')
 
             for err == nil {
                 line, err = reader.ReadString('\n')
-                fmt.Printf("%s %s %s %s", green, process.name, reset, string(line))
+                fmt.Printf("%s %s %s %s", green, procName, reset, string(line))
             }
         } (pipe)
     }
-
-    command.Wait()
 }
 
 

@@ -12,6 +12,8 @@ const (
     reset  = "\x1b[0m"
 )
 
+const tcpIPCPort = 31000
+
 type Resource struct {
     name string
     fields []string

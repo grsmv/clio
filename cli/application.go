@@ -1,13 +1,18 @@
 package cli
 
 import (
-    "os/exec"
-    "net/rpc"
-    "net/http"
-    "net"
-    "log"
     "github.com/cliohq/clio/helpers"
+    "log"
+    "net"
+    "net/http"
+    "net/rpc"
+    "os/exec"
+    "strconv"
 )
+
+const applicationProcessCode = "app"
+
+var LaunchedProcesses map[string]*exec.Cmd
 
 type Server int
 
@@ -22,9 +27,6 @@ type ProcessInfo struct {
 }
 
 
-var LaunchedProcesses map[string]*exec.Cmd
-
-
 func init () {
     LaunchedProcesses = make(map[string]*exec.Cmd)
 }
@@ -34,7 +36,7 @@ func LaunchTcpServer () {
     server := new (Server)
     rpc.Register (server)
     rpc.HandleHTTP ()
-    l, err := net.Listen ("tcp", ":31000"); if err != nil {
+    l, err := net.Listen ("tcp", ":" + strconv.Itoa(tcpIPCPort)); if err != nil {
         log.Fatal ("listen error:", err)
     }
     http.Serve (l, nil)
@@ -42,7 +44,7 @@ func LaunchTcpServer () {
 
 
 func (t *Server) RelaunchProcess (args *Args, reply *int) error {
-    appProc := LaunchedProcesses["app"]
+    appProc := LaunchedProcesses[applicationProcessCode]
 
     // backupig application's process info
     processBackup := BackupProcess (appProc)
@@ -58,10 +60,16 @@ func (t *Server) RelaunchProcess (args *Args, reply *int) error {
     // Relaunch application
     newApplicationProc := exec.Command (processBackup.Path, processBackup.Args...)
 
+    // streaming output from new app instance
+    stdOut, _ := newApplicationProc.StdoutPipe()
+    stdErr, _ := newApplicationProc.StderrPipe()
+
+    StreamOutput (stdOut, stdErr, applicationProcessCode)
+
     go newApplicationProc.Start ()
 
     // updating `LaunchedProcesses`
-    LaunchedProcesses["app"] = newApplicationProc
+    LaunchedProcesses[applicationProcessCode] = newApplicationProc
 
     return nil
 }
