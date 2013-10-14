@@ -7,7 +7,7 @@ app:      ./application
 # Running clio-watcher, which will track changes in .go and .template
 # files and restart an application immediatelly.
 # To use this tool, please make `go get github.com/cliohq/hot-swap`
-hotswap:  clio-hotswap
+hotswap:  clio watch
 
 # Example of embeding popular tools for UI development.
 coffee:   coffee -c -w -o public/javascripts app/assets/javascripts
