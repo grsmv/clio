@@ -7,16 +7,14 @@ import (
 
 
 func ApplicationRebuild () {
-    goBinPath, err := exec.LookPath ("go")
-    if err != nil {
-        log.Fatal ("ApplicationRebuild:", err) ////// debug
+    goBinPath, err := exec.LookPath ("go"); if err != nil {
+        log.Fatal ("helpers.ApplicationRebuild():", err) ////// debug
     }
 
     command := exec.Command (goBinPath, "build", "application.go")
 
-    err = command.Start()
-    if err != nil {
-        log.Fatal ("ApplicationRebuild 2:", err) /////// debug
+    err = command.Start(); if err != nil {
+        log.Fatal ("helpers.ApplicationRebuild():", err) ////// debug
     }
 
     command.Wait ()

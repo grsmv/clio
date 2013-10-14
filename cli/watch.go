@@ -11,7 +11,7 @@ import (
 
 func Watch () {
     watcher, err := fsnotify.NewWatcher (); if err != nil {
-        log.Fatal ("Watch ()", err) //////// debug
+        log.Fatal ("cli.Watch():", err) //////// debug
     }
 
     var wg sync.WaitGroup

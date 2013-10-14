@@ -49,7 +49,7 @@ func (t *Server) RelaunchProcess (args *Args, reply *int) error {
 
     // killing old app's process
     err := appProc.Process.Kill(); if err != nil {
-        log.Fatal ("RelaunchProcess: ", err)  /////////// debug
+        log.Fatal ("cli.RelaunchProcess():", err)  /////////// debug
     }
 
     // rebuilding application
