@@ -4,7 +4,7 @@ import (
   "os"
   "strings"
   "strconv"
-  "github.com/cliohq/clio/vendor/osext"
+  "bitbucket.org/kardianos/osext"
   "log"
 )
 

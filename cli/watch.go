@@ -2,7 +2,7 @@ package cli
 
 import (
     "fmt"
-    "github.com/cliohq/clio/vendor/fsnotify"
+    "github.com/howeyc/fsnotify"
     "log"
     "net/rpc"
     "regexp"
