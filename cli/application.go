@@ -51,8 +51,9 @@ func (t *Server) RelaunchProcess (args *Args, reply *int) error {
 
     // killing old app's process
     err := appProc.Process.Kill(); if err != nil {
-        log.Fatal ("cli.RelaunchProcess():", err)  /////////// debug
+        log.Fatal ("cli.RelaunchProcess()#54:", err)  /////////// debug
     }
+    appProc.Process.Kill()
 
     // rebuilding application
     helpers.ApplicationRebuild () // sync
@@ -64,7 +65,7 @@ func (t *Server) RelaunchProcess (args *Args, reply *int) error {
     stdOut, _ := newApplicationProc.StdoutPipe()
     stdErr, _ := newApplicationProc.StderrPipe()
 
-    StreamOutput (stdOut, stdErr, applicationProcessCode)
+    go StreamOutput (stdOut, stdErr, applicationProcessCode)
 
     go newApplicationProc.Start ()
 
