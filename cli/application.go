@@ -13,6 +13,7 @@ import (
 const applicationProcessCode = "app"
 
 var LaunchedProcesses map[string]*exec.Cmd
+var RelaunchProcessFlag bool
 
 type Server int
 
@@ -29,6 +30,7 @@ type ProcessInfo struct {
 
 func init () {
     LaunchedProcesses = make(map[string]*exec.Cmd)
+    RelaunchProcessFlag = true
 }
 
 
@@ -43,34 +45,39 @@ func LaunchTcpServer () {
 }
 
 
+
 func (t *Server) RelaunchProcess (args *Args, reply *int) error {
-    appProc := LaunchedProcesses[applicationProcessCode]
+    if RelaunchProcessFlag {
+        RelaunchProcessFlag = false
+        appProc := LaunchedProcesses[applicationProcessCode]
 
-    // backupig application's process info
-    processBackup := BackupProcess (appProc)
+        // backupig application's process info
+        processBackup := BackupProcess (appProc)
 
-    // killing old app's process
-    err := appProc.Process.Kill(); if err != nil {
-        log.Fatal ("cli.RelaunchProcess()#54:", err)  /////////// debug
+        // killing old app's process
+        err := appProc.Process.Kill(); if err != nil {
+            log.Fatal ("cli.RelaunchProcess()#54:", err)  /////////// debug
+        }
+        appProc.Process.Kill()
+
+        // rebuilding application
+        helpers.ApplicationRebuild () // sync
+
+        // Relaunch application
+        newApplicationProc := exec.Command (processBackup.Path, processBackup.Args...)
+
+        // streaming output from new app instance
+        stdOut, _ := newApplicationProc.StdoutPipe()
+        stdErr, _ := newApplicationProc.StderrPipe()
+
+        go StreamOutput (stdOut, stdErr, applicationProcessCode)
+
+        go newApplicationProc.Start ()
+
+        // updating `LaunchedProcesses`
+        LaunchedProcesses[applicationProcessCode] = newApplicationProc
+        RelaunchProcessFlag = true
     }
-    appProc.Process.Kill()
-
-    // rebuilding application
-    helpers.ApplicationRebuild () // sync
-
-    // Relaunch application
-    newApplicationProc := exec.Command (processBackup.Path, processBackup.Args...)
-
-    // streaming output from new app instance
-    stdOut, _ := newApplicationProc.StdoutPipe()
-    stdErr, _ := newApplicationProc.StderrPipe()
-
-    go StreamOutput (stdOut, stdErr, applicationProcessCode)
-
-    go newApplicationProc.Start ()
-
-    // updating `LaunchedProcesses`
-    LaunchedProcesses[applicationProcessCode] = newApplicationProc
 
     return nil
 }

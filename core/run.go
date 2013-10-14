@@ -3,6 +3,7 @@ package core
 import (
     "net/http"
     "strconv"
+    "fmt"
 )
 
 func requestHandler (settings map[string]interface{}) {
@@ -30,8 +31,12 @@ func Run (settings map[string]interface {}) {
     requestHandler (settings)
 
     port := strconv.Itoa(settings["port"].(int))
+
+    fmt.Println ("Clio server started at", settings["port"].(int), "port")
     http.ListenAndServe (":" + port, nil)
 }
 
+
+// todo: share settings by IPC
 
 // vim: noai:ts=4:sw=4
