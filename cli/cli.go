@@ -30,20 +30,8 @@ func Route () {
 
         case "help":
             Help()
-        case "build":
-            Build()
-        case "clean":
-            Clean()
-        case "deps":
-            Dependencies()
-        case "release":
-            Release()
         case "run":
             Run()
-        case "stop":
-            Stop()
-        case "test":
-            Test ()
         case "watch":
             Watch ()
 
@@ -58,7 +46,7 @@ func Route () {
 
         case "g":
             {
-                if len(os.Args) > 3 {
+                if len (os.Args) > 3 {
                     resource := Resource { name: os.Args[3], fields: os.Args[4:] }
                     switch os.Args[2] {
                     case "scaffold":
@@ -77,11 +65,7 @@ func Route () {
 
         default:
             {
-                fmt.Println("action:", os.Args[1])
-
-                // current working directory
-                wd, _ := os.Getwd()
-                fmt.Println("working directory:", wd)
+                Help ()
             }
         }
     } else {
