@@ -11,7 +11,7 @@ import (
 
 func Watch () {
     watcher, err := fsnotify.NewWatcher (); if err != nil {
-        log.Fatal (err)
+        log.Fatal ("Watch ()", err) //////// debug
     }
 
     var wg sync.WaitGroup
@@ -51,7 +51,10 @@ func RelaunchProcessCall () {
         log.Fatal ("dialing error", err)
     }
 
-    err = client.Call ("Server.RelaunchProcess", nil, nil); if err != nil {
+    args := Args {}
+    var reply int
+
+    err = client.Call ("Server.RelaunchProcess", args, &reply); if err != nil {
         log.Fatal ("server error:", err)
     }
 }

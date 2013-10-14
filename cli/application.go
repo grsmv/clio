@@ -6,6 +6,7 @@ import (
     "net/http"
     "net"
     "log"
+    "github.com/cliohq/clio/helpers"
 )
 
 type Server int
@@ -42,17 +43,26 @@ func LaunchTcpServer () {
 
 func (t *Server) RelaunchProcess (args *Args, reply *int) error {
     appProc := LaunchedProcesses["app"]
-    // procBackup := BackupProcess (appProc)
 
-    err := appProc.Process.Kill(); if err == nil {
+    // backupig application's process info
+    processBackup := BackupProcess (appProc)
 
-    } else {
-        // todo: notify caller about failed operation
+    // killing old app's process
+    err := appProc.Process.Kill(); if err != nil {
+        log.Fatal ("RelaunchProcess: ", err)  /////////// debug
     }
-    // todo: a. backup app's info
-    //       b. kill process with key 'app'
-    //       c. rebuild app
-    //       d. relaunch app
+
+    // rebuilding application
+    helpers.ApplicationRebuild () // sync
+
+    // Relaunch application
+    newApplicationProc := exec.Command (processBackup.Path, processBackup.Args...)
+
+    go newApplicationProc.Start ()
+
+    // updating `LaunchedProcesses`
+    LaunchedProcesses["app"] = newApplicationProc
+
     return nil
 }
 

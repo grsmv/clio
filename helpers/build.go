@@ -1,34 +1,25 @@
 package helpers
 
 import (
-    "strings"
-    "io/ioutil"
     "os/exec"
     "log"
 )
 
-// todo: move name of main file to settings
-func Build () {
-    Exec ("go build application.go")
-}
 
-
-func Euthanasia () {
-    data, err := ioutil.ReadFile ("tmp/pids/clio.pid"); if err != nil {
-        log.Fatal (err)
-    } else {
-        Exec ("kill -USR2 " + string(data))
-    }
-}
-
-
-func Exec (call string) {
-    callParts := strings.Split(call, " ")
-    command := exec.Command(callParts[0], callParts[1:]...)
-    err := command.Start()
+func ApplicationRebuild () {
+    goBinPath, err := exec.LookPath ("go")
     if err != nil {
-        log.Fatal (err)
+        log.Fatal ("ApplicationRebuild:", err) ////// debug
     }
+
+    command := exec.Command (goBinPath, "build", "application.go")
+
+    err = command.Start()
+    if err != nil {
+        log.Fatal ("ApplicationRebuild 2:", err) /////// debug
+    }
+
+    command.Wait ()
 }
 
 // vim: noai:ts=4:sw=4

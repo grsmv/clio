@@ -9,7 +9,7 @@ import (
     "os/exec"
     "strings"
     "sync"
-    // "github.com/cliohq/clio/helpers"
+    "github.com/cliohq/clio/helpers"
     // "log"
     // "time"
 )
@@ -38,6 +38,7 @@ func Run() {
     }
 
     // todo: rebuild application
+    helpers.ApplicationRebuild ()  // sync
 
     // starting up tcp server, needed for hotswap
     go LaunchTcpServer ()
