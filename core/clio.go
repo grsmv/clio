@@ -38,12 +38,14 @@ func router (w http.ResponseWriter, req *http.Request) {
 
     // splitting whole path into parts
     path, paramsString := helpers.SplitPath(req.URL.String())
+    routeFound := false
 
     // finding correct handler
     for rawPattern, _ := range routes[req.Method] {
         pattern := helpers.PreparePattern(rawPattern)
 
         if pattern.MatchString(path) {
+            routeFound = true
 
             // homage to Sinatra's splat
             splat = pattern.FindAllStringSubmatch(path, 100)[0][1:]
@@ -58,6 +60,9 @@ func router (w http.ResponseWriter, req *http.Request) {
             log.Printf ("%s %s\n", req.Method, req.URL.String())
             break
         }
+    }
+    if !routeFound {
+        NotFound(w, req)
     }
 }
 

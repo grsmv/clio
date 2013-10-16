@@ -1,6 +1,8 @@
 package core
 
 import (
+    "io/ioutil"
+    "fmt"
     "net/http"
     "regexp"
 )
@@ -23,6 +25,20 @@ var (
         "Content-Type":   "text/html",
         "Accept-Charset": "utf-8" }
 )
+
+func Redirect (url string) {
+    http.Redirect(Context().ResponseWriter, Context().Request, url, http.StatusFound)
+}
+
+func NotFound (w http.ResponseWriter, req *http.Request) {
+    w.Header().Set("Content-Type", "text/html; charset=utf-8")
+    template404, err := ioutil.ReadFile("public/404.html")
+    if err != nil {
+      template404 = []byte("404 Not Found")
+    }
+    w.WriteHeader(404)
+    fmt.Fprintln(w, string(template404))
+}
 
 func setHeaders (w http.ResponseWriter, req *http.Request) {
 
