@@ -5,20 +5,15 @@ import (
 )
 
 func (resource *Resource) GenerateScaffold () {
-    fmt.Println("Generate Backbone & Carcass scaffold with name", resource.name)
+    fmt.Println ("Scaffold :", resource.name)
 }
 
 func (resource *Resource) GenerateRouter () {
-    fmt.Println("Generate Backbone & Carcass router with name", resource.name)
-}
-
-func (resource *Resource) GenerateModel () {
-    fmt.Println("Generate Backbone & Carcass model with name", resource.name)
-    fmt.Println("model fields:", resource.fields)
+    fmt.Println ("Router :", resource.name)
 }
 
 func (resource *Resource) GenerateController () {
-    fmt.Println("Generate Carcass controller with name", resource.name)
+    fmt.Println ("Controller :", resource.name)
 }
 
 // vim: noai:ts=4:sw=4

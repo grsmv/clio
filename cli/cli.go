@@ -53,8 +53,6 @@ func Route () {
                         resource.GenerateScaffold ()
                     case "router":
                         resource.GenerateRouter ()
-                    case "model":
-                        resource.GenerateModel ()
                     case "controller":
                         resource.GenerateController ()
                     }
