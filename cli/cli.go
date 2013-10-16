@@ -50,10 +50,13 @@ func Route () {
                     resource := Resource { name: os.Args[3], fields: os.Args[4:] }
                     switch os.Args[2] {
                     case "scaffold":
+                    case "s":
                         resource.GenerateScaffold ()
                     case "router":
+                    case "r":
                         resource.GenerateRouter ()
                     case "controller":
+                    case "c":
                         resource.GenerateController ()
                     }
                 } else {
