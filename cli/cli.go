@@ -3,6 +3,7 @@ package cli
 import (
     "fmt"
     "os"
+    "strings"
 )
 
 const (
@@ -13,11 +14,6 @@ const (
 )
 
 const tcpIPCPort = 31000
-
-type Resource struct {
-    name string
-    fields []string
-}
 
 /**
  *  Dispatching command-line arguments to a separate
@@ -44,20 +40,24 @@ func Route () {
                 }
             }
 
+        case "generate":
         case "g":
             {
                 if len (os.Args) > 3 {
-                    resource := Resource { name: os.Args[3], fields: os.Args[4:] }
+                    resource := NewResource (strings.Join(os.Args[3:], " "))
                     switch os.Args[2] {
-                    case "scaffold":
-                    case "s":
-                        resource.GenerateScaffold ()
-                    case "router":
-                    case "r":
-                        resource.GenerateRouter ()
-                    case "controller":
-                    case "c":
-                        resource.GenerateController ()
+                        case "scaffold":
+                        case "s":
+                            resource.Scaffold ()
+                        case "router":
+                        case "r":
+                            resource.Router ()
+                        case "controller":
+                        case "c":
+                            resource.Controller ()
+                        case "view":
+                        case "v":
+                            resource.View ()
                     }
                 } else {
                     Help()
