@@ -62,4 +62,9 @@ func (resource *Resource) View () error {
     return nil
 }
 
+
+func (resource *Resource) templatize (files []string) error {
+    return nil
+}
+
 // vim: noai:ts=4:sw=4
