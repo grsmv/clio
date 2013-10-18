@@ -42,28 +42,37 @@ func (resource *Resource) Scaffold () error {
 }
 
 
-func (resource *Resource) Router () error {
-    // todo: a. Create contents of file from template
-    //       b. Create and write file in app/routers/NAME
-    return nil
+func (resource *Resource) Router () {
+    resource.templatize (
+        []string { "app/routes/" + resource.PluralPath + ".go" },
+    )
 }
 
 
-func (resource *Resource) Controller () error {
-    // todo: a. Create contents of file from template
-    //       b. Create and write file in app/controllers/NAME
-    return nil
+func (resource *Resource) Controller () {
+    resource.templatize (
+        []string { "app/controllers/" + resource.PluralPath + ".go" },
+    )
 }
 
 
-func (resource *Resource) View () error {
-    // todo: a. Create contents of files from template
-    //       b. Create and write file in app/views/name/{index,name}.template
-    return nil
+func (resource *Resource) View () {
+    // todo: create folder `app/views/resources` if not exists
+    resource.templatize (
+        []string {
+            "app/views/" + resource.PluralPath + "/index.template",
+            "app/views/" + resource.PluralPath + "/" + resource.SingularPath + ".template",
+        },
+    )
 }
 
 
 func (resource *Resource) templatize (files []string) error {
+    // todo: a. Read and process template
+    //       b. Write template in appropriate folder
+    for _, file := range files {
+        println (file)
+    }
     return nil
 }
 
