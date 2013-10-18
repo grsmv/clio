@@ -8,11 +8,12 @@ import (
     "strings"
 )
 
-const templatesPath = "src/github.com/cliohq/clio/application-template"
+const templatesPath = "src/github.com/cliohq/clio/templates/application"
 
 type Application struct {
     name string
 }
+
 
 /**
  *  High level abstraction for creating new app
@@ -28,6 +29,7 @@ func Create (appName string) {
         log.Fatal (err)
     }
 }
+
 
 /**
  *  Creating root folder for new application

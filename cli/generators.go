@@ -7,25 +7,25 @@ import (
 
 
 type Resource struct {
-    pluralTitle, singularTitle,
-    pluralPath, singularPath string
+    PluralTitle, SingularTitle,
+    PluralPath,  SingularPath  string
 }
 
 
 func NewResource (name string) Resource {
     return Resource {
-        pluralTitle:   inflect.Camelize (
+        PluralTitle:   inflect.Camelize (
                           inflect.Pluralize (name),
                        ),
-        singularTitle: inflect.Camelize (
+        SingularTitle: inflect.Camelize (
                            inflect.Singularize (name),
                        ),
-        pluralPath:    inflect.Underscore (
+        PluralPath:    inflect.Underscore (
                            strings.ToLower (
                                inflect.Pluralize (name),
                            ),
                        ),
-        singularPath:  inflect.Underscore (
+        SingularPath:  inflect.Underscore (
                            strings.ToLower (
                                inflect.Singularize (name),
                            ),
