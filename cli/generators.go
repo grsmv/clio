@@ -1,8 +1,14 @@
 package cli
 
 import (
+    "bytes"
+    "fmt"
     "github.com/grsmv/inflect"
+    "io/ioutil"
+    "log"
+    "os"
     "strings"
+    "text/template"
 )
 
 
@@ -57,23 +63,53 @@ func (resource *Resource) Controller () {
 
 
 func (resource *Resource) View () {
-    // todo: create folder `app/views/resources` if not exists
+
+    parentFolder := "app/views/" + resource.PluralPath
+
+    if _, err := os.Stat (parentFolder); os.IsNotExist (err) {
+        os.Mkdir (parentFolder, 0755)
+    }
+
     resource.templatize (
         []string {
-            "app/views/" + resource.PluralPath + "/index.template",
-            "app/views/" + resource.PluralPath + "/" + resource.SingularPath + ".template",
+            parentFolder + "/index.template",
+            parentFolder + "/" + resource.SingularPath + ".template",
         },
     )
 }
 
 
 func (resource *Resource) templatize (files []string) error {
-    // todo: a. Read and process template
-    //       b. Write template in appropriate folder
+
+    // nb: generatorsTemplatesPath
     for _, file := range files {
-        println (file)
+        var buffer bytes.Buffer
+
+        // preventing overwriting
+        if _, err := os.Stat (file); err == nil {
+            fmt.Println(yellow, "  exists:", reset, file)
+            continue
+        }
+
+        // reading and processing template
+        ps := string (os.PathSeparator)
+        templateSource := strings.Replace (file, ps + resource.PluralPath + ps, ps + "resources" + ps, 1)
+
+        templateContents, _ := ioutil.ReadFile (generatorsTemplatesPath + string (os.PathSeparator) + templateSource + ".tmpl")
+        tmpl, err := template.New ("generator").Parse (string(templateContents)); if err != nil {
+            log.Fatal (err)
+        }
+        tmpl.Execute (&buffer, resource)
+
+        // writing template in appropriate folder
+        err = ioutil.WriteFile (file, buffer.Bytes (), 0644); if err != nil {
+            log.Fatal (err)
+        }
+
+        fmt.Println(green, "  create:", reset, file)
     }
     return nil
 }
+
 
 // vim: noai:ts=4:sw=4

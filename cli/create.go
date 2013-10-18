@@ -8,7 +8,6 @@ import (
     "strings"
 )
 
-const templatesPath = "src/github.com/cliohq/clio/templates/application"
 
 type Application struct {
     name string
@@ -24,7 +23,10 @@ func Create (appName string) {
 
     app.createContainer ()
     err := app.copyFileTree (
-        strings.Join ([]string{ os.Getenv("GOPATH"), templatesPath }, string(os.PathSeparator)), app.name)
+        strings.Join (
+            []string { os.Getenv("GOPATH"), applicationTemplatesPath },
+            string (os.PathSeparator),
+        ), app.name)
     if err != nil {
         log.Fatal (err)
     }

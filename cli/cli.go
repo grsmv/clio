@@ -13,7 +13,17 @@ const (
     reset  = "\x1b[0m"
 )
 
-const tcpIPCPort = 31000
+var (
+    templatesRoot = strings.Join (
+        []string {"src", "github.com", "cliohq", "clio", "templates"}, string (os.PathSeparator),
+    )
+    applicationTemplatesPath = templatesRoot + string (os.PathSeparator) + "application"
+    generatorsTemplatesPath  = templatesRoot + string (os.PathSeparator) + "generators"
+)
+
+const (
+    tcpIPCPort = 31000
+)
 
 
 /**
