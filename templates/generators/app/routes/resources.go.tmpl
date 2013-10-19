@@ -1,15 +1,16 @@
-package routers
+package routes
 
 import (
     . "github.com/cliohq/clio/core"
     "../../app/controllers"
 )
 
-func {{.SingularTitle}}Routes () {
-    Get    ("/{{.PluralPath}}",   {{.PluralTitle}})
-    Get    ("/{{.PluralPath}}/*", {{.SingularTitle}})
-    Post   ("/{{.PluralPath}}",   {{.PluralTitle}}Create)
-    Put    ("/{{.PluralPath}}/*", {{.SingularTitle}}Update)
-    Delete ("/{{.PluralPath}}",   {{.PluralTitle}}Remove)
-    Delete ("/{{.PluralPath}}/*", {{.SingularTitle}}Remove)
+// func {{.SingularTitle}}Routes () {
+func init () {
+    Get    ("/{{.PluralPath}}",   controllers.{{.PluralTitle}})
+    Get    ("/{{.PluralPath}}/*", controllers.{{.SingularTitle}})
+    Post   ("/{{.PluralPath}}",   controllers.{{.PluralTitle}}Create)
+    Put    ("/{{.PluralPath}}/*", controllers.{{.SingularTitle}}Update)
+    Delete ("/{{.PluralPath}}",   controllers.{{.PluralTitle}}Remove)
+    Delete ("/{{.PluralPath}}/*", controllers.{{.SingularTitle}}Remove)
 }

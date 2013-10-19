@@ -22,8 +22,8 @@ type Resource struct {
 var templatesPaths = map[string]string {
     "controller":     "app/controllers/resources.go.tmpl",
     "router":         "app/routes/resources.go.tmpl",
-    "view-index":     "views/resources/index.template.tmpl",
-    "view-resource":  "views/resources/resource.template.tmpl",
+    "view-index":     "app/views/resources/index.template.tmpl",
+    "view-resource":  "app/views/resources/resource.template.tmpl",
 }
 
 
