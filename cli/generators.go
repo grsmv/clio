@@ -4,6 +4,7 @@ import (
     "bytes"
     "fmt"
     "github.com/grsmv/inflect"
+    "github.com/cliohq/clio/helpers"
     "io/ioutil"
     "log"
     "os"
@@ -15,6 +16,14 @@ import (
 type Resource struct {
     PluralTitle, SingularTitle,
     PluralPath,  SingularPath  string
+}
+
+
+var templatesPaths = map[string]string {
+    "controller":     "app/controllers/resources.go.tmpl",
+    "router":         "app/routes/resources.go.tmpl",
+    "view-index":     "views/resources/index.template.tmpl",
+    "view-resource":  "views/resources/resource.template.tmpl",
 }
 
 
@@ -50,14 +59,18 @@ func (resource *Resource) Scaffold () error {
 
 func (resource *Resource) Router () {
     resource.templatize (
-        []string { "app/routes/" + resource.PluralPath + ".go" },
+        map[string]string {
+            "router": "app/routes/" + resource.PluralPath + ".go",
+        },
     )
 }
 
 
 func (resource *Resource) Controller () {
     resource.templatize (
-        []string { "app/controllers/" + resource.PluralPath + ".go" },
+        map[string]string {
+            "controller": "app/controllers/" + resource.PluralPath + ".go",
+        },
     )
 }
 
@@ -71,18 +84,18 @@ func (resource *Resource) View () {
     }
 
     resource.templatize (
-        []string {
-            parentFolder + "/index.template",
-            parentFolder + "/" + resource.SingularPath + ".template",
+        map[string]string {
+            "view-index":    parentFolder + "/index.template",
+            "view-resource": parentFolder + "/" + resource.SingularPath + ".template",
         },
     )
 }
 
 
-func (resource *Resource) templatize (files []string) error {
+func (resource *Resource) templatize (files map[string]string) error {
 
     // nb: generatorsTemplatesPath
-    for _, file := range files {
+    for templateType, file := range files {
         var buffer bytes.Buffer
 
         // preventing overwriting
@@ -92,17 +105,22 @@ func (resource *Resource) templatize (files []string) error {
         }
 
         // reading and processing template
-        ps := string (os.PathSeparator)
-        templateSource := strings.Replace (file, ps + resource.PluralPath + ps, ps + "resources" + ps, 1)
+        templateContents, err := ioutil.ReadFile (
+            helpers.FixPath (
+                generatorsTemplatesPath +
+                string (os.PathSeparator) +
+                templatesPaths[templateType],
+            ),
+        )
 
-        templateContents, _ := ioutil.ReadFile (generatorsTemplatesPath + string (os.PathSeparator) + templateSource + ".tmpl")
-        tmpl, err := template.New ("generator").Parse (string(templateContents)); if err != nil {
+        tmpl, err := template.New ("generator").Parse (string(templateContents))
+        if err != nil {
             log.Fatal (err)
         }
         tmpl.Execute (&buffer, resource)
 
         // writing template in appropriate folder
-        err = ioutil.WriteFile (file, buffer.Bytes (), 0644); if err != nil {
+        err = ioutil.WriteFile (helpers.FixPath (file), buffer.Bytes (), 0644); if err != nil {
             log.Fatal (err)
         }
 

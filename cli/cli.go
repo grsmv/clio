@@ -4,6 +4,7 @@ import (
     "fmt"
     "os"
     "strings"
+    "github.com/cliohq/clio/helpers"
 )
 
 const (
@@ -14,11 +15,9 @@ const (
 )
 
 var (
-    templatesRoot = strings.Join (
-        []string {"src", "github.com", "cliohq", "clio", "templates"}, string (os.PathSeparator),
-    )
-    applicationTemplatesPath = templatesRoot + string (os.PathSeparator) + "application"
-    generatorsTemplatesPath  = templatesRoot + string (os.PathSeparator) + "generators"
+    templatesRoot = "src/github.com/cliohq/clio/templates"
+    applicationTemplatesPath = helpers.FixPath (templatesRoot + "/application")
+    generatorsTemplatesPath  = helpers.FixPath (helpers.FixPath(os.Getenv("GOPATH") + "/" + templatesRoot + "/generators"))
 )
 
 const (

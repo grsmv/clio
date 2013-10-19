@@ -1,0 +1,15 @@
+package routers
+
+import (
+    . "github.com/cliohq/clio/core"
+    "../../app/controllers"
+)
+
+func {{.SingularTitle}}Routes () {
+    Get    ("/{{.PluralPath}}",   {{.PluralTitle}})
+    Get    ("/{{.PluralPath}}/*", {{.SingularTitle}})
+    Post   ("/{{.PluralPath}}",   {{.PluralTitle}}Create)
+    Put    ("/{{.PluralPath}}/*", {{.SingularTitle}}Update)
+    Delete ("/{{.PluralPath}}",   {{.PluralTitle}}Remove)
+    Delete ("/{{.PluralPath}}/*", {{.SingularTitle}}Remove)
+}
