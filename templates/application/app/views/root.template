@@ -77,7 +77,7 @@
                     <a href="http://cliohq.github.io">cliohq.github.io</a> is your guide. <code title="type it in your command line">clio help</code> will teach you how to use development-mode tools.
                 </p>
                 <p>
-                    Righ now you looking at page, that was generated from <i>app/templates/root.template</i>. Also take a look at <i>app/routes/root.go</i> and <i>app/controllers/root.go</i>.
+                    Righ now you looking at page, that was generated from <i>app/views/root.template</i>. Also take a look at <i>app/routes/root.go</i> and <i>app/controllers/root.go</i>.
                 </p>
                 <p>
                     May the Force be with you!
