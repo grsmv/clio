@@ -8,8 +8,8 @@ import (
 // Mandatory function. Entering point of your application.
 func main () {
 
-    // Registering all possible application routes
-    routes.Root ()
+    // Registering application's routes package
+    routes.Register ()
 
     // Running application. Note that one and only parameter
     // for this function is a map of application's settings.

@@ -8,8 +8,8 @@ import (
 
 func requestHandler (settings map[string]interface{}) {
 
-    serveStatic := settings["manage-assets"].(bool)
-    if serveStatic {
+    // basic assets management
+    if settings["manage-assets"].(bool) {
         fs := http.FileServer(http.Dir("public"))
         http.Handle("/assets/", http.StripPrefix("/assets/", fs))
     }

@@ -1,10 +1,10 @@
 package routes
 
 import (
-  . "github.com/cliohq/clio/core"
-  "../../app/controllers"
+    . "github.com/cliohq/clio/core"
+    "../../app/controllers"
 )
 
-func Root () {
-  Get ("/", controllers.Root)
+func init () {
+    Get ("/", controllers.Root)
 }
