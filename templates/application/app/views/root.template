@@ -1,2 +1,90 @@
-<h1> Clio <h1>
-<h2> Welcome aboard! </h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body {
+            padding: 0;
+            margin: 0;
+            background: #fff;
+        }
+
+        a {
+            color: rgb(0, 138, 206);
+        }
+
+        a:hover {
+            color: red
+        }
+
+        code {
+            display: inline-block;
+            padding: 0 6px;
+            font: monaco, monospace;
+            color: #666;
+            font-size: 1.2em;
+            letter-spacing: -2px
+        }
+
+        #wrapper  {
+            width: 824px;
+            height: 334px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -167px 0 0 -412px;
+            font-family: source-sans-pro;
+        }
+
+        #logo {
+            width: 237px;
+            height: 334px;
+            float: left;
+            background: url("assets/images/clio.png") no-repeat 0 0;
+        }
+
+        #introduction {
+            float: left;
+            width: 556px;
+            margin: -18px 0 0 30px;
+        }
+
+        #introduction header {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+            letter-spacing: 1px
+        }
+
+        #text {
+            margin: 10px 0 0 0;
+            padding: 10px 0 0 0;
+            border-top: 1px solid #ccc;
+            font-size: 1em;
+            line-height: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="logo"></div>
+        <div id="introduction">
+            <header>Welcome aboard</header>
+            <div id="text">
+                <p>
+                    Thank you for choosing our framework to create your new mind-blown web application. Please, read next info to be familiar with super powers that you have just got:
+                    <a href="http://cliohq.github.io">cliohq.github.io</a> is your guide and <code title="command line command">clio help</code> will teach you to use development-mode tools.
+                </p>
+                <p>
+                    Righ now you looking at page, that was generated from <i>app/templates/root.template</i>. Also take a look at <i>app/routes/root.go</i> and <i>app/controllers.go</i>.
+                </p>
+                <p>
+                    May the Force be with you!
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="http://use.edgefonts.net/source-sans-pro.js"></script>
+</body>
+</html>
