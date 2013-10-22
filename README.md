@@ -1,12 +1,12 @@
 # Clio
 
 
-Clio is a simple DSL for creating web applications in Go programming language with minimal effort, built to use with [carcass](https://github.com/grsmv/carcass). It includes routes for URL-matching, simple template system with support of application-wide and custom layouts and templates for each action, and bunch of useful utilities.
+Clio is a simple DSL for creating web applications in Go programming language with minimal effort. It includes routes for URL-matching, simple template system with support of application-wide and custom layouts and templates for each action, and bunch of useful utilities.
 
 
 ##### Command-line tools
 
-Clio comes with command line interface, which makes developing of Clio-based applications mush easier. This is a bench of tools. All needed information about them you can receive typing 
+Clio comes with command line interface, which makes developing of Clio-based applications much easier. This is a bench of tools. You can find all needed information about them typing 
 
 ``` bash
 $> clio help
@@ -15,13 +15,13 @@ in your terminal.
 
 ### Creating new application
 
-To create new Clio-based application's skeleton, you need just to type few words in terminal:
+To create new Clio-based application skeleton, you need just to type few words in terminal:
 
 ``` bash
 $> clio create APPLICATION_NAME
 ```
 
-It will creates whole application's tree with some configuration assumptions, which you can change anyway. Also this will create basic structure of __app__ folder, which you can modify during your work on application.
+It will create whole application's tree with some configuration assumptions, which you can change anyway. Also this will create basic structure of __app__ folder, which you can modify during your work on application.
 
 
 ### Routes
@@ -59,8 +59,8 @@ As you noted, route pattern can be given in a form of wild card:
 Get ("/books/*", Books)
 ```
 
-So it can match, for example such URL as `/books/12`. This irregular parts of pattern is accessible as content of slice, returned by `Splat()` function.
-Pattern also can hold few irregular parts:
+So it can match, for example URLs like `/books/12`. This irregular part of pattern is accessible as content of slice, returned by `Splat()` function.
+Pattern can also hold few irregular parts:
 
 ``` go
 Get ("/books/*/download/*", BooksDownload)
@@ -73,7 +73,7 @@ func  BooksDownload () string {
 
 ### Views
 
-Clio has application-wide layout system, also you can define custom layout for specific routes. Also you can give away content without any layouts at all. Let's take a look at few examples:
+Clio has application-wide layout system, although you can define custom layout for specific routes. You can give away content without any layouts at all. Let's take a look at few examples:
 
 To define view for specific action, you need to call `Render()` method with path to a template as a first argument:
 
@@ -118,7 +118,7 @@ it will automatically convert your data to JSON and set appropriate headers.
 
 ### Headers
 
-For example, you want to give away specific data not as html, but as plain text. To do so you need just to call `SetHeader ()` method. take a look at this example:
+For example, you want to give away specific data not as html, but as plain text. To do so you need just to call `SetHeader ()` method. Take a look at this example:
 
 ``` go
 func BookPlain () string {
@@ -129,7 +129,7 @@ func BookPlain () string {
 
 ### Example application
 
-To look and feel how real Clio-based application works, please take a look at https://github.com/cliohq/clio-example.
+To see how real Clio-based application works, please take a look at https://github.com/cliohq/clio-example.
 
 ##### Request details
 ##### Cookies and sessions?
