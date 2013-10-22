@@ -48,7 +48,7 @@ Get ("/", func () string {
 })
 ```
 
-One and only requirement for functions or closures that calls when pattern match - they should return string. 
+One and only requirement for functions or closures that are called when pattern match - they should return string. 
 
 
 ### Splats
@@ -75,7 +75,7 @@ func  BooksDownload () string {
 
 Clio has application-wide layout system, also you can define custom layout for specific routes. Also you can give away content without any layouts at all. Let's take a look at few examples:
 
-To define view for specific view, you need to call `Render()` method with path to a template as a first argument:
+To define view for specific action, you need to call `Render()` method with path to a template as a first argument:
 
 ``` go
 func Index () string {
@@ -129,7 +129,7 @@ func BookPlain () string {
 
 ### Example application
 
-To look and feel how real Clio-based application works, please take a look at __example__ folder in the root.
+To look and feel how real Clio-based application works, please take a look at https://github.com/cliohq/clio-example.
 
 ##### Request details
 ##### Cookies and sessions?
