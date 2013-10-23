@@ -11,7 +11,7 @@ func Help() {
         "                                                                 \n" +
         "   clio COMMAND [FLAGS]                                          \n" +
         "                                                                 \n" +
-        "Commads:                                                         \n" +
+        "Commands:                                                        \n" +
         "                                                                 \n" +
         "   create      Creating application skeleton                     \n" +
         "   g           Generating scaffold, controller, router or view   \n" +
@@ -29,7 +29,7 @@ func Help() {
         "   This will generate a skeletal Clio application.               \n" +
         "   Please, see the README in the newly created application       \n" +
         "   get going. Also http://cliohq.github.io is a good place       \n" +
-        "   for gettingmore information about Clio. Good luck!            \n" +
+        "   for getting more information about Clio. Good luck!           \n" +
         "                                                                 \n")
 }
 
