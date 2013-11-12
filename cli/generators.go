@@ -3,8 +3,8 @@ package cli
 import (
     "bytes"
     "fmt"
-    "github.com/grsmv/inflect"
     "github.com/cliohq/clio/helpers"
+    "github.com/grsmv/inflect"
     "io/ioutil"
     "log"
     "os"
@@ -15,7 +15,8 @@ import (
 
 type Resource struct {
     PluralTitle, SingularTitle,
-    PluralPath,  SingularPath  string
+    PluralPath,  SingularPath,
+    AppName  string
 }
 
 
@@ -27,7 +28,11 @@ var templatesPaths = map[string]string {
 }
 
 
+// todo: check if this operation executes in app's root
 func NewResource (name string) Resource {
+    wd, _ := os.Getwd ()
+    splittedPath := strings.Split (wd, slash)
+
     return Resource {
         PluralTitle:   inflect.Camelize (
                           inflect.Pluralize (name),
@@ -45,6 +50,7 @@ func NewResource (name string) Resource {
                                inflect.Singularize (name),
                            ),
                        ),
+        AppName     :  splittedPath[len(splittedPath) - 1],
     }
 }
 
