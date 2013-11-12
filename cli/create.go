@@ -1,16 +1,18 @@
 package cli
 
 import (
+    "bytes"
     "fmt"
     "io/ioutil"
     "log"
     "os"
     "strings"
+    "text/template"
 )
 
 
 type Application struct {
-    name string
+    Name string
 }
 
 
@@ -23,13 +25,13 @@ func Create (appName string) {
     checkGopath ()
     checkContainer (appName)
 
-    app := Application { name: appName }
+    app := Application { Name: appName }
 
     app.createContainer ()
 
     err := app.copyFileTree (
         GOPATH + slash + applicationTemplatesPath,
-        GOPATH_SRC + app.name,
+        GOPATH_SRC + app.Name,
     )
 
     if err != nil {
@@ -63,7 +65,7 @@ func checkContainer (appName string) {
  *  Creating root folder for new application
  */
 func (app *Application) createContainer () {
-    appPath := GOPATH_SRC + app.name
+    appPath := GOPATH_SRC + app.Name
     if err := os.Mkdir(appPath, 0776); err == nil {
         fmt.Println(green, "  create:", reset, appPath)
     } else {
@@ -98,11 +100,23 @@ func (app *Application) copyDir (file os.FileInfo, destination, fromFilePath, to
  *  to a new application's skeleton
  */
 func (app *Application) copyFile (file os.FileInfo, source, destination string) error {
-    fileData, err := ioutil.ReadFile (source); if err != nil {
-        return err
+
+    fileData, _ := ioutil.ReadFile (source)
+
+    // detecting template and processing it
+    if strings.HasSuffix (source, ".go.template") {
+        var buffer bytes.Buffer
+        tmpl := template.Must (template.New ("app").Parse (string(fileData)))
+        tmpl.Execute (&buffer, app)
+
+        // overwriting file contents with data from processed template
+        fileData = buffer.Bytes ()
+
+        // removing tmp suffixes from file names
+        destination = strings.Replace(destination, ".template", "", -1)
     }
 
-    if err = ioutil.WriteFile (destination, []byte(fileData), file.Mode ()); err == nil {
+    if err := ioutil.WriteFile (destination, fileData, file.Mode ()); err == nil {
         fmt.Println(green, "  create:", reset, destination)
     } else {
         return err

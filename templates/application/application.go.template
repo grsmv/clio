@@ -2,7 +2,7 @@ package main
 
 import (
   . "github.com/cliohq/clio/core"
-  "./app/routes"
+  "{{.Name}}/app/routes"
 )
 
 // Mandatory function. Entering point of your application.
