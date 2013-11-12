@@ -5,6 +5,7 @@ import (
     "os"
     "strings"
     "github.com/cliohq/clio/helpers"
+    "github.com/cliohq/clio/core"
 )
 
 const (
@@ -36,8 +37,13 @@ func Route () {
 
         case "help":
             Help()
+
+        case "version":
+            fmt.Println (core.Version ())
+
         case "run":
             Run()
+
         case "watch":
             Watch ()
 

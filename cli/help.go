@@ -17,6 +17,7 @@ func Help() {
         "   g           Generating scaffold, controller, router or view   \n" +
         "   run         Running application and all helping workers       \n" +
         "   help        Output this message again                         \n" +
+        "   version     Displaying version information                    \n" +
         "                                                                 \n" +
         "Generators:                                                      \n" +
         "                                                                 \n" +
