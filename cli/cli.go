@@ -16,9 +16,14 @@ const (
 )
 
 var (
+    slash = string (os.PathSeparator)
+
+    GOPATH = os.Getenv ("GOPATH")
+    GOPATH_SRC = GOPATH + slash + "src" + slash
+
     templatesRoot = "src/github.com/cliohq/clio/templates"
     applicationTemplatesPath = helpers.FixPath (templatesRoot + "/application")
-    generatorsTemplatesPath  = helpers.FixPath (helpers.FixPath(os.Getenv("GOPATH") + "/" + templatesRoot + "/generators"))
+    generatorsTemplatesPath  = helpers.FixPath (helpers.FixPath(GOPATH + "/" + templatesRoot + "/generators"))
 )
 
 const (

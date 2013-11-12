@@ -13,12 +13,6 @@ type Application struct {
     name string
 }
 
-var (
-    GOPATH = os.Getenv ("GOPATH")
-    slash = string (os.PathSeparator)
-    GOPATH_SRC = GOPATH + slash + "src" + slash
-)
-
 
 /**
  *  High level abstraction for creating new app
@@ -34,13 +28,9 @@ func Create (appName string) {
     app.createContainer ()
 
     err := app.copyFileTree (
-        // source
-        strings.Join (
-            []string { GOPATH, applicationTemplatesPath },
-            slash),
-
-        // destination
-        GOPATH_SRC + app.name)
+        GOPATH + slash + applicationTemplatesPath,
+        GOPATH_SRC + app.name,
+    )
 
     if err != nil {
         log.Fatal (err)
@@ -74,11 +64,50 @@ func checkContainer (appName string) {
  */
 func (app *Application) createContainer () {
     appPath := GOPATH_SRC + app.name
-    err := os.Mkdir(appPath, 0776); if err == nil {
+    if err := os.Mkdir(appPath, 0776); err == nil {
         fmt.Println(green, "  create:", reset, appPath)
     } else {
         log.Fatal (err)
     }
+}
+
+
+/**
+ *  Copying certain directory from applciation's templates
+ *  to a new application's skeleton
+ */
+func (app *Application) copyDir (file os.FileInfo, destination, fromFilePath, toFilePath string) error {
+    if err := os.Mkdir(toFilePath, file.Mode ()); err == nil {
+        fmt.Println(green, "  create:", reset, toFilePath)
+    } else {
+        return err
+    }
+
+    // scanning next level
+    newTo := strings.Join ([]string { destination, file.Name () }, slash)
+    if err := app.copyFileTree (fromFilePath, newTo); err != nil {
+        return err
+    }
+
+    return nil
+}
+
+
+/**
+ *  Copying certain file from applciation's templates
+ *  to a new application's skeleton
+ */
+func (app *Application) copyFile (file os.FileInfo, source, destination string) error {
+    fileData, err := ioutil.ReadFile (source); if err != nil {
+        return err
+    }
+
+    if err = ioutil.WriteFile (destination, []byte(fileData), file.Mode ()); err == nil {
+        fmt.Println(green, "  create:", reset, destination)
+    } else {
+        return err
+    }
+    return nil
 }
 
 
@@ -95,33 +124,12 @@ func (app *Application) copyFileTree (from, to string) error {
     for _, f := range files {
 
         fromFilePath := strings.Join ([]string { from, f.Name () }, slash)
-        toFilePath := strings.Join ([]string { to, f.Name () }, slash)
+        toFilePath   := strings.Join ([]string { to,   f.Name () }, slash)
 
         if f.IsDir () == true {
-
-            // copying folders
-            err := os.Mkdir(toFilePath, f.Mode ()); if err != nil {
-                return err
-            } else {
-                fmt.Println(green, "  create:", reset, toFilePath)
-            }
-
-            // scanning next level
-            newTo := strings.Join ([]string { to, f.Name () }, slash)
-            err = app.copyFileTree (fromFilePath, newTo); if err != nil {
-                return err
-            }
+            app.copyDir (f, to, fromFilePath, toFilePath)
         } else {
-
-            // copying files
-            fileData, err := ioutil.ReadFile (fromFilePath); if err != nil {
-                return err
-            }
-            err = ioutil.WriteFile (toFilePath, []byte(fileData), f.Mode ()); if err != nil {
-                return err
-            } else {
-                fmt.Println(green, "  create:", reset, toFilePath)
-            }
+            app.copyFile (f, fromFilePath, toFilePath)
         }
     }
 
