@@ -15,10 +15,6 @@ func HandleSignals() {
     signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
     go func() {
         for _ = range c {
-
-            // TODO: clear after self
-
-            // final kiss
             fmt.Printf ("\nIt was amazing time! Adjö\n\n")
             os.Exit(0)
         }
