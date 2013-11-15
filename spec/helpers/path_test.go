@@ -3,7 +3,7 @@ package helpers
 import (
     "os"
     "testing"
-    "github.com/helpers"
+    "github.com/cliohq/clio/helpers"
 )
 
 func TestFixPath(t *testing.T) {

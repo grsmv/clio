@@ -2,7 +2,7 @@ package helpers
 
 import (
     "testing"
-    "github.com/helpers"
+    "github.com/cliohq/clio/helpers"
 )
 
 func TestParseParam(t *testing.T) {
@@ -34,7 +34,7 @@ func TestParseParamKeyWithoutValue(t *testing.T) {
 
 
 func TestSplitPath (t *testing.T) {
-    abs, params := SplitPath ("/a/b/c?a=b&c=d")
+    abs, params := helpers.SplitPath ("/a/b/c?a=b&c=d")
     if abs != "/a/b/c" {
         t.Error ("")
     }
@@ -46,7 +46,7 @@ func TestSplitPath (t *testing.T) {
 
 
 func TestSplitPathWithoutParams (t *testing.T) {
-    _, params := SplitPath ("/a/b/c?")
+    _, params := helpers.SplitPath ("/a/b/c?")
     if params != "" {
         t.Error ("")
     }
@@ -54,7 +54,7 @@ func TestSplitPathWithoutParams (t *testing.T) {
 
 
 func TestSplitPathWithEmptyString (t *testing.T) {
-    abs, params := SplitPath ("")
+    abs, params := helpers.SplitPath ("")
     if abs != "" {
         t.Error ("")
     }
@@ -66,7 +66,7 @@ func TestSplitPathWithEmptyString (t *testing.T) {
 
 
 func TestPreparePattern (t *testing.T) {
-    rxp := PreparePattern ("/a/*/c")
+    rxp := helpers.PreparePattern ("/a/*/c")
     if rxp.String () != "^/a/([\\p{L}\\d\\-_]{1,})/c$" {
         t.Error ("")
     }
@@ -74,7 +74,7 @@ func TestPreparePattern (t *testing.T) {
 
 
 func TestPreparePatternDots (t *testing.T) {
-    rxp := PreparePattern ("/a.mp3")
+    rxp := helpers.PreparePattern ("/a.mp3")
     if rxp.String () != "^/a\\.mp3$" {
         t.Error ("")
     }
