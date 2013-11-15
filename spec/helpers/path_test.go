@@ -3,15 +3,16 @@ package helpers
 import (
     "os"
     "testing"
+    "github.com/helpers"
 )
 
 func TestFixPath(t *testing.T) {
     if string (os.PathSeparator) == "/" {
-        if FixPath("/a/b/c") != "/a/b/c" {
+        if helpers.FixPath("/a/b/c") != "/a/b/c" {
             t.Error ("")
         }
     } else {
-        if FixPath ("/a/b/c") != "\\a\\b\\c" {
+        if helpers.FixPath ("/a/b/c") != "\\a\\b\\c" {
             t.Error ("")
         }
     }

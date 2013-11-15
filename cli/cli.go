@@ -9,6 +9,8 @@ import (
 )
 
 const (
+    tcpIPCPort = 31000
+
     red    = "\x1b[0;31m"
     green  = "\x1b[0;32m"
     yellow = "\x1b[0;33m"
@@ -24,10 +26,6 @@ var (
     templatesRoot = "src/github.com/cliohq/clio/templates"
     applicationTemplatesPath = helpers.FixPath (templatesRoot + "/application")
     generatorsTemplatesPath  = helpers.FixPath (helpers.FixPath(GOPATH + "/" + templatesRoot + "/generators"))
-)
-
-const (
-    tcpIPCPort = 31000
 )
 
 
@@ -70,12 +68,15 @@ func Route () {
                         case "scaffold":
                         case "s":
                             resource.Scaffold ()
+
                         case "router":
                         case "r":
                             resource.Router ()
+
                         case "controller":
                         case "c":
                             resource.Controller ()
+
                         case "view":
                         case "v":
                             resource.View ()

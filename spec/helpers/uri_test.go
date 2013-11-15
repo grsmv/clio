@@ -1,10 +1,13 @@
 package helpers
 
-import "testing"
+import (
+    "testing"
+    "github.com/helpers"
+)
 
 func TestParseParam(t *testing.T) {
     paramsString := "a=b&c=d"
-    parsedParams := ParseParams (paramsString)
+    parsedParams := helpers.ParseParams (paramsString)
 
     if len (parsedParams) != 2 {
         t.Error ("")
@@ -22,7 +25,7 @@ func TestParseParam(t *testing.T) {
 
 func TestParseParamKeyWithoutValue(t *testing.T) {
     paramsString := "a=b&c"
-    parsedParams := ParseParams (paramsString)
+    parsedParams := helpers.ParseParams (paramsString)
 
     if parsedParams["c"] != "" {
         t.Error ("")
