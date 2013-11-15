@@ -14,6 +14,7 @@ func requestHandler (settings map[string]interface{}) {
         http.Handle("/assets/", http.StripPrefix("/assets/", fs))
     }
 
+    // todo: move lambda to a separate public function
     http.HandleFunc("/", func (w http.ResponseWriter, req *http.Request) {
 
         // setting up package variable to use outside the package
