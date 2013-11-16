@@ -16,45 +16,46 @@ type Response struct {
 }
 
 
-func NewResponse (server *httptest.Server) Response {
+func NewResponse(server *httptest.Server) Response {
     return Response { Server: server }
 }
 
 
-func (th *Response) Get (url string, cookies []http.Cookie, headers map[string][]string) Response {
-    return genericRequest ("GET", url, cookies, headers)
+func (r *Response) Get(url string, cookies []http.Cookie, headers map[string][]string) Response {
+    return r.genericRequest ("GET", url, cookies, headers)
 }
 
 
-func (th *Response) Post (url string, cookies []http.Cookie, headers map[string][]string) Response {
-    return genericRequest ("POST", url, cookies, headers)
+func (r *Response) Post(url string, cookies []http.Cookie, headers map[string][]string) Response {
+    return r.genericRequest ("POST", url, cookies, headers)
 }
 
 
-func (th *Response) Put (url string, cookies []http.Cookie, headers map[string][]string) Response {
-    return genericRequest ("PUT", url, cookies, headers)
+func (r *Response) Put(url string, cookies []http.Cookie, headers map[string][]string) Response {
+    return r.genericRequest ("PUT", url, cookies, headers)
 }
 
 
-func (th *Response) Delete (url string, cookies []http.Cookie, headers map[string][]string) Response {
-    return genericRequest ("DELETE", url, cookies, headers)
+func (r *Response) Delete(url string, cookies []http.Cookie, headers map[string][]string) Response {
+    return r.genericRequest ("DELETE", url, cookies, headers)
 }
 
 
-// todo: set headers
-func genericRequest (method, url string, cookies []http.Cookie, headers map[string][]string) Response {
+func (r *Response) genericRequest(method, url string, cookies []http.Cookie, headers map[string][]string) Response {
     request, _ := http.NewRequest(
         method,
-        url,
+        r.Server.URL  + url,
         io.MultiReader())
 
     // note: http://golang.org/pkg/net/http/#Request.AddCookie
+    // todo: test with custom cookies
     if cookies != nil {
         for _, cookie := range cookies {
             request.AddCookie(&cookie)
         }
     }
 
+    // todo: test with custom headers
     if headers != nil {
         request.Header = headers
     }
