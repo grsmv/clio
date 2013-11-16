@@ -1,0 +1,118 @@
+package controllers
+
+import (
+    // mandatory test suite dependencies
+    "github.com/cliohq/clio/helpers/test"
+    . "github.com/onsi/ginkgo"
+    . "github.com/onsi/gomega"
+)
+
+var _ = Describe ("app/controllers/users.go", func () {
+
+    // GET "/users"
+    Describe ("Users", func () {
+        var response test.Response
+
+        BeforeEach (func (){
+            response = Clio.Get("/users", nil, nil)
+        })
+
+        It ("should return correct body", func () {
+            Expect (response.Body).To(Equal("Hi there\n"))  // todo: change
+        })
+
+        It ("should return correct http status code", func (){
+            Expect (response.StatusCode).To(Equal(200))
+        })
+    })
+
+
+    // GET "/users/*"
+    Describe ("User", func (){
+        var response test.Response
+
+        BeforeEach (func (){
+            response = Clio.Get ("/users/1", nil, nil)
+        })
+
+        It ("should return correct body", func () {
+            Expect (response.Body).To(Equal("Hi there\n")) // todo: change
+        })
+
+        It ("should return correct http status code", func (){
+            Expect (response.StatusCode).To(Equal(200))
+        })
+    })
+
+
+    // POST "/users"
+    Describe ("UsersCreate", func (){
+        var response test.Response
+
+        BeforeEach (func (){
+            response = Clio.Post ("/users", nil, nil)
+        })
+
+        It ("should return correct body", func () {
+            Expect (response.Body).To(Equal("Hi there\n")) // todo: change
+        })
+
+        It ("should return correct http status code", func (){
+            Expect (response.StatusCode).To(Equal(200))
+        })
+    })
+
+
+    // PUT "/users/*"
+    Describe ("UserUpdate", func (){
+        var response test.Response
+
+        BeforeEach (func (){
+            response = Clio.Put ("/users/1", nil, nil)
+        })
+
+        It ("should return correct body", func () {
+            Expect (response.Body).To(Equal("Hi there\n")) // todo: change
+        })
+
+        It ("should return correct http status code", func (){
+            Expect (response.StatusCode).To(Equal(200))
+        })
+    })
+
+
+    // DELETE "/users"
+    Describe ("UsersRemove", func (){
+        var response test.Response
+
+        BeforeEach (func (){
+            response = Clio.Delete ("/users", nil, nil)
+        })
+
+        It ("should return correct body", func () {
+            Expect (response.Body).To(Equal("Hi there\n")) // todo: change
+        })
+
+        It ("should return correct http status code", func (){
+            Expect (response.StatusCode).To(Equal(200))
+        })
+    })
+
+
+    // DELETE "/users/*"
+    Describe ("UserRemove", func (){
+        var response test.Response
+
+        BeforeEach (func (){
+            response = Clio.Delete ("/users/1", nil, nil)
+        })
+
+        It ("should return correct body", func () {
+            Expect (response.Body).To(Equal("Hi there\n")) // todo: change
+        })
+
+        It ("should return correct http status code", func (){
+            Expect (response.StatusCode).To(Equal(200))
+        })
+    })
+})

@@ -21,10 +21,11 @@ type Resource struct {
 
 
 var templatesPaths = map[string]string {
-    "controller":     "app/controllers/resources.go.tmpl",
-    "router":         "app/routes/resources.go.tmpl",
-    "view-index":     "app/views/resources/index.template.tmpl",
-    "view-resource":  "app/views/resources/resource.template.tmpl",
+    "controller":       "app/controllers/resources.go.tmpl",
+    "router":           "app/routes/resources.go.tmpl",
+    "view-index":       "app/views/resources/index.template.tmpl",
+    "view-resource":    "app/views/resources/resource.template.tmpl",
+    "controller-spec":  "spec/controllers/resource.template.tmpl",
 }
 
 
@@ -59,6 +60,7 @@ func (resource *Resource) Scaffold () error {
     resource.Router ()
     resource.Controller ()
     resource.View ()
+    resource.ControllerSpec ()
     return nil
 }
 
@@ -93,6 +95,15 @@ func (resource *Resource) View () {
         map[string]string {
             "view-index":    parentFolder + "/index.template",
             "view-resource": parentFolder + "/" + resource.SingularPath + ".template",
+        },
+    )
+}
+
+
+func (resource *Resource) ControllerSpec () {
+    resource.templatize (
+        map[string]string {
+            "controller-spec": "spec/controllers/" + resource.PluralPath + "_test.go"
         },
     )
 }
