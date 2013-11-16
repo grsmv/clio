@@ -34,7 +34,7 @@ func init () {
 /**
  *  Finding correct handler to certain method:path
  */
-func router (w http.ResponseWriter, req *http.Request) {
+func Router (w http.ResponseWriter, req *http.Request) {
 
     // splitting whole path into parts
     path, paramsString := helpers.SplitPath(req.URL.String())

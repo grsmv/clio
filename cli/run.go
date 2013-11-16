@@ -34,7 +34,6 @@ func Run() {
         os.Exit(1)
     }
 
-    // todo: rebuild application
     helpers.ApplicationRebuild ()  // sync
 
     // starting up tcp server, needed for hotswap
