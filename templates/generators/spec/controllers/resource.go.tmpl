@@ -7,18 +7,18 @@ import (
     . "github.com/onsi/gomega"
 )
 
-var _ = Describe ("app/controllers/users.go", func () {
+var _ = Describe ("app/controllers/{{.PluralPath}}.go", func () {
 
-    // GET "/users"
-    Describe ("Users", func () {
+    // GET "/{{.PluralPath}}"
+    Describe ("{{.PluralTitle}}", func () {
         var response test.Response
 
         BeforeEach (func (){
-            response = Clio.Get("/users", nil, nil)
+            response = Clio.Get("/{{.PluralPath}}", nil, nil)
         })
 
         It ("should return correct body", func () {
-            Expect (response.Body).To(Equal("Hi there\n"))  // todo: change
+            Expect (response.Body).To(ContainSubstring("{{.PluralTitle}} index"))
         })
 
         It ("should return correct http status code", func (){
@@ -27,16 +27,16 @@ var _ = Describe ("app/controllers/users.go", func () {
     })
 
 
-    // GET "/users/*"
-    Describe ("User", func (){
+    // GET "/{{.PluralPath}}/*"
+    Describe ("{{.SingularTitle}}", func (){
         var response test.Response
 
         BeforeEach (func (){
-            response = Clio.Get ("/users/1", nil, nil)
+            response = Clio.Get ("/{{.PluralPath}}/1", nil, nil)
         })
 
         It ("should return correct body", func () {
-            Expect (response.Body).To(Equal("Hi there\n")) // todo: change
+            Expect (response.Body).To(ContainSubstring("{{.SingularTitle}}"))
         })
 
         It ("should return correct http status code", func (){
@@ -45,16 +45,16 @@ var _ = Describe ("app/controllers/users.go", func () {
     })
 
 
-    // POST "/users"
-    Describe ("UsersCreate", func (){
+    // POST "/{{.PluralPath}}"
+    Describe ("{{.PluralTitle}}Create", func (){
         var response test.Response
 
         BeforeEach (func (){
-            response = Clio.Post ("/users", nil, nil)
+            response = Clio.Post ("/{{.PluralTitle}}", nil, nil)
         })
 
         It ("should return correct body", func () {
-            Expect (response.Body).To(Equal("Hi there\n")) // todo: change
+            Expect (response.Body).To(Equal("ok\n"))
         })
 
         It ("should return correct http status code", func (){
@@ -63,16 +63,16 @@ var _ = Describe ("app/controllers/users.go", func () {
     })
 
 
-    // PUT "/users/*"
-    Describe ("UserUpdate", func (){
+    // PUT "/{{.PluralPath}}/*"
+    Describe ("{{.SingularTitle}}Update", func (){
         var response test.Response
 
         BeforeEach (func (){
-            response = Clio.Put ("/users/1", nil, nil)
+            response = Clio.Put ("/{{.PluralPath}}/1", nil, nil)
         })
 
         It ("should return correct body", func () {
-            Expect (response.Body).To(Equal("Hi there\n")) // todo: change
+            Expect (response.Body).To(Equal("ok\n"))
         })
 
         It ("should return correct http status code", func (){
@@ -81,16 +81,16 @@ var _ = Describe ("app/controllers/users.go", func () {
     })
 
 
-    // DELETE "/users"
-    Describe ("UsersRemove", func (){
+    // DELETE "/{{.PluralPath}}"
+    Describe ("{{.PluralTitle}}Remove", func (){
         var response test.Response
 
         BeforeEach (func (){
-            response = Clio.Delete ("/users", nil, nil)
+            response = Clio.Delete ("/{{.PluralPath}}", nil, nil)
         })
 
         It ("should return correct body", func () {
-            Expect (response.Body).To(Equal("Hi there\n")) // todo: change
+            Expect (response.Body).To(Equal("ok\n"))
         })
 
         It ("should return correct http status code", func (){
@@ -99,16 +99,16 @@ var _ = Describe ("app/controllers/users.go", func () {
     })
 
 
-    // DELETE "/users/*"
-    Describe ("UserRemove", func (){
+    // DELETE "/{{.PluralPath}}/*"
+    Describe ("{{.SingularTitle}}Remove", func (){
         var response test.Response
 
         BeforeEach (func (){
-            response = Clio.Delete ("/users/1", nil, nil)
+            response = Clio.Delete ("/{{.PluralPath}}/1", nil, nil)
         })
 
         It ("should return correct body", func () {
-            Expect (response.Body).To(Equal("Hi there\n")) // todo: change
+            Expect (response.Body).To(Equal("Resource with id 1 removed\n"))
         })
 
         It ("should return correct http status code", func (){

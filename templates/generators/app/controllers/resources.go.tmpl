@@ -9,27 +9,32 @@ func {{.PluralTitle}} () string {
     return Render ("{{.PluralPath}}/index")
 }
 
+
 // GET "/{{.PluralPath}}/*"
 func {{.SingularTitle}} () string {
     return Render ("{{.PluralPath}}/{{.SingularPath}}")
 }
+
 
 // POST "/{{.PluralPath}}"
 func {{.PluralTitle}}Create () string {
     return "ok"
 }
 
+
 // PUT "/{{.PluralPath}}/*"
 func {{.SingularTitle}}Update () string {
     return "ok"
 }
+
 
 // DELETE "/{{.PluralPath}}"
 func {{.PluralTitle}}Remove () string {
     return "ok"
 }
 
+
 // DELETE "/{{.PluralPath}}/*"
 func {{.SingularTitle}}Remove () string {
-    return "Resource with id " + Splat()[0] + "removed"
+    return "Resource with id " + Splat()[0] + " removed"
 }

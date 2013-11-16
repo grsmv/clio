@@ -25,7 +25,7 @@ var templatesPaths = map[string]string {
     "router":           "app/routes/resources.go.tmpl",
     "view-index":       "app/views/resources/index.template.tmpl",
     "view-resource":    "app/views/resources/resource.template.tmpl",
-    "controller-spec":  "spec/controllers/resource.template.tmpl",
+    "controller-spec":  "spec/controllers/resource.go.tmpl",
 }
 
 
@@ -103,7 +103,7 @@ func (resource *Resource) View () {
 func (resource *Resource) ControllerSpec () {
     resource.templatize (
         map[string]string {
-            "controller-spec": "spec/controllers/" + resource.PluralPath + "_test.go"
+            "controller-spec": "spec/controllers/" + resource.PluralPath + "_test.go",
         },
     )
 }
