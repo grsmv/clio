@@ -8,7 +8,7 @@ import (
     . "github.com/onsi/gomega"
 
     // current app resources
-    "cartua/app/routes"
+    "{{.Name}}/app/routes"
 
     // stdlib packages
     "testing"
