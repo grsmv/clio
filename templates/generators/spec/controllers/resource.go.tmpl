@@ -50,7 +50,7 @@ var _ = Describe ("app/controllers/{{.PluralPath}}.go", func () {
         var response test.Response
 
         BeforeEach (func (){
-            response = Clio.Post ("/{{.PluralTitle}}", nil, nil)
+            response = Clio.Post ("/{{.PluralPath}}", nil, nil)
         })
 
         It ("should return correct body", func () {
