@@ -113,7 +113,7 @@ func Render (name string, obj ...interface{}) string {
     if len(obj) > 0 {
         for _, arg := range obj {
             settings := reflect.ValueOf(arg)
-            if settings.Type().String() == "clio.Settings" {
+            if settings.Type().String() == "core.Settings" {
                 layoutName = settings.FieldByName("Layout").String()
                 break
             }

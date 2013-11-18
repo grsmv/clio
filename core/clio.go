@@ -3,8 +3,8 @@ package core
 import (
     "fmt"
     "github.com/cliohq/clio/helpers"
-    "net/http"
     "log"
+    "net/http"
 )
 
 var (
@@ -61,6 +61,7 @@ func Router (w http.ResponseWriter, req *http.Request) {
             if AppSettings["verbose-output"] != nil && AppSettings["verbose-output"].(bool) == true {
                 log.Printf ("%s %s\n", req.Method, req.URL.String())
             }
+
             break
         }
     }
