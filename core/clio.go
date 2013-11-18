@@ -11,6 +11,7 @@ var (
     routes = make(map[string] map[string] func () string)
     splat = []string{}
     params = make(map[string]string)
+    AppSettings = make(map[string]interface{})
     ctx = context {}
 )
 
@@ -57,7 +58,9 @@ func Router (w http.ResponseWriter, req *http.Request) {
             fmt.Fprintln(w, routes[req.Method][rawPattern]())
 
             // terminal debugging
-            log.Printf ("%s %s\n", req.Method, req.URL.String())
+            if AppSettings["verbose-output"] != nil && AppSettings["verbose-output"].(bool) == true {
+                log.Printf ("%s %s\n", req.Method, req.URL.String())
+            }
             break
         }
     }

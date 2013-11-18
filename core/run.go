@@ -3,7 +3,7 @@ package core
 import (
     "net/http"
     "strconv"
-    "fmt"
+    "log"
 )
 
 func requestHandler (settings map[string]interface{}) {
@@ -30,11 +30,15 @@ func Handler (w http.ResponseWriter, req *http.Request) {
 
 
 func Run (settings map[string]interface {}) {
+
+    // making application's settings accessible to whole package
+    AppSettings = settings
+
     requestHandler (settings)
 
     port := strconv.Itoa(settings["port"].(int))
 
-    fmt.Println ("Clio server started at", settings["port"].(int), "port")
+    log.Println ("Clio server started at", AppSettings["port"].(int), "port")
     http.ListenAndServe (":" + port, nil)
 }
 

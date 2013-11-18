@@ -19,6 +19,9 @@ func main () {
             // http port on which application will be available
             "port": 4567,
 
+            // controlling logging to stdout on each request
+            "verbose-output": true,
+
             // Managing assets flag. Switch it to false if assets will
             // be managed by web server, for example NGINX
             "manage-assets": true,
