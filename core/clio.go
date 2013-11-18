@@ -8,11 +8,11 @@ import (
 )
 
 var (
-    routes = make(map[string] map[string] func () string)
-    splat = []string{}
-    params = make(map[string]string)
     AppSettings = make(map[string]interface{})
-    ctx = context {}
+    routes      = make(map[string] map[string] func () string)
+    splat       = []string{}
+    params      = make(map[string]string)
+    ctx         = context {}
 )
 
 type context struct {
