@@ -104,7 +104,7 @@ Clio reuses standard Go [text/template](http://golang.org/pkg/text/template/) pa
 {{ partial "specific_header" }}
 ```
 
-##### Websockets
+### Websockets
 
 You can easily write websocket server-side with Clio. In order to use it, add a new route with WS method:
 
@@ -128,7 +128,7 @@ func Chat () string {
 }
 ```
 
-Once you have it you can connect to your chat server like this:
+Once you have it, you can connect to your chat server like this:
 
 ``` js
 $(document).ready(function(){
