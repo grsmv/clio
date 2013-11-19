@@ -104,6 +104,43 @@ Clio reuses standard Go [text/template](http://golang.org/pkg/text/template/) pa
 {{ partial "specific_header" }}
 ```
 
+##### Websockets
+
+You can easily write websocket server-side with Clio. In order to use it, add a new route with WS method:
+
+``` go
+Ws ("/chat", controllers.Chat)
+```
+
+Simple websocket controller looks like this:
+
+``` go
+package controllers
+
+import (
+  "code.google.com/p/go.net/websocket"
+  . "github.com/cliohq/clio/core"
+)
+
+func Chat () string {
+  websocket.Message.Send(Context().Websocket, "Hello")
+  return "";
+}
+```
+
+Once you have it you can connect to your chat server like this:
+
+``` js
+$(document).ready(function(){
+  var socket = new WebSocket('ws://localhost:4567/chat');
+  socket.onmessage = function (event) {
+    console.log(event.data);
+  };
+});
+```
+
+When you run it, it will print "Hello".
+
 ##### Json
 
 Clio provides simple helper to represent your data as JSON without any exceed actions. To output JSON you just need to use `Json ()` function in your controller:
