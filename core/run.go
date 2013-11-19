@@ -7,12 +7,22 @@ import (
     "log"
 )
 
+func httpHandler (w http.ResponseWriter, req *http.Request) {
+    // setting up package variable to use outside the package
+    ctx = context { ResponseWriter: w, Request: req }
+
+    if IsWebsocket() {
+        websocket.Handler(func(ws *websocket.Conn) {
+          Handler(w, req, ws)
+        }).ServeHTTP(w, req)
+    } else {
+        Handler(w, req, nil)
+    }
+}
+
 func Handler (w http.ResponseWriter, req *http.Request, ws *websocket.Conn) {
 
     //req.Websocket = ws
-
-    // setting up package variable to use outside the package
-    ctx = context { ResponseWriter: w, Request: req }
 
     // setting up default headers
     setHeaders (w, req)
@@ -28,13 +38,8 @@ func requestHandler (settings map[string]interface{}) {
         http.Handle("/assets/", http.StripPrefix("/assets/", fs))
     }
 
-    if IsWebsocket() {
-        websocket.Handler(func(ws *websocket.Conn) {
-          Handler(w, req, ws)
-        }).ServeHTTP(w, req)
-    } else {
-        http.HandleFunc("/", Handler(w, req, nil))
-    }
+    http.HandleFunc("/", httpHandler)
+
 }
 
 
