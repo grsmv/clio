@@ -5,6 +5,7 @@ import (
     "github.com/cliohq/clio/helpers"
     "log"
     "net/http"
+    "runtime"
 )
 
 var (
@@ -57,9 +58,12 @@ func Router (w http.ResponseWriter, req *http.Request) {
             // calling matched handler
             fmt.Fprintln(w, routes[req.Method][rawPattern]())
 
-            // terminal debugging
+            // optional stdout logging
             if AppSettings["verbose-output"] != nil && AppSettings["verbose-output"].(bool) == true {
                 log.Printf ("%s %s\n", req.Method, req.URL.String())
+
+                _, file, line, _ := runtime.Caller(0)
+                log.Printf("%s: %i\n", file, line)
             }
 
             break
