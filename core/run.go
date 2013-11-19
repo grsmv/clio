@@ -1,10 +1,34 @@
 package core
 
 import (
+    "code.google.com/p/go.net/websocket"
     "net/http"
     "strconv"
     "log"
 )
+
+func httpHandler (w http.ResponseWriter, req *http.Request) {
+    // setting up package variable to use outside the package
+    ctx = context { ResponseWriter: w, Request: req }
+
+    if IsWebsocket() {
+        websocket.Handler(func(ws *websocket.Conn) {
+          Handler(w, req, ws)
+        }).ServeHTTP(w, req)
+    } else {
+        Handler(w, req, nil)
+    }
+}
+
+func Handler (w http.ResponseWriter, req *http.Request, ws *websocket.Conn) {
+
+    ctx.Websocket = ws
+
+    // setting up default headers
+    setHeaders (w, req)
+
+    Router (w, req)
+}
 
 func requestHandler (settings map[string]interface{}) {
 
@@ -14,18 +38,8 @@ func requestHandler (settings map[string]interface{}) {
         http.Handle("/assets/", http.StripPrefix("/assets/", fs))
     }
 
-    http.HandleFunc("/", Handler)
-}
+    http.HandleFunc("/", httpHandler)
 
-
-func Handler (w http.ResponseWriter, req *http.Request) {
-    // setting up package variable to use outside the package
-    ctx = context { ResponseWriter: w, Request: req }
-
-    // setting up default headers
-    setHeaders (w, req)
-
-    Router (w, req)
 }
 
 

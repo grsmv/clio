@@ -26,6 +26,13 @@ var (
         "Accept-Charset": "utf-8" }
 )
 
+func IsWebsocket () bool {
+    req := Context().Request
+    foundWebsock, err1 := regexp.MatchString("ebsocket", req.Header.Get("Upgrade"))
+    foundUpgrade, err2 := regexp.MatchString("pgrade", req.Header.Get("Connection"))
+    return foundWebsock && foundUpgrade && err1 == nil && err2 == nil
+}
+
 func Redirect (url string) {
     http.Redirect(Context().ResponseWriter, Context().Request, url, http.StatusFound)
 }
