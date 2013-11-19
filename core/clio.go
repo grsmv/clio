@@ -1,6 +1,7 @@
 package core
 
 import (
+    "code.google.com/p/go.net/websocket"
     "fmt"
     "github.com/cliohq/clio/helpers"
     "net/http"
@@ -18,6 +19,7 @@ var (
 type context struct {
     Request *http.Request
     ResponseWriter http.ResponseWriter
+    Websocket *websocket.Conn
 }
 
 

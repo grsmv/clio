@@ -22,7 +22,7 @@ func httpHandler (w http.ResponseWriter, req *http.Request) {
 
 func Handler (w http.ResponseWriter, req *http.Request, ws *websocket.Conn) {
 
-    //req.Websocket = ws
+    ctx.Websocket = ws
 
     // setting up default headers
     setHeaders (w, req)
