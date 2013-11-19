@@ -19,7 +19,6 @@ func Context () context {
     return ctx
 }
 
-
 func Splat () []string {
     return splat
 }
@@ -53,6 +52,10 @@ func Put (pattern string, handler func () string) {
 
 func Delete (pattern string, handler func () string) {
     routes["DELETE"][pattern] = handler;
+}
+
+func Ws (pattern string, handler func () string) {
+    routes["WS"][pattern] = handler;
 }
 
 // ------------------- json helper -------------------

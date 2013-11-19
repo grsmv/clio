@@ -25,7 +25,7 @@ type context struct {
  *  Creating namespace to place routes by specific http method
  */
 func init () {
-    methods := []string{"GET", "POST", "PUT", "DELETE"}
+    methods := []string{"GET", "POST", "PUT", "DELETE", "WS"}
     for index := range methods {
         routes[methods[index]] = make (map[string] func () string)
     }
@@ -39,10 +39,16 @@ func Router (w http.ResponseWriter, req *http.Request) {
 
     // splitting whole path into parts
     path, paramsString := helpers.SplitPath(req.URL.String())
+
     routeFound := false
 
+    method := req.Method
+    if IsWebsocket() {
+        method = "WS"
+    }
+
     // finding correct handler
-    for rawPattern, _ := range routes[req.Method] {
+    for rawPattern, _ := range routes[method] {
         pattern := helpers.PreparePattern(rawPattern)
 
         if pattern.MatchString(path) {
@@ -55,11 +61,11 @@ func Router (w http.ResponseWriter, req *http.Request) {
             params = helpers.ParseParams(paramsString)
 
             // calling matched handler
-            fmt.Fprintln(w, routes[req.Method][rawPattern]())
+            fmt.Fprintln(w, routes[method][rawPattern]())
 
             // terminal debugging
             if AppSettings["verbose-output"] != nil && AppSettings["verbose-output"].(bool) == true {
-                log.Printf ("%s %s\n", req.Method, req.URL.String())
+                log.Printf ("%s %s\n", method, req.URL.String())
             }
             break
         }
