@@ -3,7 +3,6 @@ package core
 import (
     "code.google.com/p/go.net/websocket"
     "net/http"
-    "fmt"
     "log"
 )
 
@@ -12,11 +11,14 @@ type ClientConnection struct {
     clientIP string
 }
 
-// placeholer for all open connections, sorted by channel's name
-var ActiveClients = make(map[string]map[ClientConnection]int)
 
-// list of all available channels
-var Channels = make([]string)
+var (
+    // placeholer for all open connections, sorted by channel's name
+    ActiveClients = make(map[string]map[ClientConnection]int)
+
+    // list of all available channels
+    Channels = []string{}
+)
 
 
 /**
@@ -31,7 +33,7 @@ func Ws (channel string) {
  *  Initializing all registered websockets
  */
 func InitializeWebsockets () {
-    for _, chanel := range Channels {
+    for _, channel := range Channels {
         ChannelInit(channel)
     }
 }

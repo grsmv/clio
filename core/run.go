@@ -11,7 +11,6 @@ import (
 var (
     AppSettings = make(map[string]interface{})
     routes      = make(map[string] map[string] func () string)
-    wsRoutes    = make([]string)
     splat       = []string{}
     params      = make(map[string]string)
     ctx         = context {}
@@ -108,7 +107,7 @@ func Router (w http.ResponseWriter, req *http.Request) {
 
 
 func Verbose () bool {
-    AppSettings["verbose-output"] != nil && AppSettings["verbose-output"].(bool) == true
+    return AppSettings["verbose-output"] != nil && AppSettings["verbose-output"].(bool) == true
 }
 
 // vim: noai:ts=4:sw=4
