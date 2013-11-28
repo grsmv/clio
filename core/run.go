@@ -33,18 +33,6 @@ func init () {
 }
 
 
-func requestHandler (settings map[string]interface{}) {
-
-    // basic assets management
-    if settings["manage-assets"].(bool) {
-        fs := http.FileServer(http.Dir("public"))
-        http.Handle("/assets/", http.StripPrefix("/assets/", fs))
-    }
-
-    http.HandleFunc("/", Handler)
-}
-
-
 func Handler (w http.ResponseWriter, req *http.Request) {
     // setting up package variable to use outside the package
     ctx = context { ResponseWriter: w, Request: req }
@@ -61,11 +49,20 @@ func Run (settings map[string]interface {}) {
     // making application's settings accessible to whole package
     AppSettings = settings
 
-    requestHandler (settings)
+    // basic assets management
+    if settings["manage-assets"].(bool) {
+        fs := http.FileServer(http.Dir("public"))
+        http.Handle("/assets/", http.StripPrefix("/assets/", fs))
+    }
+
+    http.HandleFunc("/", Handler)
+
+    // initializing all registered websockets
+    InitializeWebsockets()
 
     port := strconv.Itoa(settings["port"].(int))
 
-    log.Println ("Clio server started at", AppSettings["port"].(int), "port")
+    log.Println ("Clio server started at", settings["port"].(int), "port")
     http.ListenAndServe (":" + port, nil)
 }
 
@@ -96,15 +93,21 @@ func Router (w http.ResponseWriter, req *http.Request) {
             fmt.Fprintln(w, routes[req.Method][rawPattern]())
 
             // terminal debugging
-            if AppSettings["verbose-output"] != nil && AppSettings["verbose-output"].(bool) == true {
+            if Verbose() {
                 log.Printf ("%s %s\n", req.Method, req.URL.String())
             }
             break
         }
     }
+
     if !routeFound {
         NotFound(w, req)
     }
+}
+
+
+func Verbose () bool {
+    return AppSettings["verbose-output"] != nil && AppSettings["verbose-output"].(bool) == true
 }
 
 // vim: noai:ts=4:sw=4
