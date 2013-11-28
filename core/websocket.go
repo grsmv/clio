@@ -90,7 +90,7 @@ func ChannelInit (channel string) {
                 return
             }
 
-            clientMessage = socketClient.clientIP + " Said: " + clientMessage
+            // clientMessage = socketClient.clientIP + " Said: " + clientMessage // can be useful during debug
             for cs, _ := range ActiveClients[channel] {
                 if err = websocket.Message.Send(cs.websocket, clientMessage); err != nil {
 
