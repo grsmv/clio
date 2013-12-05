@@ -11,7 +11,7 @@ import (
 var (
     AppSettings = make(map[string]interface{})
     routes      = make(map[string] map[string] func () string)
-    splat       = []string{}
+    splat       = make(map[string]string)
     params      = make(map[string]string)
     ctx         = context {}
 )
@@ -84,7 +84,7 @@ func Router (w http.ResponseWriter, req *http.Request) {
             routeFound = true
 
             // homage to Sinatra's splat
-            splat = pattern.FindAllStringSubmatch(path, 100)[0][1:]
+            splat = helpers.ParseSplat(pattern, path)
 
             // filling params
             params = helpers.ParseParams(paramsString)
