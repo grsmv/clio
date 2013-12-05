@@ -30,12 +30,12 @@ As an example of complex route usage here you can see the whole stack of REST-ro
 
 ``` go
 func ControllerRoutes () {
-    Get    ("/books",   Books      )
-    Get    ("/books/*", Book       )
-    Post   ("/books",   BooksCreate)
-    Put    ("/books/*", BookUpdate )
-    Delete ("/books",   BooksRemove)
-    Delete ("/books/*", BookRemove )
+    Get    ("/books",     Books      )
+    Get    ("/books/:id", Book       )
+    Post   ("/books",     BooksCreate)
+    Put    ("/books/:id", BookUpdate )
+    Delete ("/books",     BooksRemove)
+    Delete ("/books/:id", BookRemove )
 }
 ```
 
@@ -56,17 +56,17 @@ One and only requirement for functions or closures that are called when pattern 
 As you noted, route pattern can be given in a form of wild card:
 
 ``` go
-Get ("/books/*", Books)
+Get ("/books/:id", Books)
 ```
 
-So it can match, for example URLs like `/books/12`. This irregular part of pattern is accessible as content of slice, returned by `Splat()` function.
+So it can match, for example URLs like `/books/12`. This irregular part of pattern is accessible as content of key-value map, returned by `Splat()` function.
 Pattern can also hold few irregular parts:
 
 ``` go
-Get ("/books/*/download/*", BooksDownload)
+Get ("/books/:id/download/:format", BooksDownload)
 
 func  BooksDownload () string {
-    return "Book with id " + Splat()[0] + "should be downloaded as: " + Splat()[1]
+    return "Book with id " + Splat()["id"] + "should be downloaded as: " + Splat()["format"]
 }
 ```
 
