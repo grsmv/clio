@@ -10,7 +10,7 @@ func {{.PluralTitle}} () string {
 }
 
 
-// GET "/{{.PluralPath}}/*"
+// GET "/{{.PluralPath}}/:id"
 func {{.SingularTitle}} () string {
     return Render ("{{.PluralPath}}/{{.SingularPath}}")
 }
@@ -22,7 +22,7 @@ func {{.PluralTitle}}Create () string {
 }
 
 
-// PUT "/{{.PluralPath}}/*"
+// PUT "/{{.PluralPath}}/:id"
 func {{.SingularTitle}}Update () string {
     return "ok"
 }
@@ -34,7 +34,7 @@ func {{.PluralTitle}}Remove () string {
 }
 
 
-// DELETE "/{{.PluralPath}}/*"
+// DELETE "/{{.PluralPath}}/:id"
 func {{.SingularTitle}}Remove () string {
-    return "Resource with id " + Splat()[0] + " removed"
+    return "Resource with id " + Splat()["id"] + " removed"
 }
