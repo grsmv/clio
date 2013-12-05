@@ -20,7 +20,7 @@ func Context () context {
 }
 
 
-func Splat () []string {
+func Splat () map[string]string {
     return splat
 }
 
