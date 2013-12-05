@@ -8,17 +8,40 @@ import (
 /**
  *  Creating a Regexp from custom-formatted pattern
  *  Example:
- *      "/books/ * /update" -> "^/books/([\p{L}\d\-_]{1,})/update$"
+ *    /users/:id -> "^/users/(?P<id>[\p{L}\d-_]{1,})$"
  */
-func PreparePattern (rawPattern string) *regexp.Regexp {
-    replaceRools := strings.NewReplacer(
-        "*", "([\\p{L}\\d\\-_]{1,})",
-        ".", "\\.")
+func PreparePattern (tracery string) *regexp.Regexp {
+    tracery = strings.Replace (tracery, ".", "\\.", -1)
 
-    // adding start and end line symbols
-    pattern := "^" + replaceRools.Replace(rawPattern) + "$"
-    regexpPattern, _ := regexp.Compile(pattern)
-    return regexpPattern
+    // detecting keywords to convert
+    ptrn, _ := regexp.Compile(":[\\p{L}\\d-_]{1,}")
+
+    // converting keywords to regexp form
+    ptrn.ReplaceAllStringFunc(tracery, func(match string) string {
+        key := strings.Replace(match, ":", "", -1)
+        tracery = strings.Replace(tracery, match, "(?P<" + key + ">[\\p{L}\\d-_]{1,})", -1)
+        return match
+    })
+
+    pattern, _ := regexp.Compile ("^" + tracery + "$")
+    return pattern
+}
+
+
+/**
+ *  Converting path to a key-value storage
+ */
+func ParseSplat (pattern *regexp.Regexp, path string) map[string]string {
+    var (
+        vocabulary = make(map[string]string)
+        matches    = pattern.FindAllStringSubmatch(path, 100)[0][1:]
+    )
+
+    for index, key := range pattern.SubexpNames()[1:] {
+        vocabulary[key] = matches[index]
+    }
+
+    return vocabulary
 }
 
 
