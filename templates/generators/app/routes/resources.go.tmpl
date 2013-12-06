@@ -7,10 +7,10 @@ import (
 
 // func {{.SingularTitle}}Routes () {
 func init () {
-    Get    ("/{{.PluralPath}}",   controllers.{{.PluralTitle}})
-    Get    ("/{{.PluralPath}}/*", controllers.{{.SingularTitle}})
-    Post   ("/{{.PluralPath}}",   controllers.{{.PluralTitle}}Create)
-    Put    ("/{{.PluralPath}}/*", controllers.{{.SingularTitle}}Update)
-    Delete ("/{{.PluralPath}}",   controllers.{{.PluralTitle}}Remove)
-    Delete ("/{{.PluralPath}}/*", controllers.{{.SingularTitle}}Remove)
+    Get    ("/{{.PluralPath}}",     controllers.{{.PluralTitle}})
+    Get    ("/{{.PluralPath}}/:id", controllers.{{.SingularTitle}})
+    Post   ("/{{.PluralPath}}",     controllers.{{.PluralTitle}}Create)
+    Put    ("/{{.PluralPath}}/:id", controllers.{{.SingularTitle}}Update)
+    Delete ("/{{.PluralPath}}",     controllers.{{.PluralTitle}}Remove)
+    Delete ("/{{.PluralPath}}/:id", controllers.{{.SingularTitle}}Remove)
 }

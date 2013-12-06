@@ -13,7 +13,7 @@ $> clio help
 ```
 in your terminal.
 
-### Creating new application
+## Creating new application
 
 To create new Clio-based application skeleton, you need just to type few words in terminal:
 
@@ -24,18 +24,18 @@ $> clio create APPLICATION_NAME
 It will create whole application's tree with some configuration assumptions, which you can change anyway. Also this will create basic structure of __app__ folder, which you can modify during your work on application.
 
 
-### Routes
+## Routes
 
 As an example of complex route usage here you can see the whole stack of REST-routes for curtain purposes (say, controller):
 
 ``` go
 func ControllerRoutes () {
-    Get    ("/books",   Books      )
-    Get    ("/books/*", Book       )
-    Post   ("/books",   BooksCreate)
-    Put    ("/books/*", BookUpdate )
-    Delete ("/books",   BooksRemove)
-    Delete ("/books/*", BookRemove )
+    Get    ("/books",     Books      )
+    Get    ("/books/:id", Book       )
+    Post   ("/books",     BooksCreate)
+    Put    ("/books/:id", BookUpdate )
+    Delete ("/books",     BooksRemove)
+    Delete ("/books/:id", BookRemove )
 }
 ```
 
@@ -56,22 +56,22 @@ One and only requirement for functions or closures that are called when pattern 
 As you noted, route pattern can be given in a form of wild card:
 
 ``` go
-Get ("/books/*", Books)
+Get ("/books/:id", Books)
 ```
 
-So it can match, for example URLs like `/books/12`. This irregular part of pattern is accessible as content of slice, returned by `Splat()` function.
+So it can match, for example URLs like `/books/12`. This irregular part of pattern is accessible as content of key-value map, returned by `Splat()` function.
 Pattern can also hold few irregular parts:
 
 ``` go
-Get ("/books/*/download/*", BooksDownload)
+Get ("/books/:id/download/:format", BooksDownload)
 
 func  BooksDownload () string {
-    return "Book with id " + Splat()[0] + "should be downloaded as: " + Splat()[1]
+    return "Book with id " + Splat()["id"] + "should be downloaded as: " + Splat()["format"]
 }
 ```
 
 
-### Views
+## Views
 
 Clio has application-wide layout system, although you can define custom layout for specific routes. You can give away content without any layouts at all. Let's take a look at few examples:
 
@@ -116,7 +116,25 @@ func JsonBook () string {
 
 it will automatically convert your data to JSON and set appropriate headers.
 
-### Headers
+## WebSockets
+
+You can easily write websocket server-side with Clio. In order to use it, add a new route with `Ws` function:
+
+```go
+Ws ("/books/updates")
+```
+
+That's all. Now you have channel to connect and to perform all this JavaScript magic.
+Also you can send messages to channel right from backend anytime you want using:
+
+```go
+WsSend("/books/updates", "51th Shade of Gray is born")
+```
+
+You can create as many separated channels as you want and use this feature, for example for role-based updates.
+
+
+## Headers
 
 For example, you want to give away specific data not as html, but as plain text. To do so you need just to call `SetHeader ()` method. Take a look at this example:
 
@@ -127,7 +145,7 @@ func BookPlain () string {
 }
 ```
 
-### Example application
+## Example application
 
 To see how real Clio-based application works, please take a look at https://github.com/cliohq/clio-example.
 

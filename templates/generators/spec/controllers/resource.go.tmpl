@@ -27,7 +27,7 @@ var _ = Describe ("app/controllers/{{.PluralPath}}.go", func () {
     })
 
 
-    // GET "/{{.PluralPath}}/*"
+    // GET "/{{.PluralPath}}/:id"
     Describe ("{{.SingularTitle}}", func (){
         var response test.Response
 
@@ -63,7 +63,7 @@ var _ = Describe ("app/controllers/{{.PluralPath}}.go", func () {
     })
 
 
-    // PUT "/{{.PluralPath}}/*"
+    // PUT "/{{.PluralPath}}/:id"
     Describe ("{{.SingularTitle}}Update", func (){
         var response test.Response
 
@@ -99,7 +99,7 @@ var _ = Describe ("app/controllers/{{.PluralPath}}.go", func () {
     })
 
 
-    // DELETE "/{{.PluralPath}}/*"
+    // DELETE "/{{.PluralPath}}/:id"
     Describe ("{{.SingularTitle}}Remove", func (){
         var response test.Response
 
