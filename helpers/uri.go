@@ -46,52 +46,52 @@ func ParseSplat (pattern *regexp.Regexp, path string) map[string]string {
 
 
 /**
- *  Splitting path into two parts - absolute page path and params
+ *  Splitting path into two parts - absolute page path and query
  *  Example:
  *    "/a/b/c?a=b&c=d" should be splitted into
  *    "/a/b/c" and "a=b&c=d"
  */
-func SplitPath (path string) (abs, params string) {
+func SplitPath (path string) (abs, query string) {
     pattern, _ := regexp.Compile("(.*)\\?(.*)")
     parts := pattern.FindAllStringSubmatch(path, 100)
     if len(parts) > 0 {
         abs = parts[0][1]
 
         if len(parts[0]) > 1 {
-            params = parts[0][2]
+            query = parts[0][2]
         } else {
-            params = ""
+            query = ""
         }
     } else {
-        abs, params = path, ""
+        abs, query = path, ""
     }
-    return abs, params
+    return abs, query
 }
 
 
 /**
- *  Parsing params into map
+ *  Parsing query into map
  *  Example:
- *    params string "a=b&c=d" should become
+ *    query string "a=b&c=d" should become
  *    map[string] string {
  *      "a": "b", "c" : "d"
  *    }
  */
-func ParseParams (paramsString string) map[string]string {
-    params := make(map[string]string)
-    if len(paramsString) > 0 {
-        pairsArray := strings.Split(paramsString, "&")
+func ParseQuery (queryString string) map[string]string {
+    query := make(map[string]string)
+    if len(queryString) > 0 {
+        pairsArray := strings.Split(queryString, "&")
 
         for index := range pairsArray {
             if strings.Contains(pairsArray[index], "=") {
                 pair := strings.Split(pairsArray[index], "=")
-                params[pair[0]] = pair[1]
+                query[pair[0]] = pair[1]
             } else {
-                params[pairsArray[index]] = ""
+                query[pairsArray[index]] = ""
             }
         }
     }
-    return params
+    return query
 }
 
 // vim: noai:ts=4:sw=4

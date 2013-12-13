@@ -25,8 +25,12 @@ func Splat () map[string]string {
 }
 
 
-func Params () map[string]string {
-    return params
+func Query () map[string]string {
+    return query
+}
+
+func Params (q string) (string) {
+    return ctx.Request.FormValue(q)
 }
 
 

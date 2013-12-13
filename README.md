@@ -70,6 +70,16 @@ func  BooksDownload () string {
 }
 ```
 
+### Query
+
+Somethimes, splats is not enough. Also you want to remember your young years and code in PHP-like style :) It's not a problem with `Query()`. For example, you want to handle all stuff after question mark in this URI: `http://site.com/articles?number=20&offset=100`. To get values for `number` and `offset` you can type just:
+
+```go
+func Articles () string {
+    return Query()["number"] + " " + Query()["offset"]
+}
+```
+
 
 ## Views
 

@@ -12,7 +12,7 @@ var (
     AppSettings = make(map[string]interface{})
     routes      = make(map[string] map[string] func () string)
     splat       = make(map[string]string)
-    params      = make(map[string]string)
+    query       = make(map[string]string)
     ctx         = context {}
 )
 
@@ -73,7 +73,7 @@ func Run (settings map[string]interface {}) {
 func Router (w http.ResponseWriter, req *http.Request) {
 
     // splitting whole path into parts
-    path, paramsString := helpers.SplitPath(req.URL.String())
+    path, queryString := helpers.SplitPath(req.URL.String())
     routeFound := false
 
     // finding correct handler
@@ -86,8 +86,8 @@ func Router (w http.ResponseWriter, req *http.Request) {
             // homage to Sinatra's splat
             splat = helpers.ParseSplat(pattern, path)
 
-            // filling params
-            params = helpers.ParseParams(paramsString)
+            // filling query
+            query = helpers.ParseQuery(queryString)
 
             // calling matched handler
             fmt.Fprintln(w, routes[req.Method][rawPattern]())
