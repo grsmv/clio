@@ -2,6 +2,7 @@ package core
 
 import (
     "encoding/json"
+    "github.com/gorilla/schema"
 )
 
 // ------------------- initializing colour marks -------------------
@@ -36,6 +37,18 @@ func Params (q string) (string) {
 
 func SetHeader (key, value string) {
     Context().ResponseWriter.Header().Set(key, value)
+}
+
+
+// Populating given empty instance of certain class with
+// form data
+// Example usage:
+//     Populate (Users{})
+func Populate (instance interface{}) interface{} {
+    decoder := schema.NewDecoder()
+    ctx.Request.ParseForm()
+    decoder.Decode(&instance, ctx.Request.Form)
+    return instance
 }
 
 // ------------------- rest methods -------------------
