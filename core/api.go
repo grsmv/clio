@@ -43,11 +43,11 @@ func SetHeader (key, value string) {
 // Populating given empty instance of certain class with
 // form data
 // Example usage:
-//     Populate (Users{})
+//     Populate (new(User))
 func Populate (instance interface{}) interface{} {
     decoder := schema.NewDecoder()
     ctx.Request.ParseForm()
-    decoder.Decode(&instance, ctx.Request.Form)
+    decoder.Decode(instance, ctx.Request.Form)
     return instance
 }
 
