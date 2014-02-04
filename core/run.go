@@ -26,7 +26,7 @@ type context struct {
  *  Creating namespace to place routes by specific http method
  */
 func init () {
-    methods := []string{"GET", "POST", "PUT", "DELETE"}
+    methods := []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
     for index := range methods {
         routes[methods[index]] = make (map[string] func () string)
     }

@@ -54,22 +54,26 @@ func Populate (instance interface{}) interface{} {
 // ------------------- rest methods -------------------
 
 func Get (pattern string, handler func () string) {
-    routes["GET"][pattern] = handler;
+    routes["GET"][pattern] = handler
 }
 
 
 func Post (pattern string, handler func () string) {
-    routes["POST"][pattern] = handler;
+    routes["POST"][pattern] = handler
 }
 
 
 func Put (pattern string, handler func () string) {
-    routes["PUT"][pattern] = handler;
+    routes["PUT"][pattern] = handler
 }
 
 
 func Delete (pattern string, handler func () string) {
-    routes["DELETE"][pattern] = handler;
+    routes["DELETE"][pattern] = handler
+}
+
+func Options (pattern string, handler func () string) {
+    routes["OPTIONS"][pattern] = handler
 }
 
 // ------------------- json helper -------------------
