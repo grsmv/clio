@@ -51,7 +51,7 @@ func Run (settings map[string]interface {}) {
 
     // basic assets management
     if settings["manage-assets"].(bool) {
-        fs := http.FileServer(http.Dir("public"))
+        fs := http.FileServer(http.Dir("static"))
         http.Handle("/assets/", http.StripPrefix("/assets/", fs))
     }
 
