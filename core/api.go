@@ -3,6 +3,7 @@ package core
 import (
     "encoding/json"
     "github.com/gorilla/schema"
+    "net/http"
 )
 
 // ------------------- initializing colour marks -------------------
@@ -37,6 +38,11 @@ func Params (q string) (string) {
 
 func SetHeader (key, value string) {
     Context().ResponseWriter.Header().Set(key, value)
+}
+
+func AccessDenied () {
+    SetHeader("WWW-Authenticate", "Basic Realm=\"My Realm\"")
+    http.Error(Context().ResponseWriter, "Authentication required", 403)
 }
 
 
