@@ -4,6 +4,7 @@ import (
     "encoding/json"
     "github.com/gorilla/schema"
     "net/http"
+    "io/ioutil"
 )
 
 // ------------------- initializing colour marks -------------------
@@ -43,6 +44,11 @@ func SetHeader (key, value string) {
 func AccessDenied () {
     SetHeader("WWW-Authenticate", "Basic Realm=\"My Realm\"")
     http.Error(Context().ResponseWriter, "Authentication required", 403)
+}
+
+func RequestBody () string {
+    body, _ := ioutil.ReadAll(Context().Request.Body)
+    return string(body)
 }
 
 
