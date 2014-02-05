@@ -41,10 +41,18 @@ func SetHeader (key, value string) {
     Context().ResponseWriter.Header().Set(key, value)
 }
 
+// Shortcuts for REST purposes
+
 func AccessDenied () {
     SetHeader("WWW-Authenticate", "Basic Realm=\"My Realm\"")
     http.Error(Context().ResponseWriter, "Authentication required", 403)
 }
+
+func BadRequest () {
+    http.Error(Context().ResponseWriter, "Bad Request", 400)
+}
+
+// other helpers
 
 func RequestBody () string {
     body, _ := ioutil.ReadAll(Context().Request.Body)
