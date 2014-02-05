@@ -52,6 +52,10 @@ func BadRequest () {
     http.Error(Context().ResponseWriter, "Bad Request", 400)
 }
 
+func Conflict () {
+    http.Error(Context().ResponseWriter, "Conflict", 409)
+}
+
 // other helpers
 
 func RequestBody () string {
