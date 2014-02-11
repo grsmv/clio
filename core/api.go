@@ -48,11 +48,15 @@ func AccessDenied () {
     http.Error(Context().ResponseWriter, "Authentication required", 403)
 }
 
-func BadRequest () {
+func BadRequest() {
     http.Error(Context().ResponseWriter, "Bad Request", 400)
 }
 
-func Conflict () {
+func NotFoundError() {
+    http.Error(Context().ResponseWriter, "Not Found", 404)
+}
+
+func Conflict() {
     http.Error(Context().ResponseWriter, "Conflict", 409)
 }
 
