@@ -1,13 +1,11 @@
 package core
 
 import (
-    // "bytes"
-    "fmt"
+    "bytes"
     "github.com/cliohq/clio/helpers"
     "log"
     "net/http"
     "strconv"
-    // "github.com/davecgh/go-spew/spew"
 )
 
 var (
@@ -92,18 +90,26 @@ func Router (w http.ResponseWriter, req *http.Request) {
             // filling query
             query = helpers.ParseQuery(queryString)
 
+            // prepearing buffer
+            buffer := new(bytes.Buffer)
+
+            // default values for 'Before' or 'After' hooking
             hooksAvailable := false
+            ctx.ResponseCode = 200
 
             // calling before action
             if BeforeActionStore[req.Method][rawPattern] != nil {
                 hooksAvailable = true
-                fmt.Fprintln(w, BeforeActionStore[req.Method][rawPattern]())
+                buffer.Write([]byte(BeforeActionStore[req.Method][rawPattern]()))
             }
 
             // calling matched handler
             if !hooksAvailable || Context().ResponseCode == 200 {
-                fmt.Fprintln(w, routes[req.Method][rawPattern]())
+                buffer.Write([]byte(routes[req.Method][rawPattern]()))
             }
+
+            // flushing buffer to ResponseWriter
+            buffer.WriteTo(w)
 
             // terminal debugging
             if Verbose() {
