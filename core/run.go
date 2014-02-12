@@ -1,16 +1,18 @@
 package core
 
 import (
+    // "bytes"
     "fmt"
     "github.com/cliohq/clio/helpers"
     "log"
     "net/http"
     "strconv"
+    // "github.com/davecgh/go-spew/spew"
 )
 
 var (
     AppSettings = make(map[string]interface{})
-    routes      = make(map[string] map[string] func () string)
+    routes      = make(map[string]map[string]func()string)
     splat       = make(map[string]string)
     query       = make(map[string]string)
     ctx         = context {}
@@ -19,6 +21,7 @@ var (
 type context struct {
     Request *http.Request
     ResponseWriter http.ResponseWriter
+    ResponseCode int
 }
 
 
@@ -89,8 +92,18 @@ func Router (w http.ResponseWriter, req *http.Request) {
             // filling query
             query = helpers.ParseQuery(queryString)
 
+            hooksAvailable := false
+
+            // calling before action
+            if BeforeActionStore[req.Method][rawPattern] != nil {
+                hooksAvailable = true
+                fmt.Fprintln(w, BeforeActionStore[req.Method][rawPattern]())
+            }
+
             // calling matched handler
-            fmt.Fprintln(w, routes[req.Method][rawPattern]())
+            if !hooksAvailable || Context().ResponseCode == 200 {
+                fmt.Fprintln(w, routes[req.Method][rawPattern]())
+            }
 
             // terminal debugging
             if Verbose() {
