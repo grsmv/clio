@@ -10,7 +10,7 @@ import (
  *  Example:
  *    /users/:id -> "^/users/(?P<id>[\p{L}\d-_]{1,})$"
  */
-func PreparePattern (tracery string) *regexp.Regexp {
+func PreparePattern(tracery string) *regexp.Regexp {
     tracery = strings.Replace (tracery, ".", "\\.", -1)
 
     // detecting keywords to convert
@@ -31,7 +31,7 @@ func PreparePattern (tracery string) *regexp.Regexp {
 /**
  *  Converting path to a key-value storage
  */
-func ParseSplat (pattern *regexp.Regexp, path string) map[string]string {
+func ParseSplat(pattern *regexp.Regexp, path string) map[string]string {
     var (
         vocabulary = make(map[string]string)
         matches    = pattern.FindAllStringSubmatch(path, 100)[0][1:]
@@ -51,7 +51,7 @@ func ParseSplat (pattern *regexp.Regexp, path string) map[string]string {
  *    "/a/b/c?a=b&c=d" should be splitted into
  *    "/a/b/c" and "a=b&c=d"
  */
-func SplitPath (path string) (abs, query string) {
+func SplitPath(path string) (abs, query string) {
     pattern, _ := regexp.Compile("(.*)\\?(.*)")
     parts := pattern.FindAllStringSubmatch(path, 100)
     if len(parts) > 0 {
@@ -77,7 +77,7 @@ func SplitPath (path string) (abs, query string) {
  *      "a": "b", "c" : "d"
  *    }
  */
-func ParseQuery (queryString string) map[string]string {
+func ParseQuery(queryString string) map[string]string {
     query := make(map[string]string)
     if len(queryString) > 0 {
         pairsArray := strings.Split(queryString, "&")
