@@ -1,4 +1,4 @@
-# Clio
+# Clio [![Build Status](https://travis-ci.org/cliohq/clio.png?branch=master)](https://travis-ci.org/cliohq/clio)
 
 
 Clio is a simple DSL for creating web applications in Go programming language with minimal effort. It includes routes for URL-matching, simple template system with support of application-wide and custom layouts and templates for each action, and bunch of useful utilities.
