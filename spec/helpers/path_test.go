@@ -2,18 +2,20 @@ package helpers
 
 import (
     "os"
-    "testing"
-    "github.com/cliohq/clio/helpers"
+    . "github.com/cliohq/clio/helpers"
+    . "github.com/onsi/ginkgo"
+    . "github.com/onsi/gomega"
 )
 
-func TestFixPath(t *testing.T) {
-    if string (os.PathSeparator) == "/" {
-        if helpers.FixPath("/a/b/c") != "/a/b/c" {
-            t.Error ("")
-        }
-    } else {
-        if helpers.FixPath ("/a/b/c") != "\\a\\b\\c" {
-            t.Error ("")
-        }
-    }
-}
+var _ = Describe("github.com/cliohq/clio/helpers/path.go", func (){
+    Describe("FixPath", func () {
+        It("Should fix given path, basing on OS type", func (){
+            path := "/a/b/c"
+            if os.PathSeparator == '/' {
+                Expect(FixPath(path)).To(Equal("/a/b/c"))
+            } else {
+                Expect(FixPath(path)).To(Equal("\\a\\b\\c"))
+            }
+        })
+    })
+})

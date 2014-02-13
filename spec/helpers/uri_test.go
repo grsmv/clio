@@ -1,81 +1,49 @@
 package helpers
 
 import (
-    "testing"
-    "github.com/cliohq/clio/helpers"
+    . "github.com/cliohq/clio/helpers"
+    . "github.com/onsi/ginkgo"
+    . "github.com/onsi/gomega"
 )
 
-func TestParseParam(t *testing.T) {
-    paramsString := "a=b&c=d"
-    parsedParams := helpers.ParseQuery(paramsString)
+var _ = Describe("github.com/cliohq/clio/helpers/uri.go", func (){
 
-    if len (parsedParams) != 2 {
-        t.Error ("")
-    }
+    Describe("ParseQuery", func () {
 
-    if parsedParams["a"] != "b" {
-        t.Error ("")
-    }
+        It("Should parse given paramenters into map", func (){
+            Expect(ParseQuery("a=b&c=d")).To(Equal(map[string]string{"a": "b", "c": "d"}))
+        })
 
-    if parsedParams["c"] != "d" {
-        t.Error ("")
-    }
-}
+        It("Should pair unmatched key with empty string", func (){
+            Expect(ParseQuery("a=b&c")).To(Equal(map[string]string{"a":"b", "c": ""}))
+        })
 
+        It("Should split main path from parameters", func (){
+            abs, params := SplitPath("/a/b/c?a=b&c")
+            Expect(abs).To(Equal("/a/b/c"))
+            Expect(params).To(Equal("a=b&c"))
+        })
 
-func TestParseParamKeyWithoutValue(t *testing.T) {
-    paramsString := "a=b&c"
-    parsedParams := helpers.ParseQuery(paramsString)
+        It("Shoud do nothing if main url followed by question mark", func () {
+            _, params := SplitPath("/a/b/c?")
+            Expect(params).To(Equal(""))
+        })
 
-    if parsedParams["c"] != "" {
-        t.Error ("")
-    }
-}
+        It("Should produce empty absolute path and params if empty string given", func () {
+            abs, params := SplitPath("")
+            Expect(abs).To(Equal(""))
+            Expect(params).To(Equal(""))
+        })
+    })
 
+    Describe("PreparePattern", func () {
 
-func TestSplitPath(t *testing.T) {
-    abs, params := helpers.SplitPath ("/a/b/c?a=b&c=d")
-    if abs != "/a/b/c" {
-        t.Error ("")
-    }
+        It("Should prepare correct pattern for splat parsing", func () {
+            Expect(PreparePattern("/users/:id/edit").String()).To(Equal("^/users/(?P<id>[\\p{L}\\d-_]{1,})/edit$"))
+        })
 
-    if params != "a=b&c=d" {
-        t.Error ("")
-    }
-}
-
-
-func TestSplitPathWithoutParams(t *testing.T) {
-    _, params := helpers.SplitPath ("/a/b/c?")
-    if params != "" {
-        t.Error ("")
-    }
-}
-
-
-func TestSplitPathWithEmptyString(t *testing.T) {
-    abs, params := helpers.SplitPath("")
-    if abs != "" {
-        t.Error("")
-    }
-
-    if params != "" {
-        t.Error("")
-    }
-}
-
-
-func TestPreparePattern(t *testing.T) {
-    rxp := helpers.PreparePattern("/a/:id/c")
-    if rxp.String() != "^/a/(?P<id>[\\p{L}\\d-_]{1,})/c$" {
-        t.Error ("")
-    }
-}
-
-
-func TestPreparePatternDots(t *testing.T) {
-    rxp := helpers.PreparePattern("/a.mp3")
-    if rxp.String() != "^/a\\.mp3$" {
-        t.Error("")
-    }
-}
+        It("Should escape dots in given path", func () {
+            Expect(PreparePattern("/a.mp3").String()).To(Equal("^/a\\.mp3$"))
+        })
+    })
+})
