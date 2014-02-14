@@ -1,0 +1,8 @@
+{
+    "name": "tincan-cource-example",
+    "version": "0.0.1.0",
+    "dependencies": {
+        "bootstrap":     "3.0.3",
+        "normalize-css": "master"
+    }
+}

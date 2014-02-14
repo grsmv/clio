@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# ---------------------------------------------------------
+# helpers:
+
+# checking npm existence
+check_dependencies () {
+    which npm > /dev/null 2>&1
+    export NPM_EXISTENCE=$?
+}
+
+# installing dependencies
+install () {
+    local tasks=(bower:install sass cssmin)
+
+    npm install --safe-dev
+    for task in ${tasks[*]}; do
+        ./node_modules/.bin/grunt $task
+    done
+}
+
+# ---------------------------------------------------------
+# execution:
+
+check_dependencies
+
+if [[ $NPM_EXISTENCE == 0 ]]; then
+    install
+else
+    echo "Plese install golang and/or npm"
+fi

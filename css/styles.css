@@ -1,0 +1,132 @@
+html {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body#index {
+  background: #222221;
+  color: white;
+  overflow-x: hidden;
+  width: 100%;
+}
+body#index nav {
+  background: #222221;
+  border: none;
+  border-bottom: 1px solid #4e4027;
+  padding-left: 30px;
+}
+body#index nav a {
+  color: #959595;
+}
+body#index nav a:hover {
+  color: #fdb63f;
+}
+body#index nav div.navbar-header {
+  font-weight: bold;
+}
+body#index .logos {
+  margin-top: 65px;
+}
+body#index .logos .main-logo {
+  text-align: center;
+}
+body#index .logos .logo {
+  text-align: center;
+  margin-top: 110px;
+}
+body#index .logos .logo a {
+  color: #fdb63f;
+}
+body#index .logos .logo div {
+  margin-top: 5px;
+}
+body#index .logos .logo h6 {
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-weight: bold;
+}
+body#index .logos .logo a {
+  text-decoration: none;
+}
+body#index .logos .logo a:hover {
+  color: white;
+  cursor: pointer;
+}
+body#index .logos .logo a:hover #ukraine-shield path, body#index .logos .logo a:hover #octocat path {
+  fill: white;
+}
+body#index .logos #ukraine-shield,
+body#index .logos #octocat {
+  height: 87px;
+}
+body#index .logos #ukraine-shield path,
+body#index .logos #octocat path {
+  fill: #fdb63f;
+}
+body#index .logos #ukraine-shield {
+  width: 52px;
+}
+body#index .logos #octocat {
+  width: 87px;
+}
+body#index .teaser {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 1.4em;
+}
+body#index .teaser .version {
+  margin-top: 8px;
+}
+body#index .teaser .version small {
+  font-size: 0.6em;
+  color: #6e6e6e;
+}
+body#index .inside {
+  margin-top: 60px;
+  text-align: center;
+}
+body#index .inside .line {
+  position: absolute;
+  width: 5000px;
+  margin-left: -1000px;
+  left: 0;
+  border-bottom: 1px solid #4e4027;
+  top: 0;
+  z-index: 1;
+}
+body#index .inside h3 {
+  background: #222221;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -15px;
+  position: relative;
+  width: 100%;
+  width: 200px;
+  z-index: 2;
+  font-weight: normal !important;
+}
+body#index .inside .features {
+  margin-top: 51px;
+}
+body#index .inside .features .feature {
+  text-align: center;
+}
+body#index .inside .features .feature div {
+  margin-top: 26px;
+}
+body#index .getting-started {
+  margin-top: 64px;
+  margin-bottom: 60px;
+  text-align: center;
+}
+body#index .getting-started a {
+  color: #fdb63f;
+}
+body#index .getting-started a:hover {
+  color: white;
+  text-decoration: none;
+}

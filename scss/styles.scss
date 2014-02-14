@@ -1,0 +1,171 @@
+html {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    &#index {
+        $bg: #222221; // background
+        $c:  #fff;    // text color
+        $l:  #959595; // link
+        $lh: #fdb63f; // link hovered
+        $db: #4e4027; // dark border
+        $dt: #6e6e6e; // dark text
+
+        background: $bg;
+        color: $c;
+        overflow-x: hidden;
+        width: 100%;
+
+        nav {
+            background: $bg;
+            border: none;
+            border-bottom: 1px solid $db;
+            padding-left: 30px;
+
+            a {
+                color: $l;
+
+                &:hover {
+                    color: $lh;
+                }
+            }
+
+            div.navbar-header {
+                font-weight: bold;
+            }
+        }
+
+        .logos {
+            margin-top: 65px;
+
+            .main-logo {
+                text-align: center;
+            }
+
+            .logo {
+                text-align: center;
+                margin-top: 110px;
+
+                a {
+                    color: $lh;
+                }
+
+                div {
+                    margin-top: 5px;
+                }
+
+                h6 {
+                    height: 20px;
+                    margin: 0;
+                    padding: 0;
+                    text-transform: uppercase;
+                    letter-spacing: 4px;
+                    font-weight: bold;
+                    // font-size: 1.05em;
+                }
+
+                a {
+                    text-decoration: none;
+
+                    &:hover {
+                        color: $c;
+                        cursor: pointer;
+
+                        #ukraine-shield, #octocat {
+                            path {
+                                fill: $c;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #ukraine-shield,
+            #octocat {
+                height: 87px;
+                path {
+                    fill: $lh;
+                }
+            }
+
+            #ukraine-shield {
+                width: 52px;
+            }
+
+            #octocat {
+                width: 87px;
+            }
+        }
+
+        .teaser {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 1.4em;
+
+            .version {
+                margin-top: 8px;
+
+                small {
+                    font-size: 0.6em;
+                    color: $dt;
+                }
+            }
+        }
+
+        .inside {
+            margin-top: 60px;
+            text-align: center;
+
+            .line {
+                position: absolute;
+                width: 5000px;
+                margin-left: -1000px;
+                left: 0;
+                border-bottom: 1px solid $db;
+                top: 0;
+                z-index: 1;
+            }
+
+            h3 {
+                background: $bg;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: -15px;
+                position: relative;
+                width: 100%;
+                width: 200px;
+                z-index: 2;
+                font-weight: normal !important;
+            }
+
+            .features {
+                margin-top: 51px;
+
+                .feature {
+                    text-align: center;
+
+                    div {
+                        margin-top: 26px;
+                    }
+                }
+            }
+        }
+
+        .getting-started {
+            margin-top: 64px;
+            margin-bottom: 60px;
+            text-align: center;
+
+            a {
+                color: $lh;
+
+                &:hover {
+                    color: $c;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
