@@ -2,7 +2,7 @@ package core
 
 import (
     "bytes"
-    "github.com/cliohq/clio/helpers"
+    "github.com/grsmv/clio/helpers"
     "log"
     "net/http"
     "strconv"

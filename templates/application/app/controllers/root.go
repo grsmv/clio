@@ -1,7 +1,7 @@
 package controllers
 
 import (
-  . "github.com/cliohq/clio/core"
+  . "github.com/grsmv/clio/core"
 )
 
 func Root () string {

@@ -28,7 +28,7 @@ Example:
 
     This will generate a skeletal Clio application.
     Please, see the README in the newly created application
-    get going. Also http://cliohq.github.io is a good place
+    get going. Also http://grsmv.github.io is a good place
     for getting more information about Clio. Good luck!
 `)
 }

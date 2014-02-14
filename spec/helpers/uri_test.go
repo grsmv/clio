@@ -1,12 +1,12 @@
 package helpers
 
 import (
-    . "github.com/cliohq/clio/helpers"
+    . "github.com/grsmv/clio/helpers"
     . "github.com/onsi/ginkgo"
     . "github.com/onsi/gomega"
 )
 
-var _ = Describe("github.com/cliohq/clio/helpers/uri.go", func (){
+var _ = Describe("github.com/grsmv/clio/helpers/uri.go", func (){
 
     Describe("ParseQuery", func () {
 

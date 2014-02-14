@@ -3,7 +3,7 @@ package cli
 import (
     "bytes"
     "fmt"
-    "github.com/cliohq/clio/helpers"
+    "github.com/grsmv/clio/helpers"
     "github.com/grsmv/inflect"
     "io/ioutil"
     "log"

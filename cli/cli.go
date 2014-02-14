@@ -4,8 +4,8 @@ import (
     "fmt"
     "os"
     "strings"
-    "github.com/cliohq/clio/helpers"
-    "github.com/cliohq/clio/core"
+    "github.com/grsmv/clio/helpers"
+    "github.com/grsmv/clio/core"
 )
 
 const (
@@ -23,7 +23,7 @@ var (
     GOPATH = os.Getenv ("GOPATH")
     GOPATH_SRC = GOPATH + slash + "src" + slash
 
-    templatesRoot = "src/github.com/cliohq/clio/templates"
+    templatesRoot = "src/github.com/grsmv/clio/templates"
     applicationTemplatesPath = helpers.FixPath (templatesRoot + "/application")
     generatorsTemplatesPath  = helpers.FixPath (helpers.FixPath(GOPATH + "/" + templatesRoot + "/generators"))
 )

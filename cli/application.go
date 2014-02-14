@@ -1,7 +1,7 @@
 package cli
 
 import (
-    "github.com/cliohq/clio/helpers"
+    "github.com/grsmv/clio/helpers"
     "log"
     "net"
     "net/http"

@@ -2,8 +2,8 @@ package controllers
 
 import (
     // custom packages
-    "github.com/cliohq/clio/core"
-    "github.com/cliohq/clio/helpers/test"
+    "github.com/grsmv/clio/core"
+    "github.com/grsmv/clio/helpers/test"
     . "github.com/onsi/ginkgo"
     . "github.com/onsi/gomega"
 

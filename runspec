@@ -15,7 +15,7 @@ cover () {
     for package in ${packages[*]}
     do
         cd spec/${package}
-        go test -v -coverpkg github.com/cliohq/clio/${package} -cover -coverprofile=cover.out
+        go test -v -coverpkg github.com/grsmv/clio/${package} -cover -coverprofile=cover.out
         go tool cover -html=cover.out
         rm cover.out
         cd ../..

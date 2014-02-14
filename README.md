@@ -1,4 +1,4 @@
-# Clio [![Build Status](https://travis-ci.org/cliohq/clio.png?branch=master)](https://travis-ci.org/cliohq/clio)
+# Clio [![Build Status](https://travis-ci.org/grsmv/clio.png?branch=master)](https://travis-ci.org/grsmv/clio)
 
 
 Clio is a simple DSL for creating web applications in Go programming language with minimal effort. It includes routes for URL-matching, simple template system with support of application-wide and custom layouts and templates for each action, and bunch of useful utilities.
@@ -6,7 +6,7 @@ Clio is a simple DSL for creating web applications in Go programming language wi
 
 ##### Command-line tools
 
-Clio comes with command line interface, which makes developing of Clio-based applications much easier. This is a bench of tools. You can find all needed information about them typing 
+Clio comes with command line interface, which makes developing of Clio-based applications much easier. This is a bench of tools. You can find all needed information about them typing
 
 ``` bash
 $> clio help
@@ -39,7 +39,7 @@ func ControllerRoutes () {
 }
 ```
 
-You can see that Clio supports next HTTP methods: GET, POST, PUT, DELETE. 
+You can see that Clio supports next HTTP methods: GET, POST, PUT, DELETE.
 Every route method takes two arguments - route pattern and function to call if route matches. You can place closure as second argument, for example:
 
 ``` go
@@ -48,7 +48,7 @@ Get ("/", func () string {
 })
 ```
 
-One and only requirement for functions or closures that are called when pattern match - they should return string. 
+One and only requirement for functions or closures that are called when pattern match - they should return string.
 
 
 ### Splats
@@ -157,7 +157,7 @@ func BookPlain () string {
 
 ## Example application
 
-To see how real Clio-based application works, please take a look at https://github.com/cliohq/clio-example.
+To see how real Clio-based application works, please take a look at https://github.com/grsmv/clio-example.
 
 ##### Request details
 ##### Cookies and sessions?

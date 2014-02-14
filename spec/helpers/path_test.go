@@ -2,12 +2,12 @@ package helpers
 
 import (
     "os"
-    . "github.com/cliohq/clio/helpers"
+    . "github.com/grsmv/clio/helpers"
     . "github.com/onsi/ginkgo"
     . "github.com/onsi/gomega"
 )
 
-var _ = Describe("github.com/cliohq/clio/helpers/path.go", func (){
+var _ = Describe("github.com/grsmv/clio/helpers/path.go", func (){
     Describe("FixPath", func () {
         It("Should fix given path, basing on OS type", func (){
             path := "/a/b/c"

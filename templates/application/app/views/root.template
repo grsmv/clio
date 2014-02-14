@@ -74,7 +74,7 @@
             <div id="text">
                 <p>
                     Thank you for choosing our framework to create your new mind-blowning web application. Please, read next info to be familiar with super powers that you have just got:
-                    <a href="http://cliohq.github.io">cliohq.github.io</a> is your guide. <code title="type it in your command line">clio help</code> will teach you how to use development-mode tools.
+                    <a href="http://grsmv.github.io">grsmv.github.io</a> is your guide. <code title="type it in your command line">clio help</code> will teach you how to use development-mode tools.
                 </p>
                 <p>
                     Right now you looking at page that was generated from <i>app/views/root.template</i>. Also take a look at <i>app/routes/root.go</i> and <i>app/controllers/root.go</i>.
