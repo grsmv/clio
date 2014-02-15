@@ -64,6 +64,10 @@ body {
             .main-logo {
                 text-align: center;
 
+                img {
+                    width: 365px;
+                }
+
                 @media screen and (max-width: $mobile) {
                     img {
                         width: 250px;

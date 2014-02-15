@@ -45,6 +45,9 @@ body#index .logos {
 body#index .logos .main-logo {
   text-align: center;
 }
+body#index .logos .main-logo img {
+  width: 365px;
+}
 @media screen and (max-width: 768px) {
   body#index .logos .main-logo img {
     width: 250px;
