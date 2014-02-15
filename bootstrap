@@ -11,7 +11,7 @@ check_dependencies () {
 
 # installing dependencies
 install () {
-    local tasks=(bower:install sass cssmin)
+    local tasks=(bower:install sass cssmin closure-compiler)
 
     npm install --safe-dev
     for task in ${tasks[*]}; do

@@ -9,26 +9,47 @@ body#index {
   overflow-x: hidden;
   width: 100%;
 }
-body#index nav {
+body#index header {
   background: #222221;
   border: none;
   border-bottom: 1px solid #4e4027;
-  padding-left: 30px;
 }
-body#index nav a {
+body#index header a {
   color: #959595;
 }
-body#index nav a:hover {
+body#index header a:hover {
   color: #fdb63f;
 }
-body#index nav div.navbar-header {
+body#index header div.navbar-header {
   font-weight: bold;
+}
+body#index header div.navbar-header button.navbar-toggle {
+  background: #222221;
+  border-color: #4e4027;
+}
+body#index header div.navbar-header button.navbar-toggle span.icon-bar {
+  background: #fdb63f;
+}
+body#index header nav.navbar-collapse {
+  border-color: #4e4027;
 }
 body#index .logos {
   margin-top: 65px;
 }
+@media screen and (max-width: 768px) {
+  body#index .logos {
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
+}
 body#index .logos .main-logo {
   text-align: center;
+}
+@media screen and (max-width: 768px) {
+  body#index .logos .main-logo img {
+    width: 250px;
+    margin-left: 30px;
+  }
 }
 body#index .logos .logo {
   text-align: center;
@@ -118,10 +139,24 @@ body#index .inside .features .feature {
 body#index .inside .features .feature div {
   margin-top: 26px;
 }
+@media screen and (max-width: 768px) {
+  body#index .inside .features .feature {
+    margin-bottom: 30px;
+  }
+  body#index .inside .features .feature div {
+    margin-top: 15px;
+  }
+}
 body#index .getting-started {
   margin-top: 64px;
   margin-bottom: 60px;
   text-align: center;
+}
+@media screen and (max-width: 768px) {
+  body#index .getting-started {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
 }
 body#index .getting-started a {
   color: #fdb63f;

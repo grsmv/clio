@@ -1,3 +1,8 @@
+// sizes for mobile and tablets:
+
+$mobile: 768px;
+$tablet: 1000px;
+
 html {
     width: 100%;
     overflow-x: hidden;
@@ -17,11 +22,10 @@ body {
         overflow-x: hidden;
         width: 100%;
 
-        nav {
+        header {
             background: $bg;
             border: none;
             border-bottom: 1px solid $db;
-            padding-left: 30px;
 
             a {
                 color: $l;
@@ -33,14 +37,39 @@ body {
 
             div.navbar-header {
                 font-weight: bold;
+
+                button.navbar-toggle {
+                    background: $bg;
+                    border-color: $db;
+
+                    span.icon-bar {
+                        background: $lh;
+                    }
+                }
+            }
+
+            nav.navbar-collapse {
+                border-color: $db;
             }
         }
 
         .logos {
             margin-top: 65px;
 
+            @media screen and (max-width: $mobile) {
+                margin-top: 0;
+                margin-bottom: 30px;
+            }
+
             .main-logo {
                 text-align: center;
+
+                @media screen and (max-width: $mobile) {
+                    img {
+                        width: 250px;
+                        margin-left: 30px; // centering
+                    }
+                }
             }
 
             .logo {
@@ -62,7 +91,6 @@ body {
                     text-transform: uppercase;
                     letter-spacing: 4px;
                     font-weight: bold;
-                    // font-size: 1.05em;
                 }
 
                 a {
@@ -149,6 +177,14 @@ body {
                     div {
                         margin-top: 26px;
                     }
+
+                    @media screen and (max-width: $mobile) {
+                        margin-bottom: 30px;
+
+                        div {
+                            margin-top: 15px;
+                        }
+                    }
                 }
             }
         }
@@ -157,6 +193,11 @@ body {
             margin-top: 64px;
             margin-bottom: 60px;
             text-align: center;
+
+            @media screen and (max-width: $mobile) {
+                margin-top: 10px;
+                margin-bottom: 20px;
+            }
 
             a {
                 color: $lh;

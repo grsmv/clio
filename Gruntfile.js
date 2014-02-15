@@ -39,6 +39,21 @@ module.exports = function (grunt) {
             }
         },
 
+        "closure-compiler": {
+            frontend: {
+                closurePath: "$HOME/bin/closure-compiler",
+                js: [
+                    "lib/jquery/jquery.js",
+                    "lib/bootstrap/bootstrap.js"
+                ],
+                jsOutputFile: "javascripts/all.min.js",
+                maxBuffer: 500,
+                options: {
+                    compilation_level: "SIMPLE_OPTIMIZATIONS"
+                }
+            }
+        },
+
         watch: {
             options: {
                 livereload: false
@@ -53,6 +68,7 @@ module.exports = function (grunt) {
     });
 
     grunt.loadNpmTasks("grunt-bower-task");
+    grunt.loadNpmTasks("grunt-closure-compiler");
     grunt.loadNpmTasks("grunt-contrib-cssmin");
     grunt.loadNpmTasks("grunt-contrib-sass");
     grunt.loadNpmTasks("grunt-contrib-watch");
