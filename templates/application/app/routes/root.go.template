@@ -1,10 +1,10 @@
 package routes
 
 import (
-    . "github.com/grsmv/clio/core"
-    "{{.Name}}/app/controllers"
+	. "github.com/grsmv/clio/core"
+	"{{.Name}}/app/controllers"
 )
 
 func init () {
-    Get ("/", controllers.Root)
+	Get ("/", controllers.Root)
 }

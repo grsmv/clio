@@ -5,4 +5,4 @@ package routes
 //     application.go. All other work done by `init` function in route files. For example
 //     take a look at `app/routes/root.go`
 
-func Register () { }
+func Register() {}

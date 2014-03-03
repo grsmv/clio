@@ -1,19 +1,19 @@
 package controllers
 
 import (
-    // custom packages
-    "github.com/grsmv/clio/core"
-    "github.com/grsmv/clio/helpers/test"
-    . "github.com/onsi/ginkgo"
-    . "github.com/onsi/gomega"
+	// custom packages
+	"github.com/grsmv/clio/core"
+	"github.com/grsmv/clio/helpers/test"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 
-    // current app resources
-    "{{.Name}}/app/routes"
+	// current app resources
+	"{{.Name}}/app/routes"
 
-    // stdlib packages
-    "testing"
-    "net/http"
-    "net/http/httptest"
+	// stdlib packages
+	"testing"
+	"net/http"
+	"net/http/httptest"
 )
 
 
@@ -22,14 +22,14 @@ var Clio test.Response
 
 func TestControllers (t *testing.T) {
 
-    // setup
-    Server = httptest.NewServer(http.HandlerFunc(core.Handler))
-    Clio = test.NewResponse(Server)
-    routes.Register()
+	// setup
+	Server = httptest.NewServer(http.HandlerFunc(core.Handler))
+	Clio = test.NewResponse(Server)
+	routes.Register()
 
-    RegisterFailHandler (Fail)
-    RunSpecs (t, "Controllers")
+	RegisterFailHandler (Fail)
+	RunSpecs (t, "Controllers")
 
-    // teardown
-    Server.Close()
+	// teardown
+	Server.Close()
 }
