@@ -25,11 +25,7 @@ func (ah ActionHandler) Before(do func()string) {
 
 // ----------------------------------
 
-var colours Colours
-
 func init () {
-    colours = Colours {}
-    colours.init ()
     BeforeActionStore = map[string]map[string]func()string {
         "GET":     map[string]func()string{},
         "POST":    map[string]func()string{},
