@@ -2,6 +2,7 @@ package core
 
 import (
 	"bytes"
+	"flag"
 	"github.com/grsmv/clio/helpers"
 	"log"
 	"net/http"
@@ -14,6 +15,7 @@ var (
 	splat           = make(map[string]string)
 	query           = make(map[string]string)
 	contextInstance = context{}
+	development     bool
 )
 
 type context struct {
@@ -44,6 +46,10 @@ func Handler(w http.ResponseWriter, req *http.Request) {
 
 func Run(settings map[string]interface{}) {
 
+	// defining if development-mode enabled via CLI
+	flag.BoolVar(&development, "development", false, "")
+	flag.Parse()
+
 	// making application's settings accessible to whole package
 	AppSettings = settings
 
@@ -60,7 +66,13 @@ func Run(settings map[string]interface{}) {
 
 	port := strconv.Itoa(settings["port"].(int))
 
-	log.Println("Clio server started at", settings["port"].(int), "port")
+	message := "Clio server started at " + strconv.Itoa(settings["port"].(int)) + " port"
+
+	if development {
+		message += " in development mode"
+	}
+
+	log.Println(message)
 	http.ListenAndServe(":"+port, nil)
 }
 

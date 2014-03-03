@@ -30,8 +30,11 @@ var (
 func templateGeneric(_type, name string, obj []interface{}) (contents string) {
 	var (
 		// functions available inside templates
-		customFunctions = template.FuncMap{"partial": partial}
-		fileName        = templatesHolder + sep + name + templateExtension
+		customFunctions = template.FuncMap{
+			"partial":     partial,
+			"development": developmentState,
+		}
+		fileName = templatesHolder + sep + name + templateExtension
 
 		// defining source for template variables by default.
 		// it's make possible to call render methods in templates
@@ -106,6 +109,14 @@ func layout(layoutName, renderedTemplate string) (output string) {
  */
 func partial(name string, obj ...interface{}) string {
 	return templateGeneric("partial", name, obj)
+}
+
+/**
+ *  Displaying development state in templates with:
+ *    `{{ development }}`
+ */
+func developmentState() bool {
+	return development
 }
 
 /**

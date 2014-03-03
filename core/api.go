@@ -122,6 +122,10 @@ func RequestBody() string {
 	return string(body)
 }
 
+func Development() bool {
+	return development
+}
+
 // --------------------------------------------------------
 
 // shortcut for json returning ----------------------------
