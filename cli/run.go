@@ -3,7 +3,6 @@ package cli
 import (
 	"bufio"
 	"fmt"
-	"github.com/grsmv/clio/helpers"
 	"io"
 	"io/ioutil"
 	"os"
