@@ -58,9 +58,6 @@ func (t *Server) RelaunchProcess(args *Args, reply *int) error {
 		}
 		appProc.Process.Kill()
 
-		// rebuilding application
-		helpers.ApplicationRebuild() // sync
-
 		// Relaunch application
 		newApplicationProc := exec.Command(processBackup.Path, processBackup.Args...)
 

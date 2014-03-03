@@ -33,8 +33,6 @@ func Run() {
 		os.Exit(1)
 	}
 
-	helpers.ApplicationRebuild() // sync
-
 	// starting up tcp server, needed for hotswap
 	go LaunchTcpServer()
 
