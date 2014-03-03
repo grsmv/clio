@@ -1,9 +1,9 @@
 package main
 
 import (
-    "github.com/grsmv/clio/cli"
+	"github.com/grsmv/clio/cli"
 )
 
 func main() {
-    cli.Route()
+	cli.Route()
 }

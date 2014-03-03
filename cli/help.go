@@ -1,11 +1,11 @@
 package cli
 
 import (
-    "fmt"
+	"fmt"
 )
 
 func Help() {
-    fmt.Println (`
+	fmt.Println(`
 Usage:
 
     clio COMMAND [FLAGS]
@@ -32,6 +32,5 @@ Example:
     for getting more information about Clio. Good luck!
 `)
 }
-
 
 // vim: noai:ts=4:sw=4

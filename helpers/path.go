@@ -1,10 +1,10 @@
 package helpers
 
 import (
-    "os"
-    "strings"
+	"os"
+	"strings"
 )
 
-func FixPath (path string) string {
-    return strings.Replace (path, "/", string (os.PathSeparator), -1)
+func FixPath(path string) string {
+	return strings.Replace(path, "/", string(os.PathSeparator), -1)
 }

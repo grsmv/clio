@@ -1,13 +1,13 @@
 package cli
 
 import (
-    "github.com/grsmv/clio/helpers"
-    "log"
-    "net"
-    "net/http"
-    "net/rpc"
-    "os/exec"
-    "strconv"
+	"github.com/grsmv/clio/helpers"
+	"log"
+	"net"
+	"net/http"
+	"net/rpc"
+	"os/exec"
+	"strconv"
 )
 
 const applicationProcessCode = "app"
@@ -18,74 +18,70 @@ var RelaunchProcessFlag bool
 type Server int
 
 type Args struct {
-    ProcName string
+	ProcName string
 }
 
 type ProcessInfo struct {
-    Path string
-    Args []string
-    Pid int
+	Path string
+	Args []string
+	Pid  int
 }
 
-
-func init () {
-    LaunchedProcesses = make(map[string]*exec.Cmd)
-    RelaunchProcessFlag = true
+func init() {
+	LaunchedProcesses = make(map[string]*exec.Cmd)
+	RelaunchProcessFlag = true
 }
 
-
-func LaunchTcpServer () {
-    server := new (Server)
-    rpc.Register (server)
-    rpc.HandleHTTP ()
-    l, err := net.Listen ("tcp", ":" + strconv.Itoa(tcpIPCPort)); if err != nil {
-        log.Fatal ("listen error:", err)
-    }
-    http.Serve (l, nil)
+func LaunchTcpServer() {
+	server := new(Server)
+	rpc.Register(server)
+	rpc.HandleHTTP()
+	l, err := net.Listen("tcp", ":"+strconv.Itoa(tcpIPCPort))
+	if err != nil {
+		log.Fatal("listen error:", err)
+	}
+	http.Serve(l, nil)
 }
 
+func (t *Server) RelaunchProcess(args *Args, reply *int) error {
+	if RelaunchProcessFlag {
+		RelaunchProcessFlag = false
+		appProc := LaunchedProcesses[applicationProcessCode]
 
+		// backupig application's process info
+		processBackup := BackupProcess(appProc)
 
-func (t *Server) RelaunchProcess (args *Args, reply *int) error {
-    if RelaunchProcessFlag {
-        RelaunchProcessFlag = false
-        appProc := LaunchedProcesses[applicationProcessCode]
+		// killing old app's process
+		err := appProc.Process.Kill()
+		if err != nil {
+			log.Fatal("cli.RelaunchProcess()#54:", err) /////////// debug
+		}
+		appProc.Process.Kill()
 
-        // backupig application's process info
-        processBackup := BackupProcess (appProc)
+		// rebuilding application
+		helpers.ApplicationRebuild() // sync
 
-        // killing old app's process
-        err := appProc.Process.Kill(); if err != nil {
-            log.Fatal ("cli.RelaunchProcess()#54:", err)  /////////// debug
-        }
-        appProc.Process.Kill()
+		// Relaunch application
+		newApplicationProc := exec.Command(processBackup.Path, processBackup.Args...)
 
-        // rebuilding application
-        helpers.ApplicationRebuild () // sync
+		// streaming output from new app instance
+		stdOut, _ := newApplicationProc.StdoutPipe()
+		stdErr, _ := newApplicationProc.StderrPipe()
 
-        // Relaunch application
-        newApplicationProc := exec.Command (processBackup.Path, processBackup.Args...)
+		go StreamOutput(stdOut, stdErr, applicationProcessCode)
 
-        // streaming output from new app instance
-        stdOut, _ := newApplicationProc.StdoutPipe()
-        stdErr, _ := newApplicationProc.StderrPipe()
+		go newApplicationProc.Start()
 
-        go StreamOutput (stdOut, stdErr, applicationProcessCode)
+		// updating `LaunchedProcesses`
+		LaunchedProcesses[applicationProcessCode] = newApplicationProc
+		RelaunchProcessFlag = true
+	}
 
-        go newApplicationProc.Start ()
-
-        // updating `LaunchedProcesses`
-        LaunchedProcesses[applicationProcessCode] = newApplicationProc
-        RelaunchProcessFlag = true
-    }
-
-    return nil
+	return nil
 }
 
-
-func BackupProcess (command *exec.Cmd) ProcessInfo {
-    return ProcessInfo { command.Path, command.Args, command.Process.Pid }
+func BackupProcess(command *exec.Cmd) ProcessInfo {
+	return ProcessInfo{command.Path, command.Args, command.Process.Pid}
 }
-
 
 // vim: noai:ts=4:sw=4
