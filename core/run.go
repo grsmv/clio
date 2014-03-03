@@ -9,11 +9,11 @@ import (
 )
 
 var (
-	AppSettings = make(map[string]interface{})
-	routes      = make(map[string]map[string]func() string)
-	splat       = make(map[string]string)
-	query       = make(map[string]string)
-	ctx         = context{}
+	AppSettings     = make(map[string]interface{})
+	routes          = make(map[string]map[string]func() string)
+	splat           = make(map[string]string)
+	query           = make(map[string]string)
+	contextInstance = context{}
 )
 
 type context struct {
@@ -34,7 +34,7 @@ func init() {
 
 func Handler(w http.ResponseWriter, req *http.Request) {
 	// setting up package variable to use outside the package
-	ctx = context{ResponseWriter: w, Request: req}
+	contextInstance = context{ResponseWriter: w, Request: req}
 
 	// setting up default headers
 	setHeaders(w, req)
@@ -91,7 +91,7 @@ func Router(w http.ResponseWriter, req *http.Request) {
 
 			// default values for 'Before' or 'After' hooking
 			hooksAvailable := false
-			ctx.ResponseCode = 200
+			contextInstance.ResponseCode = 200
 
 			// calling before action
 			if BeforeActionStore[req.Method][rawPattern] != nil {
