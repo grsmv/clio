@@ -28,13 +28,31 @@ var (
  *    @param <Slice> obj - data structure to compile with template (can be empty)
  */
 func templateGeneric(_type, name string, obj []interface{}) (contents string) {
+	var fileName = templatesHolder + sep + name + templateExtension
+
+	// checking if template file exists
+	if _, err := os.Stat(fileName); err == nil {
+
+		fileContents, _ := ioutil.ReadFile(fileName)
+		contents = processTemplate(string(fileContents), obj)
+
+	} else {
+		log.Fatal("ERROR: No such " + _type + ": " + fileName)
+	}
+
+	return
+}
+
+/**
+ *  Executing template
+ */
+func processTemplate(unrocessedContents string, data ...interface{}) string {
 	var (
 		// functions available inside templates
 		customFunctions = template.FuncMap{
 			"partial":     partial,
-			"development": developmentState,
+			"development": Development,
 		}
-		fileName = templatesHolder + sep + name + templateExtension
 
 		// defining source for template variables by default.
 		// it's make possible to call render methods in templates
@@ -43,41 +61,29 @@ func templateGeneric(_type, name string, obj []interface{}) (contents string) {
 		buffer     bytes.Buffer
 	)
 
-	// checking if template file exists
-	if _, err := os.Stat(fileName); err == nil {
+	// initializing new template
+	rawTemplate := template.New("tmpl")
 
-		// initializing new template
-		rawTemplate := template.New(fileName)
+	// adding functions to be used inside templates
+	rawTemplate = rawTemplate.Funcs(customFunctions)
 
-		// adding functions to be used inside templates
-		rawTemplate = rawTemplate.Funcs(customFunctions)
-
-		// getting raw template's content
-		fileContents, _ := ioutil.ReadFile(fileName)
-		tmpl, err := rawTemplate.Parse(string(fileContents))
-
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		// redefining source for template variables if one given
-		if len(obj) > 0 {
-			dataStruct = obj[0]
-		}
-
-		// compiling and returning template's contents
-		err = tmpl.Execute(&buffer, dataStruct)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		contents = buffer.String()
-
-	} else {
-		log.Fatal("ERROR: No such " + _type + ": " + fileName)
+	tmpl, err := rawTemplate.Parse(unrocessedContents)
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	return
+	// redefining source for template variables if one given
+	if len(data) > 0 {
+		dataStruct = data[0]
+	}
+
+	// compiling and returning template's contents
+	err = tmpl.Execute(&buffer, dataStruct)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return buffer.String()
 }
 
 /**
@@ -100,6 +106,8 @@ func layout(layoutName, renderedTemplate string) (output string) {
 	} else {
 		output = renderedTemplate
 	}
+
+	output = processTemplate(output)
 	return
 }
 
