@@ -112,22 +112,6 @@ func layout(layoutName, renderedTemplate string) (output string) {
 }
 
 /**
- *  Rendering partial (used inside other templates as
- *    `{{ partial "partial_name"}}`)
- */
-func partial(name string, obj ...interface{}) string {
-	return templateGeneric("partial", name, obj)
-}
-
-/**
- *  Displaying development state in templates with:
- *    `{{ development }}`
- */
-func developmentState() bool {
-	return development
-}
-
-/**
  *  Rendering basic template
  */
 func Render(name string, obj ...interface{}) string {
@@ -146,5 +130,24 @@ func Render(name string, obj ...interface{}) string {
 
 	return layout(layoutName, templateGeneric("template", name, obj))
 }
+
+// template built-in helpers: ---------------------------------------
+
+/**
+ *  Rendering partial (used inside other templates as
+ *    `{{ partial "partial_name"}}`)
+ */
+func partial(name string, obj ...interface{}) string {
+	return templateGeneric("partial", name, obj)
+}
+
+func IncludeStylesheets(files ...string) (output string) {
+	for _, link := range files {
+		output += "<link rel=\"stylesheet\" href=\"/assets/" + link + "\" type=\"text/css\" media=\"screen\" charset=\"utf-8\">/n"
+	}
+	return
+}
+
+// ------------------------------------------------------------------
 
 // vim: noai:ts=4:sw=4

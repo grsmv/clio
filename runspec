@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-packages=( helpers )
+packages=( helpers core )
 
 test () {
     for package in ${packages[*]}
