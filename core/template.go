@@ -2,11 +2,13 @@ package core
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 	"reflect"
 	"regexp"
+	"strings"
 	"text/template"
 )
 
@@ -50,8 +52,10 @@ func processTemplate(unrocessedContents string, data ...interface{}) string {
 	var (
 		// functions available inside templates
 		customFunctions = template.FuncMap{
-			"partial":     partial,
-			"development": Development,
+			"partial":             partial,
+			"development":         Development,
+			"include_javascripts": IncludeJavascripts,
+			"include_stylesheets": IncludeStylesheets,
 		}
 
 		// defining source for template variables by default.
@@ -141,9 +145,17 @@ func partial(name string, obj ...interface{}) string {
 	return templateGeneric("partial", name, obj)
 }
 
-func IncludeStylesheets(files ...string) (output string) {
-	for _, link := range files {
-		output += "<link rel=\"stylesheet\" href=\"/assets/" + link + "\" type=\"text/css\" media=\"screen\" charset=\"utf-8\">/n"
+func IncludeJavascripts(files ...string) string {
+	return genericInclude("<script type=\"text/javascript\" src=\"/assets/{file}.js\"></script>", files)
+}
+
+func IncludeStylesheets(files ...string) string {
+	return genericInclude("<link rel=\"stylesheet\" href=\"/assets/{file}.css\" type=\"text/css\" media=\"screen\" charset=\"utf-8\">", files)
+}
+
+func genericInclude(template string, files []string) (output string) {
+	for _, file := range files {
+		output = fmt.Sprintln(output, strings.Replace(template, "{file}", file, -1))
 	}
 	return
 }
