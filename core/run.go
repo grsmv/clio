@@ -3,10 +3,11 @@ package core
 import (
 	"bytes"
 	"flag"
-	"github.com/grsmv/clio/helpers"
 	"log"
 	"net/http"
 	"strconv"
+
+	"github.com/grsmv/clio/helpers"
 )
 
 var (
@@ -15,7 +16,7 @@ var (
 	splat           = make(map[string]string)
 	query           = make(map[string]string)
 	contextInstance = context{}
-	development     bool
+	development     = false
 )
 
 type context struct {
@@ -32,6 +33,10 @@ func init() {
 	for index := range methods {
 		routes[methods[index]] = make(map[string]func() string)
 	}
+
+	// geting data from CLI
+	flag.BoolVar(&development, "development", false, "")
+	flag.Parse()
 }
 
 func Handler(w http.ResponseWriter, req *http.Request) {
@@ -45,10 +50,6 @@ func Handler(w http.ResponseWriter, req *http.Request) {
 }
 
 func Run(settings map[string]interface{}) {
-
-	// defining if development-mode enabled via CLI
-	flag.BoolVar(&development, "development", false, "")
-	flag.Parse()
 
 	// making application's settings accessible to whole package
 	AppSettings = settings
