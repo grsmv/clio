@@ -16,7 +16,6 @@ Commands:
     g           Generating scaffold, controller, router or view
     run         Running application and all helping workers
     help        Output this message again
-    version     Displaying version information
 
 Generators:
 

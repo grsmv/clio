@@ -2,10 +2,10 @@ package cli
 
 import (
 	"fmt"
-	"github.com/grsmv/clio/core"
-	"github.com/grsmv/clio/helpers"
 	"os"
 	"strings"
+
+	"github.com/grsmv/clio/helpers"
 )
 
 const (
@@ -39,9 +39,6 @@ func Route() {
 
 		case "help":
 			Help()
-
-		case "version":
-			fmt.Println(core.Version())
 
 		case "run":
 			Run()
