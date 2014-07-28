@@ -22,8 +22,8 @@ type Resource struct {
 var templatesPaths = map[string]string{
 	"controller":      filepath.Join("app", "controllers", "resources.go.tmpl"),
 	"router":          filepath.Join("app", "routes", "resources.go.tmpl"),
-	"view-index":      filepath.Join("app", "views", "resources", "index.template.tmpl"),
-	"view-resource":   filepath.Join("app", "views", "resources", "resource.template.tmpl"),
+	"view-index":      filepath.Join("app", "views", "resources", "index.html.tmpl"),
+	"view-resource":   filepath.Join("app", "views", "resources", "resource.html.tmpl"),
 	"controller-spec": filepath.Join("spec", "controllers", "resource.go.tmpl"),
 }
 
@@ -87,8 +87,8 @@ func (resource *Resource) View() {
 
 	resource.templatize(
 		map[string]string{
-			"view-index":    filepath.Join(parentFolder, "index.template"),
-			"view-resource": filepath.Join(parentFolder, resource.SingularPath+".template"),
+			"view-index":    filepath.Join(parentFolder, "index.html"),
+			"view-resource": filepath.Join(parentFolder, resource.SingularPath+".html"),
 		},
 	)
 }

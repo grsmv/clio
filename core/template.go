@@ -18,7 +18,7 @@ type Settings struct {
 }
 
 var (
-	templateExtension = ".template"
+	templateExtension = ".html"
 	templatesHolder   = filepath.Join("app", "views")
 	defaultLayoutName = "application"
 )
