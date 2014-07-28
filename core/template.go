@@ -49,10 +49,10 @@ func processTemplate(unrocessedContents string, data []interface{}) string {
 	var (
 		// functions available inside templates
 		customFunctions = template.FuncMap{
-			"partial":             partial,
-			"development":         Development,
-			"include_javascripts": IncludeJavascripts,
-			"include_stylesheets": IncludeStylesheets,
+			"partial":     partial,
+			"development": Development,
+			"js":          IncludeJavascripts,
+			"css":         IncludeStylesheets,
 		}
 
 		// defining source for template variables by default.
