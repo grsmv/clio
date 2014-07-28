@@ -64,7 +64,7 @@ func (resource *Resource) Scaffold() error {
 func (resource *Resource) Router() {
 	resource.templatize(
 		map[string]string{
-			"router": "app/routes/" + resource.PluralPath + ".go",
+			"router": filepath.Join("app", "routes", resource.PluralPath+".go"),
 		},
 	)
 }
@@ -72,14 +72,14 @@ func (resource *Resource) Router() {
 func (resource *Resource) Controller() {
 	resource.templatize(
 		map[string]string{
-			"controller": "app/controllers/" + resource.PluralPath + ".go",
+			"controller": filepath.Join("app", "controllers", resource.PluralPath+".go"),
 		},
 	)
 }
 
 func (resource *Resource) View() {
 
-	parentFolder := "app/views/" + resource.PluralPath
+	parentFolder := filepath.Join("app", "views", resource.PluralPath)
 
 	if _, err := os.Stat(parentFolder); os.IsNotExist(err) {
 		os.Mkdir(parentFolder, 0755)
@@ -87,8 +87,8 @@ func (resource *Resource) View() {
 
 	resource.templatize(
 		map[string]string{
-			"view-index":    parentFolder + "/index.template",
-			"view-resource": parentFolder + "/" + resource.SingularPath + ".template",
+			"view-index":    filepath.Join(parentFolder, "index.template"),
+			"view-resource": filepath.Join(parentFolder, resource.SingularPath+".template"),
 		},
 	)
 }
@@ -96,7 +96,7 @@ func (resource *Resource) View() {
 func (resource *Resource) ControllerSpec() {
 	resource.templatize(
 		map[string]string{
-			"controller-spec": "spec/controllers/" + resource.PluralPath + "_test.go",
+			"controller-spec": filepath.Join("spec", "controllers", resource.PluralPath+"_test.go"),
 		},
 	)
 }
