@@ -3,13 +3,14 @@ package cli
 import (
 	"bytes"
 	"fmt"
-	"github.com/grsmv/clio/helpers"
-	"github.com/grsmv/inflect"
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 	"text/template"
+
+	"github.com/grsmv/inflect"
 )
 
 type Resource struct {
@@ -19,11 +20,11 @@ type Resource struct {
 }
 
 var templatesPaths = map[string]string{
-	"controller":      "app/controllers/resources.go.tmpl",
-	"router":          "app/routes/resources.go.tmpl",
-	"view-index":      "app/views/resources/index.template.tmpl",
-	"view-resource":   "app/views/resources/resource.template.tmpl",
-	"controller-spec": "spec/controllers/resource.go.tmpl",
+	"controller":      filpath.Join("app", "controllers", "resources.go.tmpl"),
+	"router":          filepath.Join("app", "routes", "resources.go.tmpl"),
+	"view-index":      filepath.Join("app", "views", "resources", "index.template.tmpl"),
+	"view-resource":   filepath.Join("app", "views", "resources", "resource.template.tmpl"),
+	"controller-spec": filepath.Join("spec", "controllers", "resource.go.tmpl"),
 }
 
 // todo: check if this operation executes in app's root
@@ -114,11 +115,7 @@ func (resource *Resource) templatize(files map[string]string) error {
 
 		// reading and processing template
 		templateContents, err := ioutil.ReadFile(
-			helpers.FixPath(
-				generatorsTemplatesPath +
-					string(os.PathSeparator) +
-					templatesPaths[templateType],
-			),
+			filepath.Join(generatorsTemplatesPath, templatesPaths[templateType]),
 		)
 
 		tmpl, err := template.New("generator").Parse(string(templateContents))
@@ -128,7 +125,7 @@ func (resource *Resource) templatize(files map[string]string) error {
 		tmpl.Execute(&buffer, resource)
 
 		// writing template in appropriate folder
-		err = ioutil.WriteFile(helpers.FixPath(file), buffer.Bytes(), 0644)
+		err = ioutil.WriteFile(file, buffer.Bytes(), 0644)
 		if err != nil {
 			log.Fatal(err)
 		}

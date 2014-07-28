@@ -3,14 +3,11 @@ package cli
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
-
-	"github.com/grsmv/clio/helpers"
 )
 
 const (
-	tcpIPCPort = 31000
-
 	red    = "\x1b[0;31m"
 	green  = "\x1b[0;32m"
 	yellow = "\x1b[0;33m"
@@ -18,14 +15,11 @@ const (
 )
 
 var (
-	slash = string(os.PathSeparator)
-
-	GOPATH     = os.Getenv("GOPATH")
-	GOPATH_SRC = GOPATH + slash + "src" + slash
-
-	templatesRoot            = "src/github.com/grsmv/clio/templates"
-	applicationTemplatesPath = helpers.FixPath(templatesRoot + "/application")
-	generatorsTemplatesPath  = helpers.FixPath(helpers.FixPath(GOPATH + "/" + templatesRoot + "/generators"))
+	GOPATH                   = os.Getenv("GOPATH")
+	GOPATH_SRC               = filepath.Join(GOPATH, src)
+	templatesRoot            = filepath.Join("src", "github.com", "grsmv", "clio", "templates")
+	applicationTemplatesPath = filepath.Join(templatesRoot, "application")
+	generatorsTemplatesPath  = filepath.Join(GOPATH, templatesRoot, "generators")
 )
 
 /**
@@ -39,12 +33,6 @@ func Route() {
 
 		case "help":
 			Help()
-
-		case "run":
-			Run()
-
-		case "watch":
-			Watch()
 
 		case "create":
 			{
@@ -91,5 +79,3 @@ func Route() {
 		Help()
 	}
 }
-
-// vim: noai:ts=4:sw=4
