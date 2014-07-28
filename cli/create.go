@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 	"text/template"
 )
@@ -28,8 +29,8 @@ func Create(appName string) {
 	app.createContainer()
 
 	err := app.copyFileTree(
-		GOPATH+slash+applicationTemplatesPath,
-		GOPATH_SRC+app.Name,
+		filepath.Join(GOPATH, applicationTemplatesPath),
+		filepath.Join(GOPATH_SRC, app.Name),
 	)
 
 	if err != nil {
@@ -81,7 +82,7 @@ func (app *Application) copyDir(file os.FileInfo, destination, fromFilePath, toF
 	}
 
 	// scanning next level
-	newTo := strings.Join([]string{destination, file.Name()}, slash)
+	newTo := filepath.Join(destination, file.Name())
 	if err := app.copyFileTree(fromFilePath, newTo); err != nil {
 		return err
 	}
@@ -131,9 +132,8 @@ func (app *Application) copyFileTree(from, to string) error {
 		return err
 	}
 	for _, f := range files {
-
-		fromFilePath := strings.Join([]string{from, f.Name()}, slash)
-		toFilePath := strings.Join([]string{to, f.Name()}, slash)
+		fromFilePath := filepath.Join(from, f.Name())
+		toFilePath := filepath.Join(to, f.Name())
 
 		if f.IsDir() == true {
 			app.copyDir(f, to, fromFilePath, toFilePath)

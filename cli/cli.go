@@ -16,7 +16,7 @@ const (
 
 var (
 	GOPATH                   = os.Getenv("GOPATH")
-	GOPATH_SRC               = filepath.Join(GOPATH, src)
+	GOPATH_SRC               = filepath.Join(GOPATH, "src")
 	templatesRoot            = filepath.Join("src", "github.com", "grsmv", "clio", "templates")
 	applicationTemplatesPath = filepath.Join(templatesRoot, "application")
 	generatorsTemplatesPath  = filepath.Join(GOPATH, templatesRoot, "generators")

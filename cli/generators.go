@@ -20,7 +20,7 @@ type Resource struct {
 }
 
 var templatesPaths = map[string]string{
-	"controller":      filpath.Join("app", "controllers", "resources.go.tmpl"),
+	"controller":      filepath.Join("app", "controllers", "resources.go.tmpl"),
 	"router":          filepath.Join("app", "routes", "resources.go.tmpl"),
 	"view-index":      filepath.Join("app", "views", "resources", "index.template.tmpl"),
 	"view-resource":   filepath.Join("app", "views", "resources", "resource.template.tmpl"),
@@ -30,7 +30,7 @@ var templatesPaths = map[string]string{
 // todo: check if this operation executes in app's root
 func NewResource(name string) Resource {
 	wd, _ := os.Getwd()
-	splittedPath := strings.Split(wd, slash)
+	splittedPath := strings.Split(wd, string(os.PathSeparator))
 
 	return Resource{
 		PluralTitle: inflect.Camelize(
