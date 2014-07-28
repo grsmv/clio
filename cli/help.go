@@ -14,7 +14,6 @@ Commands:
 
     create      Creating application skeleton
     g           Generating scaffold, controller, router or view
-    run         Running application and all helping workers
     help        Output this message again
 
 Generators:
@@ -31,5 +30,3 @@ Example:
     for getting more information about Clio. Good luck!
 `)
 }
-
-// vim: noai:ts=4:sw=4

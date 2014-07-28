@@ -136,5 +136,3 @@ func Json(obj interface{}) string {
 	b, _ := json.Marshal(obj)
 	return string(b)
 }
-
-// --------------------------------------------------------

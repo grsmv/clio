@@ -159,7 +159,3 @@ func genericInclude(template string, files []string) (output string) {
 	}
 	return
 }
-
-// ------------------------------------------------------------------
-
-// vim: noai:ts=4:sw=4

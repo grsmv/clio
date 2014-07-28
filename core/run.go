@@ -136,5 +136,3 @@ func Router(w http.ResponseWriter, req *http.Request) {
 func Verbose() bool {
 	return AppSettings["verbose-output"] != nil && AppSettings["verbose-output"].(bool) == true
 }
-
-// vim: noai:ts=4:sw=4

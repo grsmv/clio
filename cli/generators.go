@@ -134,5 +134,3 @@ func (resource *Resource) templatize(files map[string]string) error {
 	}
 	return nil
 }
-
-// vim: noai:ts=4:sw=4

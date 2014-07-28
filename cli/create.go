@@ -144,5 +144,3 @@ func (app *Application) copyFileTree(from, to string) error {
 
 	return nil
 }
-
-// vim: noai:ts=4:sw=4

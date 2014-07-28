@@ -90,5 +90,3 @@ func ParseQuery(queryString string) map[string]string {
 	}
 	return query
 }
-
-// vim: noai:ts=4:sw=4
