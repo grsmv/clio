@@ -62,7 +62,7 @@ func checkContainer(appName string) {
  *  Creating root folder for new application
  */
 func (app *Application) createContainer() {
-	appPath := GOPATH_SRC + app.Name
+	appPath := filepath.Join(GOPATH_SRC, app.Name)
 	if err := os.Mkdir(appPath, 0776); err == nil {
 		fmt.Println(green, "  create:", reset, appPath)
 	} else {

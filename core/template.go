@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
 	"reflect"
 	"regexp"
 	"strings"
@@ -18,9 +19,8 @@ type Settings struct {
 
 var (
 	templateExtension = ".template"
-	templatesHolder   = "app/views"
+	templatesHolder   = filepath.Join("app", "views")
 	defaultLayoutName = "application"
-	sep               = string(os.PathSeparator)
 )
 
 /**
@@ -29,26 +29,23 @@ var (
  *    @param <String> name - name (wothout extension) to lookup
  *    @param <Slice> obj - data structure to compile with template (can be empty)
  */
-func templateGeneric(_type, name string, obj []interface{}) (contents string) {
-	var fileName = templatesHolder + sep + name + templateExtension
+func templateGeneric(_type, name string, data []interface{}) (contents string) {
+	var fileName = filepath.Join(templatesHolder, name+templateExtension)
 
 	// checking if template file exists
 	if _, err := os.Stat(fileName); err == nil {
-
 		fileContents, _ := ioutil.ReadFile(fileName)
-		contents = processTemplate(string(fileContents), obj)
-
+		contents = processTemplate(string(fileContents), data)
 	} else {
 		log.Fatal("ERROR: No such " + _type + ": " + fileName)
 	}
-
 	return
 }
 
 /**
  *  Executing template
  */
-func processTemplate(unrocessedContents string, data ...interface{}) string {
+func processTemplate(unrocessedContents string, data []interface{}) string {
 	var (
 		// functions available inside templates
 		customFunctions = template.FuncMap{
@@ -96,9 +93,8 @@ func processTemplate(unrocessedContents string, data ...interface{}) string {
  *    `Render("a/b", dataInterface, Settings { Layout: 'name' })`
  */
 func layout(layoutName, renderedTemplate string) (output string) {
-
 	if layoutName != "none" {
-		layoutFilepath := templatesHolder + sep + "layouts" + sep + layoutName + templateExtension
+		layoutFilepath := filepath.Join(templatesHolder, "layouts", layoutName+templateExtension)
 		layoutContents, err := ioutil.ReadFile(layoutFilepath)
 
 		if err != nil {
@@ -111,7 +107,7 @@ func layout(layoutName, renderedTemplate string) (output string) {
 		output = renderedTemplate
 	}
 
-	output = processTemplate(output)
+	output = processTemplate(output, []interface{}{})
 	return
 }
 
